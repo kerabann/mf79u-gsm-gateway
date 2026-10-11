@@ -48,7 +48,7 @@ tail=r'''
 #undef fork
 #undef waitpid
 static struct state kernel;
-static unsigned frame,starts,stops,alive,answers,rearms,suspends;
+static unsigned frame,starts,stops,alive,answers,rearms,suspends,legacy_resumes,extended_resumes;
 static const char *input_line;
 static int f_open(const char *p,int flags,...){
  if(strstr(p,"/control"))return 2000;
@@ -75,7 +75,11 @@ static ssize_t f_write(int f,const void *b,size_t n){
  if(!strcmp(name,"SESSION")){assert(!kernel.enabled && !kernel.id);kernel.epoch=e;}
  else {assert(e==kernel.epoch);
   if(!strcmp(name,"PING"))assert(!id);
-  else if(!strcmp(name,"RESUME")){assert(!strcmp(line,"RESUME 99 0 3\n"));kernel.enabled=kernel.desired=1;}
+  else if(!strcmp(name,"RESUME")){
+   if(!strcmp(line,"RESUME 99 0\n"))legacy_resumes++;
+   else {assert(!strcmp(line,"RESUME 99 0 3\n"));extended_resumes++;}
+   kernel.enabled=kernel.desired=1;
+  }
   else if(!strcmp(name,"SUSPEND")){assert(!kernel.id && !alive);kernel.enabled=kernel.desired=0;suspends++;}
   else if(!strcmp(name,"DIAL")){assert(!kernel.id && !alive);kernel.id=id;kernel.stage=1;kernel.incoming=0;kernel.mm=0;}
   else if(!strcmp(name,"ANSWER")){assert(id==kernel.id && kernel.stage==9);kernel.stage=10;answers++;}
@@ -90,7 +94,7 @@ static pid_t f_waitpid(pid_t p,int *status,int options){(void)status;(void)optio
 static int f_poll(struct pollfd *p,nfds_t n,int timeout){
  assert(n==1 && timeout==20);frame++;input_line=0;
  switch(frame){
- case 1:input_line="RESUME 99 0 3\n";break;
+ case 1:input_line="RESUME 99 0\n";break;
  case 3:input_line="DIAL 99 2 1234567\n";break;
  case 4:kernel.stage=5;break;
  case 2000:assert(alive && starts==1 && !stops);break;
@@ -103,13 +107,16 @@ static int f_poll(struct pollfd *p,nfds_t n,int timeout){
  case 2014:assert(alive && starts==3 && kernel.stage==10);kernel.stage=5;break;
  case 2016:input_line="HANGUP 99 4\n";break;
  case 2018:input_line="SUSPEND 99 0\n";break;
- case 2020:input_line="QUIT 99 0\n";break;
+ case 2020:input_line="RESUME 99 0 3\n";break;
+ case 2022:input_line="SUSPEND 99 0\n";break;
+ case 2024:input_line="QUIT 99 0\n";break;
  default:break;
  }assert(frame<2030);p->revents=input_line?POLLIN:0;return input_line?1:0;
 }
 int main(void){
  kernel.audio=1;char *args[]={"fixture","--owned-pipe",0};assert(adapter_main(2,args)==0);
  assert(starts==3 && stops==3 && rearms==3 && answers==1 && suspends>=1 && !kernel.id && !kernel.enabled);
+ assert(legacy_resumes==1 && extended_resumes==1);
  puts("PASS actual adapter: async MO ownership, 40s streaming, repeated calls, MT explicit answer, media close before rearm, suspension ACK");
  unlink(CS_ADAPTER_LOCK);
 }

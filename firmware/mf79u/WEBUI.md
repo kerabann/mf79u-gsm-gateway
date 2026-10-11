@@ -1,5 +1,19 @@
 > Imported project history, snapshot 2026-10-11. Read the [current repository status](../../docs/STATUS.md) and [agent rules](../../AGENTS.md) first. Dated experiments/commands below may be superseded; use the root Makefile. Private historical receipts and old images are excluded from publication.
 
+## Current UI end-to-end audit, 2026-10-11
+
+See [the current audit matrix](../../docs/UI-E2E-20261011.md). Network confirmation
+now waits for backend readiness and displays the remaining deadline; successful
+rollback is informational. Save is scoped to its tab and retains other drafts.
+Unrelated network/mobile changes no longer reload an unchanged SIP listener and
+discard its client binding. Actual failures remain visible on relevant pages.
+This new audit supersedes older fixture-only claims for these flows; physical
+call/password evidence remains explicitly marked in the matrix.
+The delayed apply worker checks cancellation after taking the network lock.
+Disabled/switching voice and failed PBX registration have explicit labels.
+Authenticated System/IMEI/log reads and real API admin/SSH password rotations
+were checked in this audit; older IMEI-only evidence below is historical.
+
 ## Current IMEI display restored (2026-10-11)
 
 The modem was missing the persistent IMEI reader. Restored the verified helper

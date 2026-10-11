@@ -15,6 +15,28 @@ is an atomic userdata update, not raw flashing.
 
 ## Management API
 
+### UI audit dependency recovery (2026-10-11)
+
+The fresh UI audit found `dropbearmulti`, `ssh-shell`, `dropbear` and
+`dropbearkey` missing from userdata. System info/IMEI worked, but saving SSH
+returned `SSH runtime is not installed`. The maintained
+`install-ui-dependencies.py` first reports missing files; `--restore-missing`
+restores only missing checksum-verified executables and links. It refuses to
+replace unexpected files, preserves settings/native/SIP and does not enable
+SSH or invent a password. On this device the four dependencies were restored,
+and the UI's disabled SSH Save succeeded. The subsequent authenticated API
+audit rotated admin/SSH passwords, verified actual new authentication and old
+credential rejection, then restored the original password/disabled SSH state.
+The SSH host key was checked through USB. System info/IMEI and all three log
+sources succeeded. Browser new-password entry itself needs user handoff.
+Exact checks and remaining scope are tracked in
+[the UI audit](../../docs/UI-E2E-20261011.md).
+
+```sh
+make task TASK=install-ui-dependencies.py SERIAL=... ADB=...
+make task TASK=install-ui-dependencies.py ARGS=--restore-missing SERIAL=... ADB=...
+```
+
 ### Current IMEI display repair (2026-10-11)
 
 The physical modem was missing `tools/system-imei`, so the information API

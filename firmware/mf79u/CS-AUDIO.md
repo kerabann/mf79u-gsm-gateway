@@ -1,5 +1,23 @@
 > Imported project history, snapshot 2026-10-11. Read the [current repository status](../../docs/STATUS.md) and [agent rules](../../AGENTS.md) first. Dated experiments/commands below may be superseded; use the root Makefile. Private historical receipts and old images are excluded from publication.
 
+## UI audit compatibility correction, 2026-10-11
+
+Fresh CS selection registered in GSM but stayed at `starting_cs`. The preserved
+production driver remained suspended without a fault; an owned adapter restart
+did not restore readiness. The native controller had begun sending an explicit
+RAT suffix in RESUME, which the legacy installed driver rejects. Returning to
+the original three-field RESUME restores GSM readiness and is also accepted by
+the current source driver, whose default is GSM.
+
+Native-only update MD5 `fa5969f94697c7ec141b58b25898a69e` produced
+`cs_media_ready` after two seconds. Adapter, PCM bridge, driver MD5
+`b3440aadf8e7be2e2321d13e539ba078`, SIP and IMS media binaries were preserved;
+no reboot, unload, audio gain/CMR/FIR or external PCM change. Native lifecycle
+fixtures reject a fourth field on the simulated legacy driver; the actual
+adapter loop checks both legacy and extended parsing. This is fresh idle
+readiness evidence, not a new CS conversation/audio test. See
+[the audit matrix](../../docs/UI-E2E-20261011.md) for remaining coordinated calls.
+
 # CS sound and call-startup fixes
 
 Updated: 2026-10-10. This document covers the userdata CS runtime; old rootfs

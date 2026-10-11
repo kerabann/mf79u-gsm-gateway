@@ -46,8 +46,8 @@ int main(int argc,char **argv){
     char action[24];unsigned seen,id;if(sscanf(line,"%23s %u %u",action,&seen,&id)!=3 || seen!=epoch)return 7;
     FILE *f=fopen("/tmp/cs-commands","a");if(f){fprintf(f,"%s %u\n",action,id);fclose(f);}
     if(!strcmp(action,"RESUME")) {
-     unsigned rat=0;assert(sscanf(line,"%23s %u %u %u",action,&seen,&id,&rat)==4);
-     assert(rat==2 || rat==3);
+     /* A legacy physical GSM driver rejects a fourth RAT argument. */
+     char extra;assert(sscanf(line,"%23s %u %u %c",action,&seen,&id,&extra)==3);
      if(pcm<0) {
       pcm=socket(AF_INET,SOCK_DGRAM,0);struct sockaddr_in addr={.sin_family=AF_INET,.sin_port=htons(46001),.sin_addr.s_addr=htonl(INADDR_LOOPBACK)};
       if(pcm<0 || bind(pcm,(struct sockaddr *)&addr,sizeof(addr))){if(pcm>=0)close(pcm);

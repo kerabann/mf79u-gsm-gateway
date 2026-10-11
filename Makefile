@@ -76,10 +76,11 @@ build-helpers: toolchain
 test: deps sdk build-native build-sip lint test-go test-js test-native test-sip test-workflow
 test-workflow:
 	@cd "$(ROOT)" && $(PYTHON) scripts/test-workflow.py
+	@cd "$(ROOT)" && $(PYTHON) $(FW)/test-native-update.py
 test-go: build-control toolchain
 	@cd "$(ROOT)" && $(PYTHON) scripts/test-go.py
 test-js:
-	@cd "$(ROOT)" && node $(FW)/test-system-ui.js && node $(FW)/test-roaming-ui.js && node $(FW)/test-wifi-ui.js && node $(FW)/test-vowifi-ui.js
+	@cd "$(ROOT)" && node $(FW)/test-system-ui.js && node $(FW)/test-roaming-ui.js && node $(FW)/test-wifi-ui.js && node $(FW)/test-vowifi-ui.js && node $(FW)/test-ui-actions.js
 test-native: toolchain
 	@cd "$(ROOT)" && $(PYTHON) scripts/test-native.py
 test-sip: build-native build-sip

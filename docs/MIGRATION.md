@@ -91,6 +91,9 @@ checks migration coverage while allowing intentional future source edits;
 
 No physical install, reboot, real call/SMS, IMEI write or fresh visual browser
 run was performed. Existing hardware receipts remain dated historical evidence.
-A GitHub-hosted execution has not yet been run; the workflow was validated and
-its complete Make target passed locally. Factory-profile-preserving Reset remains
-unimplemented; UMTS and GSM wideband are not supported claims.
+The initial publication commit `cbb0ae7` is now available on GitHub `main`.
+The first [hosted workflow](https://github.com/kerabann/mf79u-gsm-gateway/actions/runs/38158311596)
+completed successfully on Ubuntu 24.04 x86_64 in 7m 16s for that publication
+commit. Later [UI audit changes](UI-E2E-20261011.md) are validated separately and
+are not included in that hosted result. Factory-profile-preserving Reset remains unimplemented;
+UMTS and GSM wideband are not supported claims.

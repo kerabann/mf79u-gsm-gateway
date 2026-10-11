@@ -1,15 +1,29 @@
 // Native voice state overrides stale SIP state and identifies the IMS access.
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
-const source=fs.readFileSync(__dirname+'/control/web/app.js','utf8').match(/^async function status\(\).+$/m)[0];
+const source=fs.readFileSync(__dirname+'/control/web/app.js','utf8').split('async function renderStatus(){')[1].split('action("#network-confirm"')[0];
 const elements=new Map();const get=id=>{if(!elements.has(id))elements.set(id,{textContent:'',hidden:false,disabled:false,classList:{toggle(){}},replaceChildren(){},append(){}});return elements.get(id)};
 const snapshot={radio:{},vendorSession:false,gateway:{imsReady:false,role:'TRUNK',running:true,registerMode:false,activeCall:false},runtime:{voiceBackend:'ims',voiceReady:true,imsReady:true,imsAccess:'WIFI',registrationState:'ready',callBackend:'none'},wifi:{mode:'CLIENT',state:'COMPLETED'},interfaces:[]};
-const ctx={$:get,api:async()=>snapshot,settings:{sip:{server:'pbx',port:5060,transport:'UDP'},lan:{address:'192.168.0.1/24'}},document:{createElement(){return {append(){}}}},networkToken:'',networkNotice:'',notice(){}};
-vm.createContext(ctx);vm.runInContext(source,ctx);
+const ctx={$:get,api:async()=>snapshot,settings:{sip:{server:'pbx',port:5060,transport:'UDP'},lan:{address:'192.168.0.1/24'}},document:{createElement(){return {append(){}}}},networkToken:'',networkNotice:'',notice(){},renderNetworkState(){},refreshSettings:async()=>{}};
+vm.createContext(ctx);vm.runInContext('async function renderStatus(){'+source,ctx);
 (async()=>{
- await ctx.status();assert.equal(get('voice-current').textContent,'VoWiFi');assert.equal(get('ims-state').textContent,'Registered');assert.equal(get('voice-vowifi-option').disabled,false);
+ await ctx.renderStatus();assert.equal(get('voice-current').textContent,'VoWiFi');assert.equal(get('ims-state').textContent,'Registered');assert.equal(get('voice-vowifi-option').disabled,false);
  snapshot.gateway.imsReady=true;Object.assign(snapshot.runtime,{voiceReady:false,imsReady:false,voiceBackend:'none',imsAccess:'NONE',registrationState:'waiting_for_wifi',smsOnly:true});
- await ctx.status();assert.equal(get('voice-current').textContent,'Unavailable');assert.equal(get('ims-state').textContent,'Not registered');assert.match(get('call-state').textContent,/Voice unavailable/);
- Object.assign(snapshot.runtime,{voiceReady:true,imsReady:true,voiceBackend:'ims',imsAccess:'LTE',registrationState:'ready'});await ctx.status();assert.equal(get('voice-current').textContent,'VoLTE');
- delete snapshot.runtime.imsAccess;await ctx.status();assert.equal(get('voice-vowifi-option').disabled,true);
+ await ctx.renderStatus();assert.equal(get('voice-current').textContent,'Unavailable');assert.equal(get('ims-state').textContent,'Not registered');assert.match(get('call-state').textContent,/Voice unavailable/);
+ Object.assign(snapshot.runtime,{voiceReady:true,imsReady:true,voiceBackend:'ims',imsAccess:'LTE',registrationState:'ready'});await ctx.renderStatus();assert.equal(get('voice-current').textContent,'VoLTE');
+ delete snapshot.runtime.imsAccess;await ctx.renderStatus();assert.equal(get('voice-vowifi-option').disabled,true);
+ snapshot.gateway.registerMode=true;snapshot.gateway.registrationCode=404;
+ await ctx.renderStatus();assert.equal(get('sip-state').textContent,'PBX registration failed · SIP 404');
+ snapshot.gateway.registrationCode=0;await ctx.renderStatus();assert.equal(get('sip-state').textContent,'Registering…');
+ snapshot.gateway.registered=true;snapshot.gateway.registrationCode=200;
+ await ctx.renderStatus();assert.equal(get('sip-state').textContent,'PBX registered');
+ snapshot.gateway.role='DISABLED';snapshot.runtime.voiceReady=false;snapshot.runtime.imsReady=true;
+ await ctx.renderStatus();assert.equal(get('ims-state').textContent,'Registered');
+ assert.equal(get('ims-label').textContent,'Voice disabled');assert.equal(get('voice-current').textContent,'Disabled');
+ assert.equal(get('voice-registration').textContent,'Voice calls disabled');assert.equal(get('sip-state').textContent,'Disabled');
+ snapshot.gateway.role='SERVER';ctx.settings.voiceMode='VOLTE';
+ Object.assign(snapshot.runtime,{voiceMode:'VOWIFI',voiceReady:true,imsReady:true});
+ await ctx.renderStatus();assert.equal(get('voice-registration').textContent,'Switching voice mode…');
+ assert.equal(get('ims-label').textContent,'Voice registering');assert.match(get('call-state').textContent,/Voice unavailable/);
+ snapshot.runtime.voiceMode='VOLTE';await ctx.renderStatus();assert.equal(get('voice-registration').textContent,'Ready for calls');
  console.log('PASS actual status UI: Wi-Fi IMS, LTE IMS, stale SIP readiness and legacy capability gate');
 })().catch(e=>{console.error(e);process.exitCode=1});

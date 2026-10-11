@@ -34,7 +34,11 @@ remain on the device and are checked before install. Private IMS and the one-byt
 IMEI authorization patch are checksum-bound recipes, not committed vendor blobs.
 
 Follow [MIGRATION.md](MIGRATION.md) for the actual completed verification report.
-Do not infer a GitHub-hosted run merely from a local `make ci` success.
+The initial publication commit `cbb0ae7` was pushed to `main` on 2026-10-11.
+The first [GitHub-hosted workflow](https://github.com/kerabann/mf79u-gsm-gateway/actions/runs/38158311596)
+completed successfully on Ubuntu 24.04 x86_64 in 7m 16s for `cbb0ae7`.
+This hosted receipt validates the initial publication; the later UI changes
+below have local checks and are not attributed to that older workflow run.
 
 ## Remaining boundaries
 
@@ -44,3 +48,19 @@ UDP; trunk transport supports UDP/TCP/TLS. Full rootfs flashing and factory rese
 preservation are not production workflows. Previously observed remote clearing,
 clock and DSP faults are documented historically; use the accepted production
 driver/profile rather than resurrecting older experiments.
+
+## Current UI audit and CS compatibility correction, 2026-10-11
+
+A fresh UI/runtime audit corrected network readiness/rollback notices, delayed
+apply after cancellation, scoped drafts, unnecessary SIP reloads and misleading
+voice/PBX status. Missing SSH runtime files were recovered. A legacy GSM driver
+compatibility correction restored CS readiness without changing its driver or
+PCM/IMS media. Updated Control/native are installed without a modem reboot.
+
+Fresh physical checks include real 90-second expiry, gateway-address restoration,
+UDP PBX registration, admin/SSH password rotations, hotspot settings, GSM CS/AUTO
+readiness, LTE data-off guards and a user-confirmed incoming VoLTE conversation.
+All seven fixture views passed 1280/390/320px. See [the audit matrix](UI-E2E-20261011.md)
+for exact source/browser/API/device boundaries, preserved artifact hashes and
+remaining call/Wi-Fi/transport checks. The user deferred another outgoing call;
+the complete combination matrix is not claimed as passed.

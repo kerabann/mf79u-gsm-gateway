@@ -51,8 +51,11 @@ type App struct {
 	sessions             map[string]*Session
 	bootstrapUntil       time.Time
 	networkError         string
+	networkNotice        string
 	pending              string
 	networkReady         bool
+	networkRollingBack   bool
+	networkDeadline      time.Time
 	rollback             *Settings
 	applied              Settings
 }
@@ -311,7 +314,12 @@ func (a *App) serve(w http.ResponseWriter, r *http.Request) {
 		if remaining < 0 {
 			remaining = 0
 		}
-		pending, neterr, sharing := a.pending, a.networkError, a.settings.InternetSharing
+		pending, neterr, netnotice, sharing := a.pending, a.networkError, a.networkNotice, a.settings.InternetSharing
+		ready, rollingBack := a.networkReady, a.networkRollingBack
+		networkRemaining := int(time.Until(a.networkDeadline).Seconds())
+		if pending == "" || networkRemaining < 0 {
+			networkRemaining = 0
+		}
 		a.mu.Unlock()
 		interfaces := []any{}
 		list := networkInterfaces()
@@ -326,7 +334,7 @@ func (a *App) serve(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 		runtime := nativeRuntime()
-		respond(w, 200, map[string]any{"radio": radio, "vendorSession": vendorSession, "wifi": wifi, "gateway": gatewayStatus(), "runtime": runtime, "interfaces": interfaces, "bootstrapRemaining": remaining, "networkError": neterr, "pendingNetwork": pending, "internetSharing": sharing, "operatorCodecs": []string{"AMR-WB / 23.85 kbit/s max", "AMR-NB fallback"}, "pcmRate": 16000, "hostRelayRequired": runtime["hostRelayRequired"] != false})
+		respond(w, 200, map[string]any{"radio": radio, "vendorSession": vendorSession, "wifi": wifi, "gateway": gatewayStatus(), "runtime": runtime, "interfaces": interfaces, "bootstrapRemaining": remaining, "networkError": neterr, "networkNotice": netnotice, "pendingNetwork": pending, "networkReady": ready, "networkRollingBack": rollingBack, "networkRemaining": networkRemaining, "internetSharing": sharing, "operatorCodecs": []string{"AMR-WB / 23.85 kbit/s max", "AMR-NB fallback"}, "pcmRate": 16000, "hostRelayRequired": runtime["hostRelayRequired"] != false})
 	case "/api/apply":
 		if r.Method != "POST" {
 			w.WriteHeader(405)
@@ -363,7 +371,7 @@ func (a *App) serve(w http.ResponseWriter, r *http.Request) {
 		}
 		warning := ""
 		if a.native {
-			if !req.Network {
+			if !req.Network && sipNeedsReload(value, old) {
 				if e := signalGateway(); e != nil {
 					warning = e.Error()
 				}
@@ -380,40 +388,15 @@ func (a *App) serve(w http.ResponseWriter, r *http.Request) {
 			a.mu.Lock()
 			a.pending = token
 			a.networkError = ""
+			a.networkNotice = ""
 			a.networkReady = false
+			a.networkRollingBack = false
+			a.networkDeadline = deadline
 			a.rollback = &old
 			a.mu.Unlock()
 			go func() {
 				time.Sleep(time.Second)
-				a.netmu.Lock()
-				var e error
-				if !reflect.DeepEqual(value.WiFi, old.WiFi) {
-					e = a.wifiApply(value.WiFi)
-				}
-				if e == nil {
-					e = a.lanApply(value.LAN)
-				}
-				if e == nil {
-					e = a.applyVoWiFiUplink(value.VoWiFi)
-				}
-				if e == nil {
-					e = signalGateway()
-				}
-				if e != nil {
-					a.setNetworkError(e)
-				}
-				a.mu.Lock()
-				a.networkReady = e == nil
-				a.mu.Unlock()
-				a.netmu.Unlock()
-				if e != nil {
-					a.rollbackNetwork(token)
-					return
-				}
-				if remaining := time.Until(deadline); remaining > 0 {
-					time.Sleep(remaining)
-				}
-				a.rollbackNetwork(token)
+				a.applyNetworkChange(token, value, old, deadline)
 			}()
 		} else {
 			a.mu.Lock()
@@ -435,7 +418,7 @@ func (a *App) serve(w http.ResponseWriter, r *http.Request) {
 		}
 		a.mu.Lock()
 		ok := a.pending != "" && a.pending == req.Token
-		if ok && r.URL.Path == "/api/network/confirm" && !a.networkReady {
+		if ok && r.URL.Path == "/api/network/confirm" && (!a.networkReady || a.networkRollingBack) {
 			a.mu.Unlock()
 			failure(w, 409, errors.New("Network settings are still being applied"))
 			return
@@ -445,6 +428,8 @@ func (a *App) serve(w http.ResponseWriter, r *http.Request) {
 			a.rollback = nil
 			a.applied = a.settings
 			a.networkError = ""
+			a.networkNotice = "Network settings confirmed."
+			a.networkReady = false
 		}
 		a.mu.Unlock()
 		if !ok {
@@ -452,7 +437,7 @@ func (a *App) serve(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		if r.URL.Path == "/api/network/rollback" {
-			a.rollbackNetwork(req.Token)
+			a.rollbackNetwork(req.Token, "Network changes rolled back.")
 		}
 		respond(w, 200, map[string]bool{"ok": true})
 	case "/api/sms":
@@ -551,7 +536,48 @@ func (a *App) vendorFailure(w http.ResponseWriter, r *http.Request, e error) {
 	}
 	failure(w, 502, e)
 }
-func (a *App) rollbackNetwork(token string) {
+func (a *App) applyNetworkChange(token string, value, old Settings, deadline time.Time) {
+	a.netmu.Lock()
+	a.mu.Lock()
+	// An immediate rollback can finish during the delayed start, or while this
+	// worker waits for another network operation. Never apply its abandoned profile.
+	current := a.pending == token && a.rollback != nil
+	a.mu.Unlock()
+	if !current {
+		a.netmu.Unlock()
+		return
+	}
+	var e error
+	if !reflect.DeepEqual(value.WiFi, old.WiFi) {
+		e = a.wifiApply(value.WiFi)
+	}
+	if e == nil {
+		e = a.lanApply(value.LAN)
+	}
+	if e == nil {
+		e = a.applyVoWiFiUplink(value.VoWiFi)
+	}
+	if e == nil && sipNeedsReload(value, old) {
+		e = signalGateway()
+	}
+	if e != nil {
+		a.setNetworkError(e)
+	}
+	a.mu.Lock()
+	a.networkReady = e == nil
+	a.mu.Unlock()
+	a.netmu.Unlock()
+	if e != nil {
+		a.rollbackNetwork(token, "")
+		return
+	}
+	if remaining := time.Until(deadline); remaining > 0 {
+		time.Sleep(remaining)
+	}
+	a.rollbackNetwork(token, "Network changes were not confirmed in time and were rolled back.")
+}
+
+func (a *App) rollbackNetwork(token, message string) {
 	a.netmu.Lock()
 	defer a.netmu.Unlock()
 	a.mu.Lock()
@@ -561,27 +587,51 @@ func (a *App) rollbackNetwork(token string) {
 	}
 	old, failed := *a.rollback, a.settings
 	reason := a.networkError
-	a.pending = ""
-	a.rollback = nil
+	a.networkReady = false
+	a.networkRollingBack = true
 	a.settings.WiFi = old.WiFi
 	a.settings.LAN = old.LAN
 	a.settings.VoWiFi = old.VoWiFi
+	if a.settings.SIP.Role == "SERVER" {
+		a.settings.SIP.Bind = strings.SplitN(old.LAN.Address, "/", 2)[0]
+	}
 	value := a.settings
 	a.mu.Unlock()
-	_ = a.wifiApply(old.WiFi)
-	_ = a.lanApply(old.LAN)
-	_ = a.applyVoWiFiUplink(old.VoWiFi)
-	_ = atomicFile(filepath.Join(a.dir, "gateway.ini"), gatewayINI(value, a.dir), 0600)
-	_ = signalGateway()
-	if failed.LAN.Address != old.LAN.Address && failed.LAN.Address != "192.168.0.1/24" {
-		_ = run("ip", "addr", "del", failed.LAN.Address, "dev", "bridge0")
+	var restoreErrors []error
+	if a.native {
+		// Avoid disconnecting an unchanged uplink when only LAN/DNS changed.
+		if !reflect.DeepEqual(failed.WiFi, old.WiFi) {
+			restoreErrors = append(restoreErrors, a.wifiApply(old.WiFi))
+		}
+		restoreErrors = append(restoreErrors, a.lanApply(old.LAN), a.applyVoWiFiUplink(old.VoWiFi))
+	}
+	restoreErrors = append(restoreErrors, atomicFile(filepath.Join(a.dir, "gateway.ini"), gatewayINI(value, a.dir), 0600))
+	if a.native {
+		if sipNeedsReload(value, failed) {
+			restoreErrors = append(restoreErrors, signalGateway())
+		}
+		if failed.LAN.Address != old.LAN.Address && failed.LAN.Address != "192.168.0.1/24" {
+			restoreErrors = append(restoreErrors, run("ip", "addr", "del", failed.LAN.Address, "dev", "bridge0"))
+		}
 	}
 	b, _ := json.MarshalIndent(value, "", "  ")
-	_ = atomicFile(filepath.Join(a.dir, "settings.json"), b, 0600)
+	restoreErrors = append(restoreErrors, atomicFile(filepath.Join(a.dir, "settings.json"), b, 0600))
+	a.mu.Lock()
+	defer a.mu.Unlock()
+	a.pending = ""
+	a.rollback = nil
+	a.networkRollingBack = false
+	// Network rollback preserves separately applied SIP/mobile settings.
+	a.applied = value
+	a.networkNotice = message
+	if e := errors.Join(restoreErrors...); e != nil {
+		a.networkError = "Could not fully restore the previous network settings. Check Network and Wi-Fi settings."
+		return
+	}
 	if reason != "" {
-		a.setNetworkError(errors.New(reason + ". Network changes rolled back; USB management is still available."))
+		a.networkError = strings.TrimSuffix(reason, ".") + ". Network changes rolled back; USB management is still available."
 	} else {
-		a.setNetworkError(errors.New("Network changes rolled back. USB management is still available."))
+		a.networkError = ""
 	}
 }
 func main() {

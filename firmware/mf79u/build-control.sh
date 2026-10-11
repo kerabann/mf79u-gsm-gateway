@@ -7,6 +7,7 @@ node ../test-system-ui.js
 node ../test-roaming-ui.js
 node ../test-wifi-ui.js
 node ../test-vowifi-ui.js
+node ../test-ui-actions.js
 python3 ../compress-web.py
 # Go 1.26 adds an unused 32 MiB FIPS entropy buffer to .bss. B03 kills that
 # executable during execve. Pin this target's supported, tested toolchain.

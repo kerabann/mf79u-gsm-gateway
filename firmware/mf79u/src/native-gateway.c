@@ -633,8 +633,11 @@ static int suspend_cs(void) {
     return 0;
 }
 static void resume_cs(void) {
+    /* The installed GSM driver accepts the original three-field RESUME.
+     * Its replacement also defaults to GSM; do not require the newer RAT
+     * suffix to resume a preserved, already validated CS audio driver. */
     if(cs_voice>0 && cs_epoch && ims<0 && (cs_state==1 || cs_state==5) &&
-       cs_resume_requested!=1 && (cs_suspended || !cs_ready) && !send_cs("RESUME",0,"2"))
+       cs_resume_requested!=1 && (cs_suspended || !cs_ready) && !send_cs("RESUME",0,NULL))
         cs_resume_requested=1;
 }
 static void stop_child(pid_t *pid) {

@@ -98,6 +98,19 @@ func signalGateway() error {
 	}
 	return errors.New("The SIP gateway is not running. Settings are saved for the next start.")
 }
+
+// Native reads voice/uplink policy from the shared file itself. Reloading an
+// unchanged SIP configuration unnecessarily drops the registrar client binding.
+func sipNeedsReload(next, previous Settings) bool {
+	n, p := next.SIP, previous.SIP
+	if n.Role == "SERVER" {
+		n.Bind = strings.SplitN(next.LAN.Address, "/", 2)[0]
+	}
+	if p.Role == "SERVER" {
+		p.Bind = strings.SplitN(previous.LAN.Address, "/", 2)[0]
+	}
+	return !reflect.DeepEqual(n, p)
+}
 func sharing(enabled bool) error {
 	for _, tool := range []string{"iptables", "ip6tables"} {
 		if _, e := exec.LookPath(tool); e != nil {

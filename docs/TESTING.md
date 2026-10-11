@@ -44,6 +44,29 @@ UI behavior changes require all seven tabs and relevant roles/Client settings at
 Rebuild Control because HTML/CSS/JS are embedded. Serving source assets is not
 proof that the modem is running the new executable.
 
+The full frontend fixture (`test-ui-actions.js`) runs from `make test-js` and
+Control builds. `make task TASK=test-ui-e2e-server.py ARGS='--timeout 12'` serves
+the disposable browser fixture on loopback. `ui-e2e-device.py --assets` compares
+all five live embedded assets against source; `--call-stats` returns strictly
+allowlisted call metadata. `ui-e2e-api.py` reads credentials through a hidden
+terminal prompt and emits only sanitized results. Its explicit
+`--pbx-registration`, `--administrator-password`, `--ssh-password` and
+`--hotspot-settings` modes change real settings
+temporarily and restore them; they require separately authorized physical test
+scope. They do not submit SMS/calls. The initial PBX test is specific to the
+dedicated local password-free MF79U provider and refuses other profiles.
+Password tests are real API/authentication checks; valid new credential entry
+through the browser requires user handoff. Read-only device helper flags
+`--cs-diagnostics` and `--network-policy` report owned process/driver/firewall
+facts, without live rules or configuration values. `install-native-update.py
+--install` is an authorized native-only update with executable/supervisor
+ownership, idle, backup and staging-space checks. It leaves the persistent CS
+driver/media untouched. Run through `make task` after `make test-native
+build-native`, then obtain a fresh client REGISTER.
+`make test-workflow` checks this updater's refusal before any transfer/shutdown
+for active calls, an unknown executable/supervisor and insufficient staging space.
+It also checks a call arriving during transfer is refused before shutdown.
+
 Physical evidence is separate: do not repeat one-shot SMS/call tests, change IMEI
 or reboot merely to validate the repository migration. See [AGENTS.md](../AGENTS.md)
 for the current permission/roaming/PCM constraints and [MIGRATION.md](MIGRATION.md)
