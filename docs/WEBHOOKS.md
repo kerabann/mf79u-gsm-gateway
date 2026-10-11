@@ -17,7 +17,8 @@ one framed **Telegram SMS** block and uses the existing common Save controls.
   must already be enabled for a mobile interface. Saving this block never
   changes routes, Wi-Fi mode, LTE policy, voice registration or SIP binding.
 - **Delete after send to chat** defaults to off. When checked at delivery, the
-  original SMS is deleted only after Telegram returns HTTP 200 with `ok:true`.
+  original SMS is deleted only after Telegram returns HTTP 200 with `ok:true`
+  and any needed copy for a connected SIP peer is safely saved.
   A failed deletion retries deletion alone, including across a Control restart.
   Pending queue data is removed when processing finishes; delivery fingerprints
   do not contain the sender/text.
@@ -32,7 +33,14 @@ message text
 The implementation uses HTTPS JSON `sendMessage`, without `parse_mode`, and
 disables link previews. Telegram's [official Bot API](https://core.telegram.org/bots/api#sendmessage)
 defines the request fields and success response. HTTPS validates certificates
-and the hostname using device system roots. There is no proxy or redirect, and
+and the hostname using device system roots plus the embedded public Go Daddy G2
+root from the [official CA repository](https://certs.godaddy.com/repository).
+The stock B03 CA store lacks this root. The bundled certificate's DER SHA256 is
+`45140b3247eb9cc8c5b4f0d7b53091f73292089e6e5a63e2749dd3aca9198eda`;
+it is a self-signed CA, not the expiring Telegram server certificate. Only the
+Telegram client uses this additional root; system and SIP/IMS trust stores are
+unchanged. TLS 1.2 or newer is required; certificate/hostname checks remain on.
+There is no proxy or redirect, and
 both DNS sockets and HTTPS sockets use Linux `SO_BINDTODEVICE`. An unavailable
 interface fails closed; the worker does not try another uplink or bypass the
 ordinary LTE data firewall.
@@ -77,9 +85,24 @@ path. SMS deleted independently is treated as already removed. Existing SIP
 inbox delivery can observe the same SMS independently; Telegram deletion also
 removes it from subsequent UI/REST/SIP inbox listings.
 
+Before automatic deletion, Control saves a separate private SIP copy if an
+active SERVER client is registered, or the configured TRUNK is available
+(registered when registration is enabled; a running static trunk otherwise).
+Already SIP-acknowledged SMS needs no copy. The copy uses the same fingerprint,
+sender and Unicode body, and is served through the existing SIP MESSAGE IPC
+even after the original disappears. It survives Control restart/disconnection
+and is removed only with the persisted SIP 2xx acknowledgement. No voice/IMS
+readiness is required for SIP SMS. Original SMS deletion can finish while this
+independent delivery is pending; Telegram is not resent to wait for SIP.
+
+The private SIP copy queue is limited to 64 messages. Failure to save/full queue
+defers deletion of the original and retries without resending Telegram. A
+disconnected/Disabled peer creates no new copy or deletion dependency. With the
+checkbox off, normal SIP polling continues to use the retained original inbox.
+
 ## Validation and delivery evidence
 
-Completed on 2026-10-11:
+Initial implementation/install checks on 2026-10-11 (before owner configuration):
 
 | Layer | Result |
 | --- | --- |
@@ -92,7 +115,7 @@ Completed on 2026-10-11:
 | Physical runtime preservation | PASS same boot, native3483/SIP3484, settings/gateway hashes, ring-only guard and IMS/voice readiness; no modem reboot/calls/SMS |
 | Real Telegram forwarding/deletion | Not tested: BOT-token/chat-id are unconfigured; forwarding remains disabled |
 
-The installed Control MD5 is `c84d03dfac22088a48187ea6717b035d`, SHA256 `a2c857d9d1def0841ae1163b1ef49db3f2c1f9a6df0d4759aa54d1d7bfa81dcf`.
+The initial installed Control MD5 was `c84d03dfac22088a48187ea6717b035d`, SHA256 `a2c857d9d1def0841ae1163b1ef49db3f2c1f9a6df0d4759aa54d1d7bfa81dcf`.
 The full-overlay read-only install plan refused a different pinned CS driver;
 it would require an explicitly scoped checked reboot. Only Control was updated,
 with a separate read-only Control staging-space preflight. The installed CS
@@ -107,8 +130,85 @@ Sanitized local receipts (generated/ignored):
 `reports/telegram-control-install.log`, and
 `firmware/mf79u/build/control-update-install.json`.
 No bot credentials or real Telegram/SIM messages were used by fixtures.
-Authenticated live webhook configuration and end-to-end Telegram delivery are
-separate remaining checks after the owner supplies credentials through the UI.
+The owner subsequently configured the real bot/chat in the UI; the live delivery
+check and repair below supersede the initial unconfigured boundary.
+
+## Physical Telegram TLS repair, 2026-10-11
+
+The owner's incoming SMS was queued but not forwarded: enabled/configured,
+USB `bridge0` up with internet route and DNS, queue one unsent job. The installed
+read-only probe resolved Telegram successfully but returned `tls_untrusted_root`
+for `getMe`. The old device system-root file existed but did not trust Telegram's
+Go Daddy G2 chain. An official public root is now embedded as described above.
+TLS errors also have a fixed, specific status message without private URLs.
+
+After a guarded Control-only install, the normal worker automatically retried
+the existing job. Persistent delivery count changed 0→1, queue 1→0 with no
+pending deletion, and private IMS incoming count changed 4→3 with
+**Delete after send to chat** enabled. No new SIM SMS or manual Telegram
+`sendMessage` probe was submitted. Bound-interface read-only `getMe` and
+`getChat` both returned HTTP 200 / `ok:true`; this verifies API acceptance,
+not that a recipient has read the message.
+
+The TLS-only Control revision MD5 was `5c1cebe02c20e33711d4ff8f8b137af6`, SHA256
+`5214debca8abab711c1c4fe5ae0aa06757aebd3f6d2c9316ba50b1c556821d1a`.
+Same boot/native3483/SIP3484, settings/gateway hashes and ring-only guard were
+preserved, and the executable/all embedded assets matched the checked source.
+No modem reboot or call occurred. IMS/voice readiness was already false in the
+fresh preflight and remained false afterward; consequently the strict aggregate
+post-install verifier reports this readiness boundary despite all preservation
+and artifact checks passing. This webhook repair does not claim current voice
+readiness or modify/restart native/SIP to restore it.
+Readiness subsequently recovered on the same boot/PIDs before the SIP-copy
+update below; no recovery action/reboot was issued.
+
+The additional Go fixtures verify the exact public root fingerprint, strict TLS
+configuration, error privacy and GET-only diagnostic response allowlisting.
+Sanitized local receipts: `reports/telegram-tls-failure.json`,
+`reports/telegram-ca-delivery.json`, `reports/telegram-ca-device-{before,after}.json`,
+`reports/telegram-ca-control-install.log`, `reports/telegram-ca-test-go.log`.
+Credentials, sender and message bodies were kept only in process memory/device
+private storage; they are not included in reports or Git.
+
+## Telegram plus connected SIP delivery, 2026-10-11
+
+The user confirmed Telegram receipt but reported missing SIP receipt. Independent
+pollers allowed the successful Telegram worker to delete a new SMS before SIP's
+five-second inbox refresh. The durable handoff above removes that race without
+restarting SIP or changing its MESSAGE protocol/media.
+
+Fixtures pass delayed SIP polling after original deletion, Unicode/sender
+preservation, Control restart, duplicate retention/ACK suppression, failure to
+save the copy, bounded queue backpressure, disconnected/Disabled peers and body
+removal from disk after ACK. Confirmed Telegram jobs are never resent during a
+SIP-copy/deletion retry. The existing ARM SIP MESSAGE fixture still checks the
+real gateway's Unicode delivery/2xx ACK behavior.
+
+The combined TLS/SIP-copy Control is installed: MD5
+`a60db0a1511c4e3673ce90218366efb6`, SHA256
+`214b10d4a6c15e999504fc7f0303e64a8791df0bdfd853c575d1e607d6c435b0`.
+Fresh post-install checks passed: unchanged boot/native3483/SIP3484,
+settings/gateway hashes/guards, IMS/voice ready, SERVER client registered, and
+installed binary/all embedded assets matching source. Control alone restarted;
+there was no modem reboot, SIP reload or new SIM SMS/call submitted by this work.
+The user subsequently confirmed that a fresh incoming SMS arrived in both
+Telegram and the SIP client after this update. This adds physical recipient
+confirmation to the fixture/install evidence; the agent submitted no SIM SMS.
+
+Sanitized receipts: `reports/telegram-sip-baseline.json`,
+`reports/telegram-sip-after.json`, `reports/telegram-sip-device-{before,after}.json`,
+`reports/telegram-sip-control-install.log` and `reports/telegram-sip-test-go.log`.
+The follow-up metadata-only receipt is `reports/telegram-sip-confirmed.json`.
+It records Telegram delivered 2→3 and SIP acknowledgements 13→14, with both
+private delivery queues empty, the client registered and deletion still enabled.
+The Telegram delivery count had reached two through independent user/device
+activity before this update; this is not a second agent-originated test message.
+Final `make test`, `make package package-check` and `make audit` passed for the
+combined revision: ARM/Go/JS/native/workflow fixtures, complete 28-file overlay,
+unchanged PCM contract, publication/secret scan and Markdown links. Logs:
+`reports/telegram-sip-test.log`, `reports/telegram-sip-package.log` and
+`reports/telegram-sip-audit.log`. No frontend behavior changed in this repair;
+the installed assets still match the eight-tab browser-checked source.
 
 Commands run from the repository root through Make:
 
@@ -137,3 +237,12 @@ and checks Control staging space. After the guarded Control-only updater,
 voice owners, protected settings and installed public assets. Pass `ADB` and
 `SERIAL` explicitly for the connected device. This verifier creates no login,
 call, SMS, Telegram request, deletion or configuration change.
+
+For troubleshooting, use `make task TASK=diagnose-telegram.py` to read only
+allowlisted settings/queue/interface metadata. Add
+`ARGS='--installed-network --report-prefix telegram-check'` to invoke the
+installed Control's `-native -telegram-diagnose` mode: bound DNS, TLS, `getMe`
+and `getChat`, without `sendMessage`, settings changes, service startup or queue
+mutations. It does not require temporary binary staging. Private API responses
+and token-bearing error URLs are omitted; only fixed error categories and
+numeric status/error codes appear. The report prefix preserves earlier receipts.

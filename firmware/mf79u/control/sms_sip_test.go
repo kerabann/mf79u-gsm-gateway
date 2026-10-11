@@ -13,7 +13,89 @@ import (
 
 func testSMSBridge(t *testing.T) *smsSIPBridge {
 	t.Helper()
-	return &smsSIPBridge{path: filepath.Join(t.TempDir(), "queue.json"), wake: make(chan struct{}, 1), enabled: func() bool { return true }}
+	return &smsSIPBridge{path: filepath.Join(t.TempDir(), "queue.json"), wake: make(chan struct{}, 1), enabled: func() bool { return true }, connected: func() bool { return true }}
+}
+
+func TestSMSSIPPeerAvailabilityIndependentOfVoice(t *testing.T) {
+	for _, tc := range []struct {
+		role                                       string
+		register, running, local, registered, want bool
+	}{
+		{"SERVER", false, true, true, false, true},
+		{"SERVER", false, true, false, false, false},
+		{"SERVER", false, false, true, false, false},
+		{"TRUNK", true, true, false, true, true},
+		{"TRUNK", true, true, false, false, false},
+		{"TRUNK", false, true, false, false, true},
+		{"DISABLED", false, true, true, true, false},
+	} {
+		status := map[string]any{"role": tc.role, "running": tc.running, "localRegistered": tc.local, "registered": tc.registered, "voiceReady": false}
+		if sipSMSPeerAvailable(SIP{Role: tc.role, Register: tc.register}, status) != tc.want {
+			t.Fatal("incorrect SIP peer availability")
+		}
+	}
+	if sipSMSPeerAvailable(SIP{Role: "SERVER"}, map[string]any{"running": true, "role": "TRUNK", "localRegistered": true}) {
+		t.Fatal("stale role accepted")
+	}
+}
+
+func TestSMSSIPRetainedInboxRestartAckAndBounds(t *testing.T) {
+	b := testSMSBridge(t)
+	item := smsSIPItem{ID: smsSIPHash("received"), Number: "Sender", Text: "Привет 🌍", SourceID: "ims-fixture", Storage: "modem"}
+	if b.retainIncoming(item) != nil || b.retainIncoming(item) != nil || len(b.state.Inbox) != 1 {
+		t.Fatal("SIP copy missing or duplicated")
+	}
+	b.connected = func() bool { return false }
+	if b.retainIncoming(item) != nil || len(b.state.Inbox) != 1 {
+		t.Fatal("disconnect discarded SIP copy")
+	}
+	reloaded := testSMSBridge(t)
+	reloaded.path = b.path
+	reloaded.list = func(string) (map[string]any, error) { return map[string]any{"messages": []any{}}, nil }
+	if reloaded.load() != nil {
+		t.Fatal("load")
+	}
+	reloaded.refresh() // Original SMS is already deleted by Telegram.
+	if next := reloaded.next(); next == nil || *next != item {
+		t.Fatal("retained SMS lost after original deletion/restart")
+	}
+	path := reloaded.path
+	reloaded.path = t.TempDir() // Atomic persistence cannot replace a directory.
+	if reloaded.ack(item.ID) != 2 || len(reloaded.state.Inbox) != 1 || reloaded.deliveredLocked(item.ID) {
+		t.Fatal("failed ACK persistence discarded copy")
+	}
+	reloaded.path = path
+	if reloaded.ack(item.ID) != 0 || reloaded.next() != nil || len(reloaded.state.Inbox) != 0 {
+		t.Fatal("ACK did not erase private copy")
+	}
+	data, e := os.ReadFile(path)
+	if e != nil || strings.Contains(string(data), item.Text) {
+		t.Fatal("acknowledged body retained on disk")
+	}
+	if reloaded.retainIncoming(item) != nil || len(reloaded.state.Inbox) != 0 || reloaded.load() != nil || reloaded.next() != nil {
+		t.Fatal("confirmed SMS replayed")
+	}
+	b = testSMSBridge(t)
+	b.connected = func() bool { return false }
+	if b.retainIncoming(item) != nil || len(b.state.Inbox) != 0 {
+		t.Fatal("offline client created deletion dependency")
+	}
+	b.connected = func() bool { return true }
+	b.enabled = func() bool { return false }
+	if b.retainIncoming(item) != nil || len(b.state.Inbox) != 0 {
+		t.Fatal("Disabled retained incoming")
+	}
+	b.enabled = func() bool { return true }
+	for i := 0; i < smsSIPLimit; i++ {
+		item.ID = smsSIPHash(string(rune(i)))
+		if b.retainIncoming(item) != nil {
+			t.Fatal("bounded SIP copy rejected")
+		}
+	}
+	item.ID = smsSIPHash("overflow")
+	if b.retainIncoming(item) == nil || len(b.state.Inbox) != smsSIPLimit {
+		t.Fatal("full copy queue silently lost SMS")
+	}
 }
 func TestSMSSIPDurableDedupeAndUnicode(t *testing.T) {
 	b := testSMSBridge(t)

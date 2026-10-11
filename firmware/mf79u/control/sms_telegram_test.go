@@ -184,6 +184,55 @@ func TestTelegramDeliveryDeleteRetryAndRestart(t *testing.T) {
 	}
 }
 
+func TestTelegramDeleteRetainsConnectedSIPCopyBeforeIndependentPoll(t *testing.T) {
+	b, c, inbox := telegramBridgeFixture(t)
+	c.DeleteAfterSend = true
+	sip := testSMSBridge(t)
+	b.retainForSIP = sip.retainIncoming
+	b.tick() // Telegram baseline; SIP has not polled yet.
+	(*inbox)["modem"] = append((*inbox)["modem"], telegramInbox("18", "1"))
+	sends, deletes := 0, 0
+	b.send = func(TelegramSMS, smsSIPItem) (time.Duration, error) { sends++; return 0, nil }
+	b.delete = func(item smsSIPItem) error {
+		deletes++
+		if len(sip.state.Inbox) != 1 || sip.state.Inbox[0].ID != item.ID {
+			t.Fatal("deleted SMS before durable SIP handoff")
+		}
+		(*inbox)["modem"] = (*inbox)["modem"][:1]
+		return nil
+	}
+	path := sip.path
+	sip.path = t.TempDir()
+	b.tick()
+	if sends != 1 || deletes != 0 || len(b.state.Jobs) != 1 || !b.state.Jobs[0].Sent {
+		t.Fatal("copy failure deleted or lost Telegram acknowledgement")
+	}
+	sip.path = path
+	b.nextTry = time.Time{}
+	b.tick()
+	if sends != 1 || deletes != 1 || len(b.state.Jobs) != 0 {
+		t.Fatal("handoff retry repeated Telegram send")
+	}
+	sip.list = b.list
+	sip.refresh() // Independent poll occurs only after the original is deleted.
+	item := sip.next()
+	if item == nil || item.SourceID != "18" || item.Number != "+123456789" || item.Text != "Привет <b>🌍</b>" {
+		t.Fatal("SIP lost deleted incoming Unicode SMS")
+	}
+	reloaded := testSMSBridge(t)
+	reloaded.path = sip.path
+	if reloaded.load() != nil || reloaded.next() == nil {
+		t.Fatal("SIP copy did not survive Control restart")
+	}
+	if reloaded.ack(item.ID) != 0 || reloaded.next() != nil || len(reloaded.state.Inbox) != 0 {
+		t.Fatal("SIP ACK did not clear copy")
+	}
+	b.tick()
+	if sends != 1 {
+		t.Fatal("SIP delivery triggered Telegram replay")
+	}
+}
+
 func TestTelegramDeleteProtectsReusedIDAndMissingInbox(t *testing.T) {
 	b, c, inbox := telegramBridgeFixture(t)
 	c.DeleteAfterSend = true

@@ -137,7 +137,8 @@ local warning as proof of non-delivery. No second test SMS was sent.
   plaintext password or external HTTP endpoint is introduced.
 - `/mnt/userdata/mf79u/sms-sip.sock`: Unix socket 0600 in protected userdata.
 - `/mnt/userdata/mf79u/sms-sip-state.json`: atomic durable queue, 0600. Up to 64
-  logical jobs and 300 acknowledged incoming/status IDs. Pending job text is
+  logical outgoing jobs, 64 retained incoming copies and 300 acknowledged
+  incoming/status IDs. Pending outgoing job text is
   cleared at terminal state; numbers and deduplication metadata remain private.
 - Logical outgoing deduplication uses SIP Call-ID/CSeq plus payload validation.
   Retrying the same logical transaction is idempotent within retained history;
@@ -295,3 +296,28 @@ Removal installed and verified on the physical modem. Native1697/SIP1749, IMS
 readiness, local SIP binding and settings were preserved; Control alone restarted.
 Receipt: `build/sms-success-notice-removal-install-20261011.json`. No reboot,
 new SMS or calls. Successful retained submission still reads confirmed via IPC5.
+
+## Telegram auto-delete coexistence (2026-10-11)
+
+Current repository behavior: [Webhooks](../../docs/WEBHOOKS.md). Telegram and SIP
+poll independently, so deleting the original after Telegram acceptance could
+remove it before the SIP worker saw it. Before automatic deletion, Control now
+saves a private incoming copy for a connected SERVER client/available TRUNK.
+The existing IPC `next` serves that copy even after the original is gone; SIP
+2xx ACK atomically records dedupe and removes the body. Copies survive a Control
+restart or a subsequent peer disconnect. Disabled/disconnected peers create no
+new copy. Full queues/persistence failures defer original deletion without
+repeating confirmed Telegram delivery. Incoming sender/Unicode fields and the
+SIP binary, registrar, IMS/CS media and outgoing SMS dispatcher are unchanged.
+
+The persistent state read limit is now 600000 bytes, with separate 64-entry
+outgoing and incoming bounds. IPC diagnostics expose `bufferedIncoming` and a
+deduplicated `pendingIncoming` count, without private fields. Existing states
+without an `Inbox` field remain compatible.
+
+Delayed-poll/original-deletion, restart, ACK persistence rollback, body erasure,
+queue bounds and peer availability fixtures pass. Control-only update is
+installed with the same native/SIP PIDs and registered SERVER client; fresh
+IMS/voice readiness and installed public artifacts match the receipt. No new
+SIM SMS/call or reboot was issued by the agent. The user subsequently confirmed
+a fresh incoming SMS reached both Telegram and the SIP client after the update.

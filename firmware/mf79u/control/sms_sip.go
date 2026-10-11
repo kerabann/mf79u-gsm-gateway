@@ -30,18 +30,20 @@ type smsSIPJob struct {
 type smsSIPState struct {
 	Jobs      []smsSIPJob
 	Delivered []string
+	Inbox     []smsSIPItem `json:",omitempty"`
 }
 type smsSIPItem struct{ ID, Number, Text, Date, Storage, SourceID string }
 type smsSIPBridge struct {
-	mu       sync.Mutex
-	state    smsSIPState
-	incoming []smsSIPItem
-	ready    bool
-	path     string
-	wake     chan struct{}
-	enabled  func() bool
-	list     func(string) (map[string]any, error)
-	send     func(string, string) error
+	mu        sync.Mutex
+	state     smsSIPState
+	incoming  []smsSIPItem
+	ready     bool
+	path      string
+	wake      chan struct{}
+	enabled   func() bool
+	connected func() bool
+	list      func(string) (map[string]any, error)
+	send      func(string, string) error
 }
 
 func smsSIPHash(value string) string {
@@ -84,7 +86,7 @@ func (b *smsSIPBridge) load() error {
 	if os.IsNotExist(e) {
 		return nil
 	}
-	if e != nil || len(data) > 300000 || json.Unmarshal(data, &b.state) != nil || len(b.state.Jobs) > smsSIPLimit || len(b.state.Delivered) > 300 {
+	if e != nil || len(data) > 600000 || json.Unmarshal(data, &b.state) != nil || len(b.state.Jobs) > smsSIPLimit || len(b.state.Inbox) > smsSIPLimit || len(b.state.Delivered) > 300 {
 		return errors.New("Invalid SMS SIP queue")
 	}
 	for i := range b.state.Jobs {
@@ -161,12 +163,64 @@ func (b *smsSIPBridge) deliveredLocked(id string) bool {
 	}
 	return false
 }
+
+// Preserve a private SIP copy before Telegram deletes the original inbox SMS.
+// A connected peer may disappear while MESSAGE is in flight; retain until ACK.
+func (b *smsSIPBridge) retainIncoming(item smsSIPItem) error {
+	if !b.enabled() {
+		return nil
+	}
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	if b.deliveredLocked(item.ID) {
+		return nil
+	}
+	for _, known := range b.state.Inbox {
+		if known.ID == item.ID {
+			return nil
+		}
+	}
+	if !b.connected() {
+		return nil
+	}
+	if len(b.state.Inbox) >= smsSIPLimit {
+		return errors.New("Telegram delivered; SIP inbox queue is full, waiting before SMS deletion")
+	}
+	old := b.state.Inbox
+	b.state.Inbox = append(append([]smsSIPItem(nil), old...), item)
+	if b.saveLocked() != nil {
+		b.state.Inbox = old
+		return errors.New("Telegram delivered; could not save SIP copy, waiting before SMS deletion")
+	}
+	return nil
+}
+
+func sipSMSPeerAvailable(s SIP, status map[string]any) bool {
+	if status["running"] != true || status["role"] != s.Role {
+		return false
+	}
+	switch s.Role {
+	case "SERVER":
+		return status["localRegistered"] == true
+	case "TRUNK":
+		return !s.Register || status["registered"] == true
+	default:
+		return false
+	}
+}
+
 func (b *smsSIPBridge) next() *smsSIPItem {
 	if !b.enabled() {
 		return nil
 	}
 	b.mu.Lock()
 	defer b.mu.Unlock()
+	for _, item := range b.state.Inbox {
+		if !b.deliveredLocked(item.ID) {
+			copy := item
+			return &copy
+		}
+	}
 	for _, item := range b.incoming {
 		if !b.deliveredLocked(item.ID) {
 			copy := item
@@ -197,13 +251,19 @@ func (b *smsSIPBridge) ack(id string) byte {
 		return 0
 	}
 	// The local gateway may ack after the user deletes the underlying SMS.
-	old := append([]string(nil), b.state.Delivered...)
+	old := b.state
 	b.state.Delivered = append(b.state.Delivered, id)
 	if len(b.state.Delivered) > 300 {
 		b.state.Delivered = b.state.Delivered[len(b.state.Delivered)-300:]
 	}
+	b.state.Inbox = nil
+	for _, item := range old.Inbox {
+		if item.ID != id {
+			b.state.Inbox = append(b.state.Inbox, item)
+		}
+	}
 	if b.saveLocked() != nil {
-		b.state.Delivered = old
+		b.state = old
 		return 2
 	}
 	return 0
@@ -368,7 +428,8 @@ func (b *smsSIPBridge) connection(c net.Conn) {
 		if n == 0 {
 			enabled := b.enabled()
 			b.mu.Lock()
-			queued, pending := 0, 0
+			queued := 0
+			pending := make(map[string]bool)
 			for _, j := range b.state.Jobs {
 				if j.State == "queued" || j.State == "sending" {
 					queued++
@@ -376,11 +437,16 @@ func (b *smsSIPBridge) connection(c net.Conn) {
 			}
 			for _, item := range b.incoming {
 				if !b.deliveredLocked(item.ID) {
-					pending++
+					pending[item.ID] = true
+				}
+			}
+			for _, item := range b.state.Inbox {
+				if !b.deliveredLocked(item.ID) {
+					pending[item.ID] = true
 				}
 			}
 			body, _ = json.Marshal(map[string]any{"enabled": enabled, "vendorReady": b.ready, "queued": queued,
-				"incoming": len(b.incoming), "pendingIncoming": pending, "delivered": len(b.state.Delivered)})
+				"incoming": len(b.incoming), "pendingIncoming": len(pending), "bufferedIncoming": len(b.state.Inbox), "delivered": len(b.state.Delivered)})
 			b.mu.Unlock()
 			status = 0
 		}
@@ -408,6 +474,12 @@ func (a *App) startSMSSIP() error {
 	}
 	b := &smsSIPBridge{path: filepath.Join(a.dir, "sms-sip-state.json"), wake: make(chan struct{}, 1)}
 	b.enabled = func() bool { a.mu.Lock(); defer a.mu.Unlock(); return a.settings.SIP.Role != "DISABLED" }
+	b.connected = func() bool {
+		a.mu.Lock()
+		s := a.settings.SIP
+		a.mu.Unlock()
+		return sipSMSPeerAvailable(s, gatewayStatus())
+	}
 	b.list = func(storage string) (map[string]any, error) {
 		v, key, e := a.localSMSVendor()
 		if e != nil {
@@ -433,6 +505,7 @@ func (a *App) startSMSSIP() error {
 		listener.Close()
 		return e
 	}
+	a.smsSIP = b
 	go b.worker()
 	go func() {
 		limit := make(chan struct{}, 4)

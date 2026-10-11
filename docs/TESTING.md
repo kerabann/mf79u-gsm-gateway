@@ -49,6 +49,13 @@ UI behavior changes require all eight tabs and relevant roles/Client settings at
 Rebuild Control because HTML/CSS/JS are embedded. Serving source assets is not
 proof that the modem is running the new executable.
 
+Telegram fixtures check strict TLS, the bundled public CA fingerprint, bound
+DNS/HTTPS, private error redaction and GET-only diagnostic response allowlisting.
+`make task TASK=diagnose-telegram.py` reads only sanitized queue/interface facts;
+`ARGS=--installed-network` additionally invokes the installed Control's read-only
+DNS/TLS/getMe/getChat checks, without submitting a Telegram message. See
+[WEBHOOKS.md](WEBHOOKS.md) for the current delivery receipt and commands.
+
 The full frontend fixture (`test-ui-actions.js`) runs from `make test-js` and
 Control builds. `make task TASK=test-ui-e2e-server.py ARGS='--timeout 12'` serves
 the disposable browser fixture on loopback. `ui-e2e-device.py --assets` compares

@@ -107,5 +107,41 @@ preserved. All eight browser fixture tabs passed 1280/390/320px (24 views).
 `make test`, final Linux Go tests, package checks and repository audit passed.
 The full package is checked but was not installed: its different pinned CS
 driver would require a checked reboot. No modem reboot, call, SMS or real
-Telegram send/delete occurred. The webhook remains disabled and unconfigured;
-real Telegram delivery awaits owner-entered bot/chat credentials.
+Telegram send/delete occurred during that initial install. The later owner
+configuration and actual delivery are recorded below.
+
+## Telegram TLS repair and real delivery, 2026-10-11
+
+After owner configuration, a real incoming SMS remained queued because B03's
+old CA store did not trust Telegram's Go Daddy G2 chain. A bound-interface
+read-only probe confirmed DNS success and `tls_untrusted_root`. Control now
+embeds the official public CA root in the Telegram client, retains strict
+certificate/hostname validation and provides sanitized DNS/TLS/getMe/getChat
+diagnostics. Source/provenance and exact receipts: [WEBHOOKS](WEBHOOKS.md).
+
+After Control-only installation, the existing queued SMS was accepted by
+Telegram: delivered 0→1, queue 1→0, no pending deletion. The enabled deletion
+option reduced the private IMS inbox from four incoming SMS to three. Bot/chat
+checks both returned HTTP 200 / `ok:true` through USB `bridge0`. No new SIM SMS,
+manual Telegram test message, call or reboot was issued. Settings/gateway hashes,
+boot, native3483/SIP3484 and guards were preserved; installed Control and public
+assets matched source. IMS/voice was already not ready in the fresh preflight
+and remained not ready at that snapshot. Readiness subsequently recovered on the
+same boot/PIDs without a recovery action, before the update below.
+
+## Telegram and connected SIP delivery together, 2026-10-11
+
+Telegram auto-delete could race SIP's independent inbox polling. Before deleting
+the original, Control now persists a private copy for an available SIP peer.
+SIP receives the same sender/body even after original deletion, and removes its
+copy only on persisted SIP 2xx ACK. A restart/disconnection retains the copy;
+full queues/write failures defer original deletion without Telegram resubmission.
+Disconnected/Disabled peers introduce no new deletion dependency.
+
+The combined fix is installed with fresh source/binary/asset/preservation checks
+passing. Same boot/native3483/SIP3484, settings and guards; IMS/voice ready and
+SERVER client still registered. Only Control restarted. Race/restart/privacy/
+ACK/bounds/disconnected fixtures pass. After installation, the user confirmed a
+fresh incoming SMS reached both Telegram and the SIP client. No SIM SMS was
+submitted by the agent. See [WEBHOOKS](WEBHOOKS.md) and
+[SMS-SIP](../firmware/mf79u/SMS-SIP.md) for behavior and receipts.

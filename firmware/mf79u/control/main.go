@@ -35,6 +35,7 @@ type Session struct {
 }
 type App struct {
 	smsIMS               *imsSMSStore
+	smsSIP               *smsSIPBridge
 	telegram             *telegramSMSBridge
 	systemmu             sync.Mutex
 	sshmu                sync.Mutex
@@ -645,6 +646,7 @@ func main() {
 	base := flag.String("vendor", "http://127.0.0.1", "local vendor service")
 	native := flag.Bool("native", false, "enable modem service and network controls")
 	boot := flag.Bool("bootstrap", false, "apply the saved Wi-Fi profile")
+	telegramCheck := flag.Bool("telegram-diagnose", false, "read-only Telegram DNS/TLS/bot/chat diagnostic; no message submission")
 	flag.Parse()
 	// This vendor Linux 3.4 kernel has a non-standard syscall 384: Go's
 	// getrandom probe does not return ENOSYS. Use the kernel CSPRNG device.
@@ -654,6 +656,10 @@ func main() {
 			log.Fatal("Kernel CSPRNG unavailable")
 		}
 		rand.Reader = f
+	}
+	if *telegramCheck {
+		_ = json.NewEncoder(os.Stdout).Encode(telegramDiagnostics(*dir))
+		return
 	}
 	s, e := readSettings(*dir)
 	if e != nil {

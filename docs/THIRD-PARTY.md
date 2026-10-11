@@ -17,6 +17,7 @@ and source files, including `src/dropbear-mf79u.patch`.
 | opencore-amr | 0.1.6 | Apache 2.0/per-file; upstream license files |
 | vo-amrwbenc | 0.1.3 | Apache 2.0/per-file; upstream license files |
 | ARM libgcc/libc and GMP | Debian Bookworm packages | Package copyright files/licenses |
+| Go Daddy G2 public root certificate | SHA256 `45140b3247eb9cc8c5b4f0d7b53091f73292089e6e5a63e2749dd3aca9198eda` | [Official public CA repository](https://certs.godaddy.com/repository); embedded for Telegram TLS |
 
 This is an inventory of the source/build dependency licensing, not a new license
 grant for the project's original code. The owner has not selected the project's

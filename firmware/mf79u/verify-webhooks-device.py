@@ -23,7 +23,10 @@ def shell(command):
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--after', action='store_true')
+parser.add_argument('--report-prefix', default='telegram-device')
 args = parser.parse_args()
+if not args.report_prefix.replace('-', '').isalnum():
+    raise SystemExit('Use an alphanumeric report prefix')
 native = json.loads(shell('cat /dev/.mf79u-native-status.json'))
 sip = json.loads(shell('cat /dev/.mf79u-gateway-status.json'))
 settings = shell('cat ' + data + '/settings.json')
@@ -38,6 +41,7 @@ receipt = {
     'controlPid': int(shell('cat /dev/.mf79u-control.pid')),
     'imsReady': native.get('imsReady'), 'imsAccess': native.get('imsAccess'),
     'voiceReady': sip.get('voiceReady'),
+    'sipLocalRegistered': bool(sip.get('localRegistered')),
     'activeCall': bool(sip.get('activeCall')) or native.get('callBackend', 'none') != 'none',
     'settingsHash': hashlib.sha256(settings).hexdigest(),
     'gatewayHash': hashlib.sha256(shell('cat ' + data + '/gateway.ini')).hexdigest(),
@@ -48,12 +52,13 @@ receipt = {
     'controlStageSpaceOK': free_kib*1024 >= required_bytes,
     'realTelegramOrSMS': False,
 }
-out = root / ('reports/telegram-device-after.json' if args.after else 'reports/telegram-device-before.json')
+out = root / ('reports/' + args.report_prefix + ('-after.json' if args.after else '-before.json'))
 if args.after:
-    before = json.loads((root / 'reports/telegram-device-before.json').read_text())
+    before = json.loads((root / ('reports/' + args.report_prefix + '-before.json')).read_text())
     for key in ['boot', 'nativePid', 'sipPid', 'settingsHash', 'gatewayHash', 'ringOnly']:
         receipt[key + 'Preserved'] = receipt[key] == before[key]
     receipt['controlUpdated'] = receipt['controlPid'] != before['controlPid']
+    receipt['sipBindingPreserved'] = not before.get('sipLocalRegistered') or receipt['sipLocalRegistered']
     candidate = (root / 'firmware/mf79u/build/mf79u-control').read_bytes()
     actual = shell('md5sum ' + data + '/.mf79u-control').decode().split()[0]
     receipt['controlBinaryMatches'] = actual == hashlib.md5(candidate).hexdigest()

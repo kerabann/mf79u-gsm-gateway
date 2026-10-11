@@ -3,6 +3,9 @@ package main
 import (
 	"bytes"
 	"context"
+	"crypto/tls"
+	"crypto/x509"
+	_ "embed"
 	"encoding/json"
 	"errors"
 	"io"
@@ -33,6 +36,27 @@ type TelegramSMS struct {
 var telegramTokenRE = regexp.MustCompile(`^[0-9]{1,20}:[A-Za-z0-9_-]{20,128}$`)
 var telegramChatRE = regexp.MustCompile(`^-?[1-9][0-9]{0,19}$|^@[A-Za-z][A-Za-z0-9_]{4,31}$`)
 var telegramInterfaceRE = regexp.MustCompile(`^(bridge0|wlan0-vxd|wan[0-9])$`)
+
+// The stock B03 CA store lacks the current Telegram chain's public root.
+// Embed the official CA root, not a rotating api.telegram.org leaf certificate.
+//
+//go:embed certs/godaddy-g2.crt
+var telegramPublicRoot []byte
+
+var telegramRootOnce sync.Once
+var telegramRoots *x509.CertPool
+
+func telegramRootPool() *x509.CertPool {
+	telegramRootOnce.Do(func() {
+		var e error
+		telegramRoots, e = x509.SystemCertPool()
+		if e != nil {
+			telegramRoots = x509.NewCertPool()
+		}
+		telegramRoots.AppendCertsFromPEM(telegramPublicRoot)
+	})
+	return telegramRoots
+}
 
 func validateTelegram(c TelegramSMS) error {
 	if c.BotToken != "" && !telegramTokenRE.MatchString(c.BotToken) {
@@ -102,15 +126,16 @@ type telegramSMSJob struct {
 	Delete bool
 }
 type telegramSMSBridge struct {
-	mu        sync.Mutex
-	path      string
-	state     telegramSMSState
-	lastError string
-	nextTry   time.Time
-	config    func() TelegramSMS
-	list      func(string) (map[string]any, error)
-	send      func(TelegramSMS, smsSIPItem) (time.Duration, error)
-	delete    func(smsSIPItem) error
+	mu           sync.Mutex
+	path         string
+	state        telegramSMSState
+	lastError    string
+	nextTry      time.Time
+	config       func() TelegramSMS
+	list         func(string) (map[string]any, error)
+	send         func(TelegramSMS, smsSIPItem) (time.Duration, error)
+	delete       func(smsSIPItem) error
+	retainForSIP func(smsSIPItem) error
 }
 
 func (b *telegramSMSBridge) load() error {
@@ -231,6 +256,12 @@ func (b *telegramSMSBridge) tick() {
 			// Reused vendor IDs are not permission to delete a different SMS.
 			for _, item := range items {
 				if item.ID == job.ID {
+					if b.retainForSIP != nil {
+						sendError = b.retainForSIP(item)
+						if sendError != nil {
+							break
+						}
+					}
 					if b.delete(item) != nil {
 						sendError = errors.New("Telegram delivered; SMS deletion failed, waiting to retry")
 					}
@@ -284,6 +315,18 @@ func (a *App) startTelegramSMS() error {
 		return a.smsList(v, storage, key)
 	}
 	b.send = sendTelegramSMS
+	b.retainForSIP = func(item smsSIPItem) error {
+		if a.smsSIP != nil {
+			return a.smsSIP.retainIncoming(item)
+		}
+		a.mu.Lock()
+		s := a.settings.SIP
+		a.mu.Unlock()
+		if sipSMSPeerAvailable(s, gatewayStatus()) {
+			return errors.New("Telegram delivered; SIP SMS service unavailable, waiting before SMS deletion")
+		}
+		return nil
+	}
 	b.delete = func(item smsSIPItem) error {
 		v, key, e := a.localSMSVendor()
 		if e != nil {
@@ -306,15 +349,19 @@ func (a *App) startTelegramSMS() error {
 	return nil
 }
 
-func telegramClient(iface string) *http.Client {
+func telegramDialer(iface string) *net.Dialer {
 	control := func(_, _ string, c syscall.RawConn) error { return bindTelegramInterface(c, iface) }
 	// Bind DNS and HTTPS independently. No proxy, redirect or alternate uplink.
 	dnsDialer := &net.Dialer{Timeout: 5 * time.Second, Control: control}
 	resolver := &net.Resolver{PreferGo: true, Dial: func(ctx context.Context, network, address string) (net.Conn, error) {
 		return dnsDialer.DialContext(ctx, network, address)
 	}}
-	dialer := &net.Dialer{Timeout: 10 * time.Second, Resolver: resolver, Control: control}
-	transport := &http.Transport{DialContext: dialer.DialContext, TLSHandshakeTimeout: 10 * time.Second, DisableKeepAlives: true, MaxResponseHeaderBytes: 8192}
+	return &net.Dialer{Timeout: 10 * time.Second, Resolver: resolver, Control: control}
+}
+
+func telegramClient(iface string) *http.Client {
+	dialer := telegramDialer(iface)
+	transport := &http.Transport{DialContext: dialer.DialContext, TLSClientConfig: &tls.Config{RootCAs: telegramRootPool(), MinVersion: tls.VersionTLS12}, TLSHandshakeTimeout: 10 * time.Second, DisableKeepAlives: true, MaxResponseHeaderBytes: 8192}
 	return &http.Client{Transport: transport, Timeout: 20 * time.Second, CheckRedirect: func(*http.Request, []*http.Request) error { return errors.New("Telegram redirect refused") }}
 }
 
@@ -337,6 +384,9 @@ func telegramRequest(client *http.Client, base string, c TelegramSMS, item smsSI
 	r, e := client.Post(base+"/bot"+c.BotToken+"/sendMessage", "application/json", bytes.NewReader(body))
 	if e != nil {
 		// net/http errors contain the token-bearing URL. Never expose them.
+		if category := telegramErrorCategory(e); category == "tls_untrusted_root" || category == "tls_invalid_certificate" || category == "tls_hostname_mismatch" {
+			return 0, errors.New("Telegram TLS certificate verification failed; check device time and trusted CA roots")
+		}
 		return 0, errors.New("Telegram HTTPS request failed; check interface, internet, DNS and device time")
 	}
 	defer r.Body.Close()
