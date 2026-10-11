@@ -80,12 +80,29 @@ int main(int argc,char **argv){
   int request=msgget(0x701e,IPC_CREAT|IPC_EXCL|0600),response=msgget(0x700f,0600);if(request<0 || response<0)return 3;
   dprintf(3,"OPERATOR WB/NB factory enabled result=1\n");
   ims_send(response,0x150a,"\r\n+CVMOD: 3\r\n+ZIMSAMRW: 1\r\n");
-  int accepted=0;struct message m;
+  int accepted=0,access_gate=0,stage=0;struct message m;
+  int non3gpp=exists("/tmp/ims-non3gpp-gated");
   for(;;){
    if(exists("/tmp/ims-crash"))return 4;
-   if(!accepted && exists("/tmp/ims-accept")){ims_send(response,0x150c,"AT+ZIMSSTATE=1");accepted=1;}
+   if(!non3gpp && !accepted && exists("/tmp/ims-accept")){ims_send(response,0x150c,"AT+ZIMSSTATE=1");accepted=1;}
    ssize_t n=msgrcv(request,&m,sizeof(m)-4,0,IPC_NOWAIT);
    if(n<0 && errno!=ENOMSG && errno!=EINTR)return 6;
+   if(non3gpp && n>=0 && m.cmd==0x150b) {
+    if(!strncmp((char *)m.payload,"\r\n+CEREG: 1\r\n",13))access_gate|=1;
+    if(!strncmp((char *)m.payload,"\r\n^MODE: 17,7\r\n",15))access_gate|=2;
+    if(!strncmp((char *)m.payload,"\r\n+CIREPI: 1\r\n",14))access_gate|=4;
+    if(stage==1 && strstr((char *)m.payload,"+CEREG: 2,1")) {
+     stage=2;ims_send(response,0x150c,"AT+CGREG?");
+    } else if(stage==2 && strstr((char *)m.payload,"+CGREG: 2,1")) {
+     stage=3;ims_send(response,0x150c,"AT+ZPDPACT=0,\"IPV4V6\",\"ims\",0,1,1");
+    } else if(stage==3 && strstr((char *)m.payload,"+ZPDPACT: 5,\"IP\",\"10.77.0.2\"")) {
+     stage=4;ims_send(response,0x150c,"AT+ZIMSSTATE=1");accepted=1;
+     FILE *f=fopen("/tmp/non3gpp-admitted","w");if(f){fputs("authenticated_bearer",f);fclose(f);}
+    }
+   }
+   if(non3gpp && access_gate==7 && !stage) {
+    stage=1;ims_send(response,0x150c,"AT+CEREG?");
+   }
    if(n>=0 && m.cmd==0x1509 &&
       (!memcmp(m.payload,"ATA\r",4) || !memcmp(m.payload,"ATD",3))) {
     FILE *f=fopen("/tmp/charged-command","w");if(f){fputs("forbidden",f);fclose(f);}
@@ -102,9 +119,9 @@ int main(int argc,char **argv){
   struct message m;if(msgrcv(q,&m,sizeof(m)-4,0,0)<0)return 7;
   int destination=m.src,replyq=msgget(destination,0600);if(replyq<0)return 8;
   char reply[256];char command[3497];memcpy(command,m.payload,3496);command[3496]=0;command[strcspn(command,"\r\n")]=0;
-  int lte=profile==27 && fun && exists("/tmp/radio-lte"),short_reply=exists("/tmp/radio-search");const char *text="\r\nOK\r\n";
-  if(!strncmp(command,"AT+CEREG?",9))text=exists("/tmp/cp-status-error")?"\r\nERROR\r\n":lte?"\r\n+CEREG: 2,5,\"00D3\",\"000052C4\",7\r\nOK\r\n":"\r\n+CEREG: 2,2\r\nOK\r\n";
-  else if(!strncmp(command,"AT+CREG?",8))text=short_reply?"\r\n+CREG: 2,2\r\nOK\r\n":"\r\n+CREG: 2,5\r\nOK\r\n";
+  int lte=profile==27 && fun && exists("/tmp/radio-lte"),short_reply=exists("/tmp/radio-search"),non3gpp=exists("/tmp/ims-non3gpp-gated");const char *text="\r\nOK\r\n";
+  if(!strncmp(command,"AT+CEREG?",9))text=exists("/tmp/cp-status-error")?"\r\nERROR\r\n":non3gpp?"\r\n+CEREG: 2,4\r\nOK\r\n":lte?"\r\n+CEREG: 2,5,\"00D3\",\"000052C4\",7\r\nOK\r\n":"\r\n+CEREG: 2,2\r\nOK\r\n";
+  else if(!strncmp(command,"AT+CREG?",8))text=non3gpp?"\r\n+CREG: 2,4\r\nOK\r\n":short_reply?"\r\n+CREG: 2,2\r\nOK\r\n":"\r\n+CREG: 2,5\r\nOK\r\n";
   else if(!strncmp(command,"AT^SYSINFO",10))text=short_reply?"\r\n^SYSINFO: 0,0,0,0,1\r\nOK\r\n":lte?"\r\n^SYSINFO: 2,2,1,5,1,,7\r\nOK\r\n":"\r\n^SYSINFO: 2,3,1,3,1,,3\r\nOK\r\n";
   else if(!strncmp(command,"AT+CIREP?",9))text=lte?"\r\n+CIREP: 0,1\r\nOK\r\n":"\r\n+CIREP: 0,0\r\nOK\r\n";
   else if(!strcmp(command,"AT+CFUN=0"))fun=0;

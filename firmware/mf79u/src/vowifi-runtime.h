@@ -39,7 +39,10 @@ static void vowifi_pcscf_remember(void){
 }
 static int vowifi_wifi_ready(int active_call){
  if(effective_usb){
-  FILE *f=fopen("/sys/class/net/usblan0/carrier","r");int carrier=0;if(f){carrier=fgetc(f)=='1';fclose(f);}
+ #ifndef MF79U_USB_CARRIER_FILE
+ #define MF79U_USB_CARRIER_FILE "/sys/class/net/usblan0/carrier"
+ #endif
+  FILE *f=fopen(MF79U_USB_CARRIER_FILE,"r");int carrier=0;if(f){carrier=fgetc(f)=='1';fclose(f);}
   return carrier && !access("/dev/mf79u/vowifi-usb-ready",R_OK);
  }
 
@@ -77,8 +80,18 @@ static void vowifi_stop(void){
  pid_t cleanup=fork();if(!cleanup){execl("/mnt/userdata/mf79u/tools/busybox","busybox","sh","/mnt/userdata/mf79u/start-vowifi.sh","--cleanup-only",(char*)NULL);_exit(127);}if(cleanup>0){int done=0;for(int i=0;i<20;i++){if(waitpid(cleanup,NULL,WNOHANG)==cleanup){done=1;break;}usleep(100000);}if(!done){kill(cleanup,SIGKILL);waitpid(cleanup,NULL,0);}}
  unlink("/dev/mf79u/vowifi/address");unlink("/dev/mf79u/vowifi/mf79u-pcscf");memset(vowifi_local,0,sizeof(vowifi_local));memset(vowifi_pcscf,0,sizeof(vowifi_pcscf));
 }
+static int vowifi_ims_local_command(const char *command){
+ return !strcmp(command,"AT+CEREG?") || !strcmp(command,"AT+CGREG?") ||
+  !strcmp(command,"AT+ZPDPACT=0,\"IPV4V6\",\"ims\",0,1,1") ||
+  !strcmp(command,"AT+CGCONTRDP=5") || !strcmp(command,"AT+ZPDPDEACT=5");
+}
 static int vowifi_bearer(const char *command,char *reply,size_t size){
  if(!vowifi_tunnel_ready())return -1;
+ /* B03's private LTE IMS engine needs a packet-service gate. On non-3GPP
+  * access it represents the authenticated SWu bearer, never CP attachment.
+  * Only the owned IMS child sees these replies; telemetry/SMS keep real CP. */
+ if(!strcmp(command,"AT+CEREG?"))return snprintf(reply,size,"\r\n+CEREG: 2,1\r\nOK\r\n");
+ if(!strcmp(command,"AT+CGREG?"))return snprintf(reply,size,"\r\n+CGREG: 2,1\r\nOK\r\n");
  if(!strcmp(command,"AT+ZPDPACT=0,\"IPV4V6\",\"ims\",0,1,1"))return snprintf(reply,size,"\r\n+ZPDPACT: 5,\"IP\",\"%s\",\"0.0.0.0\",\"0.0.0.0\",\"0.0.0.0\"\r\nOK\r\n",vowifi_local);
  if(!strcmp(command,"AT+CGCONTRDP=5"))return snprintf(reply,size,"\r\n+CGCONTRDP: 5,6,\"ims\",\"%s.255.255.255.255\",,\"0.0.0.0\",\"0.0.0.0\",\"%s\"\r\nOK\r\n",vowifi_local,vowifi_pcscf);
  if(!strcmp(command,"AT+ZPDPDEACT=5"))return snprintf(reply,size,"\r\nOK\r\n");

@@ -1,5 +1,139 @@
 > Imported project history, snapshot 2026-10-11. Read the [current repository status](../../docs/STATUS.md) and [agent rules](../../AGENTS.md) first. Dated experiments/commands below may be superseded; use the root Makefile. Private historical receipts and old images are excluded from publication.
 
+## Roaming/no-cellular IMS compatibility correction, 2026-10-12
+
+The owner confirmed this is a roaming SIM and authorized a repair. B03's LTE IMS
+engine has an EPS-registration gate even when its actual bearer is authenticated
+SWu. The native controller now feeds that private engine packet-service/mode/
+capability notifications from the ready owned ePDG tunnel, and answers its own
+CEREG/CGREG queries consistently. These are B03 compatibility notifications,
+not a claim of cellular attachment: native telemetry still reads real CP, no
+cell identifiers are invented, and external access remains the selected USB or
+Wi-Fi path. LTE/CS status handling is unchanged. The normal tunnel-loss path
+revokes voice readiness; neither a missing tunnel nor a failed SIM authentication
+can open this compatibility gate. Cellular SMS is not routed through the adapter.
+
+The actual ARM controller fixture now requires the complete private access
+notification/query/bearer sequence before accepting IMS registration, with real
+CP reporting no service/state4 and short SYSINFO. It verifies tunnel-required
+admission, real cellular status preservation, tunnel-loss/recovery, recovery
+despite CP query failure, stable SIP PID and ring-only dial/answer rejection.
+It runs automatically in `make test-native`; receipt:
+`reports/vowifi-registration-fixture.json`. This is isolated fixture evidence.
+Physical installation and renewed registration passed as described below.
+
+Two native-only candidates reached SIM initialization and the SWu bearer, but
+did not reach REGISTER. The first adapter used `^MODE: 5,7`, incorrectly copying
+the SYSINFO service enum. Read-only fixed-scalar checks of the checksum-verified
+owned B03 child observed mode5, IMS capability1, EPS gate1, UICC ready1 and
+registration state0. Stock `zImsMain_WmngRspGetPdnCtx` / `ModemIndMode` require
+mode17 before registration (`0xda50`, `0x1045e`). The corrected private adapter
+uses `^MODE: 17,7`; no real radio mode or CP registration is changed. The ARM
+fixture requires this exact B03 enum. Renewed physical verification passed.
+An attempted stdout observer was removed because private B03 trace wrappers are
+disabled; no raw vendor trace, identities or keys were persisted.
+
+The corrected native MD5 `5baa88e88525c47f0c44cdba3a5a2327` was installed
+through `make task TASK=firmware/mf79u/install-native-update.py
+ARGS="--install --ring-only"`. On the physical roaming SIM, bearer setup and
+private access admission completed at elapsed14; SIP401 triggered SIM AKA,
+SIP200 and `ims_registered` followed at15, and `vowifi_ready` / `sip_ready`
+at19. The real cellular EPS/CS states remain4, demonstrating that LTE attachment
+is no longer required. An additional60s check confirmed `imsReady=true`,
+`voiceReady=true`, tunnel ready, selected USB route, reachable management and
+purple hardware LED mask5 at all five samples. This is physical registration
+evidence; no new call, voice/audio or SMS delivery test was performed.
+
+The native-only updater independently verified boot/settings/private IMS/media,
+SIP and CS driver/adapter/PCM checksums, and retained the persistent ring-only
+guard. Bootfc55eaf9… remains unchanged; final native2130/SIP2131. Linphone's
+existing account was reopened without changing its settings, restoring the
+SERVER client's `localRegistered=true` after the SIP runtime restart. Temporary
+RAM probes/marker and the temporary host diagnostic sources were removed.
+Receipts: `reports/native-update-install.json`,
+`reports/vowifi-roaming-verified-20261012.json`,
+`reports/vowifi-roaming-sip-client-20261012.json`,
+`reports/vowifi-roaming-runtime-20261012.json`. Complete build/test/package/audit
+log: `reports/vowifi-roaming-final-validation-20261012.log`.
+
+The native-only updater can explicitly enable `--ring-only` for a roaming
+registration-only check, preserves its marker across replacement, and refuses
+shutdown if another operation changes the marker during staging. It does not
+remove this protection. Existing media/driver/private IMS, settings and boot
+remain protected by its checksum/ownership checks.
+
+After the registration check, the owner explicitly requested removal of the
+ring-only guard while staying in VoWiFi-only. The marker
+`/mnt/userdata/mf79u/native-ring-only` was removed through a temporary checked
+Make task, without restart or changing configuration. Four subsequent snapshots
+confirmed `ringOnly=false`, requested/effective VOWIFI, ready USB SWu/IMS and
+`localRegistered=true`, with CS signaling inactive. Boot, native2130/SIP2131,
+settings and installed runtime hashes were preserved. Source control flow still
+rejects LTE/CS voice fallback and cellular SMS fallback in VOWIFI; removing the
+guard permits ordinary SIP dial/answer through the available VoWiFi backend.
+No real call or SMS was initiated. Receipt:
+`reports/vowifi-ring-only-disabled-20261012.json`. The temporary host task was
+removed. This current user-authorized state supersedes the earlier enabled-guard
+snapshot; future updates preserve the absent marker unless `--ring-only` is
+explicitly selected again.
+
+## New SIM registration check, 2026-10-12
+
+The owner inserted another SIM and requested a registration check. Read-only
+snapshots at 00:45–00:48 Asia/Nicosia observed VOWIFI-only, USB-selected internet
+through bridge0/gateway192.168.0.169, carrier and Control ready marker present.
+The SIM-derived public ePDG domain was
+`epdg.epc.mnc002.mcc250.pub.3gppnetwork.org`; no SIM identifier was recorded.
+
+At the first physical snapshot the tunnel was ready, with an assigned IPv4
+address and two P-CSCF addresses. This proves a completed transport setup at
+that instant; the identity-bearing EAP exchange was not captured. IMS remained
+`registering_vowifi`, `imsReady=false`, `voiceReady=false`. Native history showed:
+
+- IMS starts at elapsed20/90 and173/243 each logged `waiting_for_radio_service`.
+- Provider P-CSCF failover occurred at elapsed81 and234.
+- Attempts ended at elapsed151 and304 with
+  `VOWIFI_ATTEMPT_ENDED tunnel=1 registered=0 ims=1`.
+- No `IMS_WIFI_REGISTER`, `IMS_SIP_RESPONSE`, `ims_registered` or `vowifi_ready`
+  event appeared in the retained native log. The log was only about2KiB, below
+  its64KiB truncation threshold. This is missing registration progress, not
+  an observed SIP authentication rejection.
+- Subsequent managers exited at elapsed358 and418 with code1/signal0. Their
+  selected peer was85.26.231.145, compared with31.173.34.209 in the initial
+  successful-tunnel snapshot. Last observation was `vowifi_unavailable` /
+  `vowifi_start_failed`, with no tunnel address and hardware red mask1. Quiet
+  charon logging was preserved, so the exact reason for those exits is unknown.
+
+Native status reported EPS/CS state4 and no cellular registration. These fields
+are refreshed during IMS initialization and are not a continuous cellular
+measurement in the VoWiFi branch. Additional read-only USB AT queries returned
+no parseable response; they do not establish a PIN, SIM or radio fault.
+
+The pre-repair source passed real CEREG/CIREP to B03 IMS and withheld the `^MODE`
+notification when SYSINFO had no radio mode. It also did not poll
+`network_status()` again while waiting in the active VoWiFi branch. Together
+with the observed `waiting_for_radio_service` and absence of REGISTER metadata,
+this suggests an unresolved dependency on cellular status in the B03 IMS start
+path. It is a hypothesis, not a proven cause or a verified fix. Determine the
+required non-3GPP IMS initialization separately from the later ePDG startup
+failures; do not infer that the operator rejected VoWiFi service.
+
+Throughout observation bootfc55eaf9… / native2336 / SIP2469 were preserved;
+SERVER client remained locally registered, with no active call. Installed
+native and SIP matched the current local builds. Installed IMS transport MD5
+`8da9d5e4e44884faf73527ca372630dc` differs from the local build
+`86fe604e84524689094ceadd467a754d`; no replacement was performed and local
+source is not claimed as a complete installed-transport validation.
+
+Diagnostics ran through the root Makefile (`device-status`, temporary safe
+observer via `task`, and read-only `usb-at`). The temporary host observer was
+removed after use. Sanitized local receipts are ignored publication inputs:
+`reports/vowifi-new-sim-20261012-summary.json`,
+`reports/vowifi-new-sim-20261012.json`, and
+`reports/vowifi-new-sim-radio-20261012.json`. No credentials, SIM identifiers,
+AKA fields, messages or raw device logs were saved. No settings/runtime changes,
+restarts, reboot, calls or SMS submission were performed.
+
 ## USB internet for VoWiFi (2026-10-11)
 
 Final near-AP reboot restored USB IMS/SIP (native29s/34s) and Wi-Fi via the

@@ -17,7 +17,11 @@ unsafe members, unexpected payloads, checksum mismatches, missing runtime files
 or a changed external PCM contract.
 
 Native tests run 26 C fixtures (23 with ASan/UBSan, three under ARM32 qemu)
-and four Python regressions. The kernel relocation test generates synthetic ELF
+and five Python regressions. The new actual ARM VoWiFi controller fixture gates
+private IMS on an authenticated simulated tunnel with no cellular service
+and requires B03 private mode17 (SYSINFO service5 is not that enum);
+it covers private CEREG/CGREG queries, tunnel loss/recovery, CP query failure,
+preserved SIP and roaming ring-only rejection. The kernel relocation test generates synthetic ELF
 modules and export tables rather than requiring quarantined historical binaries.
 Hardware-only PCM/LED/portless-adapter programs and dynamic vendor selftests
 require real B03 services and are outside isolated CI. SIP codec/network tests
@@ -77,7 +81,10 @@ driver/media untouched. Run through `make task` after `make test-native
 build-native`, then obtain a fresh client REGISTER.
 `make test-workflow` checks this updater's refusal before any transfer/shutdown
 for active calls, an unknown executable/supervisor and insufficient staging space.
-It also checks a call arriving during transfer is refused before shutdown.
+It also checks a call or ring-only marker change arriving during transfer is
+refused before shutdown. Its explicit `--ring-only` option enables persistent
+dial/answer protection for an authorized roaming registration-only check; this
+does not prevent private VoWiFi IMS registration and is never removed by update.
 
 Physical evidence is separate: do not repeat one-shot SMS/call tests, change IMEI
 or reboot merely to validate the repository migration. See [AGENTS.md](../AGENTS.md)

@@ -28,9 +28,11 @@ for p in sorted(src.glob('*-selftest.c')):
 commands += ['python3 firmware/mf79u/test-cs-pcm-bridge-stream.py',
              'python3 firmware/mf79u/test-cs-observation-evidence.py',
              'python3 scripts/test-kernel-abi.py',
-             'python3 firmware/mf79u/test-cs-restore-route-guard.py']
+             'python3 firmware/mf79u/test-cs-restore-route-guard.py',
+             'touch /tmp/MF79U_ISOLATED_FIXTURE',
+             'python3 firmware/mf79u/test-vowifi-registration.py']
 subprocess.run(['docker', 'run', '--rm', '-v', str(root) + ':/work', '-w', '/work', 'mf79u-build-tools:local', 'sh', '-eu', '-c', '\n'.join(commands)], check=True)
 reports = root / 'reports'
 reports.mkdir(exist_ok=True)
 (reports / 'native-tests.json').write_text(json.dumps({'passed': True, 'sanitizers': ['address', 'undefined'], 'cases': cases, 'requires_external_service_not_run': sorted(skip), 'abi_tests_under_qemu': ['cp-ipc-selftest','cp-memory-selftest','cs-dsp-pcm-period-selftest'], 'device_access': False}, indent=2) + '\n')
-print('PASS', len(cases), 'native selftests plus four Python regression fixtures.')
+print('PASS', len(cases), 'native selftests plus five Python regression fixtures.')

@@ -345,7 +345,7 @@ static int ims_messages(void) {
                 }
                 event("cp_operation_rejected");return -1;
             }
-            char reply[8192];int wifi_bearer=ims_wifi && (!strcmp(text,"AT+ZPDPACT=0,\"IPV4V6\",\"ims\",0,1,1") || !strcmp(text,"AT+CGCONTRDP=5") || !strcmp(text,"AT+ZPDPDEACT=5"));
+            char reply[8192];int wifi_bearer=ims_wifi && vowifi_ims_local_command(text);
             int count=wifi_bearer?vowifi_bearer(text,reply,sizeof(reply)):mf79u_cp_query(&cp,text,reply,sizeof(reply),6);
             if(!wifi_bearer && count>0 && !strcmp(text,"AT+ZPDPACT=0,\"IPV4V6\",\"ims\",0,1,1") && cp.pdp_received && cp.pdp[0]==0) {
                 char details[4096];
@@ -537,7 +537,7 @@ static int registration_state(const char *reply,const char *prefix) {
        sscanf(p+strlen(prefix)," %d,%d",&mode,&state)!=2 || mode<0 || mode>5 || state<0 || state>10)return -1;
     return state;
 }
-static int network_status(void) {
+static int cellular_network_status(int notify_ims) {
     char reply[4096],registration[128],status[200];
     int system,subsystem,capability,ignore;
     if(mf79u_cp_query(&cp,"AT+CEREG?",reply,sizeof(reply),5)<0){event("cereg_query_failed");return -1;}
@@ -556,7 +556,7 @@ static int network_status(void) {
     eps_state=eps;cs_state=cs;
     /* The vendor owns GSM/SMS. IMS notifications need a live private engine;
      * cellular registration and SIP MESSAGE do not require that engine. */
-    if(request<0)return 0;
+    if(!notify_ims || request<0)return 0;
     int n=snprintf(status,sizeof(status),"\r\n+CEREG: %s\r\n",registration);
     if(n<0 || n>=(int)sizeof(status))return -1;
     if(strcmp(last_registration,registration)) {
@@ -575,6 +575,25 @@ static int network_status(void) {
     if(capability!=last_capability) {
         if(send_ims(0x150b,status,(size_t)n,1))return -1;
         last_capability=capability;
+    }
+    return 0;
+}
+static int network_status(void) {
+    if(!ims_wifi)return cellular_network_status(1);
+    /* A roaming/no-service CP cannot admit or revoke an authenticated SWu
+     * bearer. Retain real cellular telemetry, but feed B03's private IMS
+     * compatibility gate from the owned tunnel. No fake cell identifiers. */
+    (void)cellular_network_status(0);
+    if(request<0 || !vowifi_tunnel_ready())return -1;
+    if(strcmp(last_registration,"swu")) {
+        /* B03 zImsWmng_GetMdmNetMode uses the ^MODE enum (LTE=17),
+         * not the ^SYSINFO service enum (LTE=5). Only this private
+         * compatibility engine uses LTE admission for authenticated SWu. */
+        const char *events[]={"\r\n+CEREG: 1\r\n","\r\n^MODE: 17,7\r\n","\r\n+CIREPI: 1\r\n"};
+        for(unsigned i=0;i<sizeof(events)/sizeof(events[0]);i++)
+            if(send_ims(0x150b,events[i],strlen(events[i]),1) || pump(100))return -1;
+        strcpy(last_registration,"swu");
+        event("vowifi_ims_access_available");
     }
     return 0;
 }

@@ -1,12 +1,54 @@
 # Current project status
 
-Updated 2026-10-11. This Git repository is the new source of truth. The complete
+Updated 2026-10-12. This Git repository is the new source of truth. The complete
 original topic documentation and test sources have been imported. The migration
 is packaging/build work; it does not itself constitute a new physical call test.
 
 The maintained delivery is the device-local userdata overlay. Full NAND/rootfs
 0.9 and SD 0.8 archives are historical and were not flashed or refreshed. Reset
 that preserves/restores a factory profile is designed, not implemented.
+
+## Roaming SIM VoWiFi registration fixed, 2026-10-12
+
+Installed native MD5 `5baa88e88525c47f0c44cdba3a5a2327`: the owned B03 IMS
+engine now admits an authenticated SWu tunnel without cellular registration.
+Its private compatibility mode uses B03's `^MODE` enum17, not SYSINFO enum5.
+Physical registration completed at native elapsed15s (401 → SIM AKA → 200),
+VoWiFi/SIP voice-ready at19s. A further60s read-only check passed readiness,
+USB ePDG route, management and purple idle LED. Real EPS/CS telemetry stays4;
+no cellular attachment is claimed. Native2130/SIP2131, bootfc55eaf9… retained
+through final verification. The existing Linphone account was reopened and
+`localRegistered=true` was restored after the SIP process replacement.
+
+The roaming `native-ring-only` guard was enabled during registration diagnostics.
+The owner subsequently explicitly requested its removal while remaining in
+VoWiFi-only. The marker is now absent and runtime reports `ringOnly=false`;
+requested/effective mode remains VOWIFI, IMS and the registered Linphone client
+remain ready. Four post-removal snapshots confirmed unchanged boot, native/SIP
+PIDs, settings and runtime checksums, with CS signaling disabled. VoWiFi-only
+still forbids LTE/CS voice and cellular SMS fallback. Receipt:
+`reports/vowifi-ring-only-disabled-20261012.json`. No call or SMS was initiated.
+The native-only updater verified unchanged settings, private IMS/media, SIP,
+CS driver/adapter/PCM and boot. No call, SMS, reboot or radio setting change.
+`make test`, native build, package/package-check and audit passed. Receipts:
+`reports/native-update-install.json`,
+`reports/vowifi-roaming-verified-20261012.json`,
+`reports/vowifi-roaming-sip-client-20261012.json`. Details:
+[VoWiFi correction](../firmware/mf79u/VOWIFI.md#roamingno-cellular-ims-compatibility-correction-2026-10-12).
+
+Read-only inspection after the owner changed SIM found VOWIFI-only with USB
+internet selected. The SIM-derived ePDG is for public PLMN 250/02. An initial
+snapshot confirmed the SWu tunnel and two assigned P-CSCF addresses, but IMS
+and voice never became ready. Two complete native attempts exhausted both
+P-CSCF waits with `tunnel=1 registered=0 ims=1`; each IMS start recorded
+`waiting_for_radio_service`, with no REGISTER or SIP response metadata observed.
+Later ePDG attempts exited with code 1 and `vowifi_start_failed`. Last observed
+hardware LED was red; native2336/SIP2469, boot and registered local SIP client
+were preserved. Details, limitations and next diagnostic hypothesis:
+[VoWiFi new-SIM check](../firmware/mf79u/VOWIFI.md#new-sim-registration-check-2026-10-12).
+No settings, runtime installation, reboot, call or SMS submission was performed.
+The owner subsequently authorized repair and confirmed the SIM is roaming.
+The completed repair above supersedes this initial read-only diagnosis.
 
 ## Implemented and previously physically confirmed
 

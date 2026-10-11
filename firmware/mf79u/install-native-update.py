@@ -22,6 +22,9 @@ shell, push = transfer.shell, transfer.push
 def checksum(path):
     return shell('md5sum ' + path).split()[0]
 
+def ring_guard_present():
+    return shell('test ! -e ' + DATA + '/native-ring-only || echo PRESENT') == 'PRESENT'
+
 
 def wait_exit(pid):
     for _ in range(240):
@@ -34,6 +37,7 @@ def wait_exit(pid):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--install', action='store_true')
+    parser.add_argument('--ring-only', action='store_true', help='Enable persistent dial/answer protection for a roaming registration-only check')
     args = parser.parse_args()
     candidate = BASE / 'build/mf79u-native-gateway'
     if not args.install:
@@ -52,9 +56,14 @@ def main():
     if int(stat[1]) != parent or shell('grep -F -q start-native.sh /proc/' + str(parent) + '/cmdline && echo OWNED') != 'OWNED':
         raise RuntimeError('Unexpected native supervisor owner')
     boot = shell('cat /proc/sys/kernel/random/boot_id')
+    if args.ring_only and not ring_guard_present():
+        shell('set -e; umask 077; touch ' + DATA + '/native-ring-only')
+    guard = ring_guard_present()
     protected = [DATA + '/' + name for name in ['settings.json', 'gateway.ini', '.mf79u-cs-voice',
                  '.mf79u-cs-pcm-bridge', '.mf79u-cs-voice.ko', '.mf79u-sip-gateway', '.mf79u-volte-private',
                  '.mf79u-ims-userspace-ipsec.so']]
+    if guard:
+        protected.append(DATA + '/native-ring-only')
     before = shell('md5sum ' + ' '.join(protected))
     stamp = datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%SZ')
     backup = ROOT / 'private/backups' / ('native-update-' + stamp)
@@ -86,6 +95,7 @@ def main():
         raise RuntimeError('A call began during staging; services remain running')
     if current.get('pid') != pid or current.get('sipPid') != native.get('sipPid') or \
        shell('cat /dev/.mf79u-native-supervisor.pid') != str(parent) or \
+       ring_guard_present() != guard or \
        checksum('/proc/' + str(pid) + '/exe') != oldhash or \
        before != shell('md5sum ' + ' '.join(protected)):
         raise RuntimeError('Runtime or protected settings changed during staging; refusing shutdown')
@@ -101,13 +111,14 @@ def main():
         time.sleep(1)
     else:
         raise RuntimeError('Updated native controller did not become voice ready; checked backup retained')
-    if before != shell('md5sum ' + ' '.join(protected)) or boot != shell('cat /proc/sys/kernel/random/boot_id'):
+    if before != shell('md5sum ' + ' '.join(protected)) or boot != shell('cat /proc/sys/kernel/random/boot_id') or ring_guard_present() != guard:
         raise RuntimeError('Protected artifact, settings or boot changed')
     if checksum('/proc/' + str(current['pid']) + '/exe') != digest:
         raise RuntimeError('Updated native process differs from the candidate')
     report = {'at': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'nativeMD5': digest,
               'nativePid': current['pid'], 'sipPid': current.get('sipPid'), 'voiceMode': current.get('voiceMode'),
               'voiceBackend': current.get('voiceBackend'), 'voiceReady': current.get('voiceReady'),
+              'ringOnlyGuard': guard,
               'bootSettingsMediaDriverPreserved': True, 'realCallsSmsMade': False,
               'backup': str(backup.relative_to(ROOT))}
     (ROOT / 'reports/native-update-install.json').write_text(json.dumps(report, indent=2) + '\n')

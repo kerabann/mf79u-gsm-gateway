@@ -16,7 +16,7 @@ spec.loader.exec_module(update)
 previous = b'previous native fixture'
 digest = hashlib.md5(previous).hexdigest()
 
-for failure in ['active_call', 'wrong_executable', 'wrong_parent', 'no_staging_space', 'call_during_staging']:
+for failure in ['active_call', 'wrong_executable', 'wrong_parent', 'no_staging_space', 'call_during_staging', 'guard_during_staging']:
     calls, transfers = [], []
 
     def shell(command):
@@ -39,6 +39,8 @@ for failure in ['active_call', 'wrong_executable', 'wrong_parent', 'no_staging_s
             return 'OWNED'
         if command == 'cat /proc/sys/kernel/random/boot_id':
             return 'fixture-boot'
+        if command == 'test ! -e /mnt/userdata/mf79u/native-ring-only || echo PRESENT':
+            return 'PRESENT' if failure == 'guard_during_staging' and len(transfers) == 2 else ''
         if 'gzip -c ' in command:
             return base64.b64encode(gzip.compress(previous)).decode()
         if command.startswith('df -k '):
@@ -62,6 +64,6 @@ for failure in ['active_call', 'wrong_executable', 'wrong_parent', 'no_staging_s
             else:
                 raise AssertionError('Updater accepted ' + failure)
         assert not any(command.startswith('kill ') for command in calls)
-        assert len(transfers) == (2 if failure == 'call_during_staging' else 0)
+        assert len(transfers) == (2 if failure in {'call_during_staging', 'guard_during_staging'} else 0)
 
-print('PASS native-only updater: call, executable/owner, staging-space and late-call guards refuse before shutdown')
+print('PASS native-only updater: call, executable/owner, staging-space, late-call and ring-guard changes refuse before shutdown')
