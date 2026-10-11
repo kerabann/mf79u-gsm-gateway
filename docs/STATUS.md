@@ -100,3 +100,12 @@ DNS and HTTPS bind to the selected interface without automatic uplink fallback;
 operator IMS `wan5` is excluded. Existing mobile data firewall policy applies.
 
 Current validation and physical-install boundaries: [WEBHOOKS](WEBHOOKS.md).
+
+Control-only installation and fresh embedded-asset verification passed. Boot,
+native3483/SIP3484, settings/gateway hashes, guards and IMS/voice readiness were
+preserved. All eight browser fixture tabs passed 1280/390/320px (24 views).
+`make test`, final Linux Go tests, package checks and repository audit passed.
+The full package is checked but was not installed: its different pinned CS
+driver would require a checked reboot. No modem reboot, call, SMS or real
+Telegram send/delete occurred. The webhook remains disabled and unconfigured;
+real Telegram delivery awaits owner-entered bot/chat credentials.
