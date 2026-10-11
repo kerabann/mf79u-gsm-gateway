@@ -10,6 +10,7 @@ Updated 2026-10-11. Current entry points appear first; original topic history is
 - [BUILD](BUILD.md)
 - [INSTALL](INSTALL.md)
 - [TESTING](TESTING.md)
+- [WEBHOOKS](WEBHOOKS.md)
 - [MIGRATION](MIGRATION.md)
 - [THIRD-PARTY](THIRD-PARTY.md)
 - [Agent instructions](../AGENTS.md)

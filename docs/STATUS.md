@@ -19,7 +19,7 @@ that preserves/restores a factory profile is designed, not implemented.
   autonomous reconnection. Read current topic receipts for voice/audio boundaries.
 - IMS-only VoWiFi SMS: one authorized real send/receive was confirmed. No cellular
   fallback or retry in VOWIFI mode. Durable IMS receive inbox and SIP delivery ACK.
-- English seven-tab WebUI; Mobile settings, scoped Save, framed blocks; LEDs,
+- English eight-tab WebUI; Mobile settings, scoped Save, framed blocks; LEDs,
   SMS management, USB/LAN/DHCP/LTE firewall and system/SSH/IMEI controls.
 
 See [FEATURES.md](FEATURES.md) for code, tests and evidence topic links.
@@ -64,3 +64,39 @@ All seven fixture views passed 1280/390/320px. See [the audit matrix](UI-E2E-202
 for exact source/browser/API/device boundaries, preserved artifact hashes and
 remaining call/Wi-Fi/transport checks. The user deferred another outgoing call;
 the complete combination matrix is not claimed as passed.
+
+## Incomplete UI commit and checkout verification, 2026-10-11
+
+The [workflow for `6fa01c6`](https://github.com/kerabann/mf79u-gsm-gateway/actions/runs/38166521915)
+failed in the Control build because `test-ui-actions.js` was referenced but absent
+from the pushed commit. Nine UI audit source/test/helper/document files remained
+untracked locally; this also omitted the native updater regression and the audit
+document linked from this status. The repair includes those publication files.
+
+The old clean-checkout helper copied untracked files and working-tree contents,
+so it could conceal an incomplete commit. It now exports only the Git index.
+A real temporary Git regression checks exclusion of untracked files and unstaged
+edits and inclusion after staging. Run `make clean-checkout` after staging the
+intended change.
+
+Validation passed: `make test-workflow` and a complete `make clean-checkout`
+(`make ci` from the prepared Git index). This includes Linux Go tests, all UI
+fixtures, 26 native selftests plus four Python regressions, ARM SIP/RTP tests,
+the complete 28-file overlay and checksum/PCM checks, publication secret scan
+(499 files) and documentation audit (43 documents, 324 local links). Local logs
+and the Git-index checkout receipt are under ignored `reports/`. This is local
+CI evidence, not a successful replacement GitHub-hosted run. No modem operation
+is part of the CI repair.
+
+## Telegram SMS webhooks, 2026-10-11
+
+The eighth tab, **Webhooks**, contains one **Telegram SMS** block: Enabled,
+BOT-token, Chat-id, Send through interface and **Delete after send to chat**.
+A scoped authenticated/CSRF-protected Save does not reload voice/SIP or apply
+network settings. Incoming cellular modem/SIM and private IMS SMS use the shared
+normalized inbox path, including with SIP Disabled. A private bounded queue,
+restart deduplication, retry and confirmed-delivery deletion run on the modem.
+DNS and HTTPS bind to the selected interface without automatic uplink fallback;
+operator IMS `wan5` is excluded. Existing mobile data firewall policy applies.
+
+Current validation and physical-install boundaries: [WEBHOOKS](WEBHOOKS.md).

@@ -464,3 +464,11 @@ policy now excludes traffic-statistics, phonebook and USSD topsw workers;
 measured targeted PSS228KiB plus swap620KiB. Exact workers absent after stop,
 critical network/SIM/SMS/voice services retained. Checksummed backups and
 remaining validation: [BOOT-MEMORY.md](BOOT-MEMORY.md).
+
+## Webhooks / Telegram SMS, 2026-10-11
+
+The current UI has eight tabs. Webhooks adds one framed Telegram SMS block with
+bot token, chat ID, interface, Enabled and Delete after send to chat. Its scoped
+Save is independent of network/SIP apply. Tokens remain masked in ordinary API
+responses and are stored only in protected settings; the input clears after Save.
+See [current behavior and verification](../../docs/WEBHOOKS.md).

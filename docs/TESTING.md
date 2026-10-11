@@ -26,7 +26,12 @@ Preserved tools under `firmware/mf79u/test-*` document additional historical
 fixtures and authorized physical test procedures. Run them only through
 `make task` after reading their topic document and distinguishing device mutations.
 
-`make test-workflow` exercises corrupt/missing/extra/duplicate/traversal packages,
+`make test-workflow` verifies a real temporary Git index exports only staged
+contents, excluding untracked helpers and unstaged edits. `make clean-checkout`
+runs the full CI from that index; stage intended changes before running it.
+This prevents a local untracked test from masking an incomplete pushed commit.
+
+`make test-workflow` also exercises corrupt/missing/extra/duplicate/traversal packages,
 the PCM contract, staging-space bounds and rejection before service shutdown
 when space or transfer setup is unavailable, and fail-closed SMS/driver ownership
 checks. `make workflow-check` runs pinned
@@ -39,7 +44,7 @@ settings/guard preservation and every installed checksum. For a SIP SERVER,
 client binding after a service restart requires a fresh REGISTER; a presence
 toggle does not refresh registration. Never infer a preserved binding from a PID.
 
-UI behavior changes require all seven tabs and relevant roles/Client settings at
+UI behavior changes require all eight tabs and relevant roles/Client settings at
 1280/390/320px, with no horizontal overflow or JS errors. Use non-secret fixtures.
 Rebuild Control because HTML/CSS/JS are embedded. Serving source assets is not
 proof that the modem is running the new executable.

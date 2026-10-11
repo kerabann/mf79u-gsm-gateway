@@ -31,7 +31,7 @@ type smsSIPState struct {
 	Jobs      []smsSIPJob
 	Delivered []string
 }
-type smsSIPItem struct{ ID, Number, Text, Date string }
+type smsSIPItem struct{ ID, Number, Text, Date, Storage, SourceID string }
 type smsSIPBridge struct {
 	mu       sync.Mutex
 	state    smsSIPState
@@ -254,18 +254,27 @@ func (b *smsSIPBridge) refresh() {
 	if !b.enabled() {
 		return
 	}
+	items, e := incomingSMS(b.list)
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	if e != nil {
+		b.ready = false
+		return // Preserve the cache on failure, never invent an empty inbox.
+	}
+	b.incoming = items
+	b.ready = true
+}
+
+func incomingSMS(list func(string) (map[string]any, error)) ([]smsSIPItem, error) {
 	items := []smsSIPItem{}
 	for _, storage := range []string{"modem", "sim"} {
-		value, e := b.list(storage)
+		value, e := list(storage)
 		if e != nil {
-			b.mu.Lock()
-			b.ready = false
-			b.mu.Unlock()
-			return // Keep prior cache on session/API failure; never invent empty inbox.
+			return nil, errors.New("Could not read incoming SMS")
 		}
 		messages, ok := value["messages"].([]any)
 		if !ok || len(messages) > 328 {
-			return
+			return nil, errors.New("Invalid incoming SMS list")
 		}
 		for _, raw := range messages {
 			m, ok := raw.(map[string]any)
@@ -282,14 +291,11 @@ func (b *smsSIPBridge) refresh() {
 			if normalized := smsDate(date); normalized != nil {
 				when = *normalized
 			}
-			items = append(items, smsSIPItem{ID: key, Number: number, Text: text, Date: when})
+			items = append(items, smsSIPItem{ID: key, Number: number, Text: text, Date: when, Storage: storage, SourceID: str(m["id"])})
 		}
 	}
 	sort.SliceStable(items, func(i, j int) bool { return items[i].Date < items[j].Date })
-	b.mu.Lock()
-	b.incoming = items
-	b.ready = true
-	b.mu.Unlock()
+	return items, nil
 }
 func (b *smsSIPBridge) worker() {
 	ticker := time.NewTicker(5 * time.Second)

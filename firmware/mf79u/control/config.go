@@ -62,14 +62,15 @@ type VoWiFi struct {
 }
 
 type Settings struct {
-	Version          int     `json:"version"`
-	VoiceMode        string  `json:"voiceMode"`
-	VoWiFi           VoWiFi  `json:"vowifi"`
-	SIP              SIP     `json:"sip"`
-	WiFi             WiFi    `json:"wifi"`
-	InternetSharing  bool    `json:"internetSharing"`
-	LAN              Network `json:"lan"`
-	BootstrapSeconds int     `json:"bootstrapSeconds"`
+	Version          int      `json:"version"`
+	VoiceMode        string   `json:"voiceMode"`
+	VoWiFi           VoWiFi   `json:"vowifi"`
+	Webhooks         Webhooks `json:"webhooks"`
+	SIP              SIP      `json:"sip"`
+	WiFi             WiFi     `json:"wifi"`
+	InternetSharing  bool     `json:"internetSharing"`
+	LAN              Network  `json:"lan"`
+	BootstrapSeconds int      `json:"bootstrapSeconds"`
 }
 
 var hostRE = regexp.MustCompile(`^[A-Za-z0-9][A-Za-z0-9.-]{0,252}$`)
@@ -106,6 +107,9 @@ func validateNetwork(n Network, lan bool) error {
 	return nil
 }
 func validate(s Settings) error {
+	if e := validateTelegram(s.Webhooks.TelegramSMS); e != nil {
+		return e
+	}
 	if e := validateVoWiFi(s.VoWiFi, s.LAN); e != nil {
 		return e
 	}
@@ -261,6 +265,8 @@ func readSettings(dir string) (Settings, error) {
 	return s, validate(s)
 }
 func publicSettings(s Settings) Settings {
+	s.Webhooks.TelegramSMS.BotTokenSet = s.Webhooks.TelegramSMS.BotToken != ""
+	s.Webhooks.TelegramSMS.BotToken = ""
 	s.SIP.ExtensionPasswordSet = s.SIP.ExtensionPassword != ""
 	s.SIP.ExtensionPassword = ""
 	s.SIP.PasswordSet = s.SIP.Password != ""

@@ -20,8 +20,9 @@ from tests run during this migration and from a fresh live device test.
 | Cellular SMS read/send/manage | Control `sms*.go`, vendor API/native CP | [SMS-API](../firmware/mf79u/SMS-API.md); B03 SEND_SMS in supported non-VOWIFI modes |
 | VoWiFi-only IMS SMS | `ims-sms-native.h`, Control `sms_ims*.go` + native/IMS | [SMS-IMS](../firmware/mf79u/SMS-IMS.md); no cellular fallback/retry; durable PDU before ACK, Unicode/concatenation inbox |
 | SIP MESSAGE/SMS confirmation/inbox delivery | `sip-sms.h`, Control SMS Unix IPC/job worker | [SMS-SIP](../firmware/mf79u/SMS-SIP.md); waits for confirmed submission, unconfirmed failure no auto resend; delivery ACK retained |
+| Telegram incoming SMS webhook | Control `sms_telegram.go`, bound DNS/HTTPS + private queue | [WEBHOOKS](WEBHOOKS.md); optional delete after Telegram confirmation; source/fixture evidence and physical boundaries below |
 | REST/login/CSRF/sessions/config | `control/*.go` embedded in Control | auth/error/recovery/config fixtures imported |
-| Seven-tab English WebUI | `control/web/` + System JS | Status, Mobile, SIP, Messages, Wi-Fi, Network, System; framed blocks, scoped Save, no CDN |
+| Eight-tab English WebUI | `control/web/` + System JS | Status, Mobile, SIP, Messages, Webhooks, Wi-Fi, Network, System; framed blocks, scoped Save, no CDN |
 | Hotspot / Client Wi-Fi scan/DHCP | `control/wifi*.go`, web app | [WIFI](../firmware/mf79u/WIFI.md); WPA2-Personal/Open, hidden/enabled/SSID/password |
 | USB/LAN/static network/DHCP | `control/network.go`, network helpers | [NETWORK](../firmware/mf79u/NETWORK.md); shared USB/hotspot LAN, vendor DHCP retained |
 | Ordinary LTE OUTPUT/FORWARD block | Control owned IPv4/IPv6 chains | IMS `wan5` remains allowed; external SIP needs viable USB/Wi-Fi route |

@@ -3,13 +3,39 @@ from pathlib import Path
 import contextlib
 import gzip
 import hashlib
+import importlib.util
 import io
 import json
+import subprocess
 import tempfile
 import tarfile
 from unittest import mock
 import device
 import package
+
+# Exercise a real Git index: untracked helpers and unstaged edits must never
+# make a publication checkout pass when they are absent from the next commit.
+spec = importlib.util.spec_from_file_location('clean_checkout_fixture', Path(__file__).with_name('clean-checkout.py'))
+clean_checkout = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(clean_checkout)
+with tempfile.TemporaryDirectory(prefix='mf79u-checkout-test-') as directory:
+    base = Path(directory)
+    repo = base / 'repo'
+    subprocess.run(['git', 'init', '--quiet', str(repo)], check=True)
+    (repo / 'tracked.txt').write_text('staged source\n')
+    subprocess.run(['git', 'add', 'tracked.txt'], cwd=repo, check=True)
+    (repo / 'tracked.txt').write_text('unstaged source\n')
+    (repo / 'untracked.py').write_text('untracked helper\n')
+    first = base / 'first'
+    clean_checkout.export_index(repo, first)
+    assert (first / 'tracked.txt').read_text() == 'staged source\n'
+    assert not (first / 'untracked.py').exists()
+    subprocess.run(['git', 'add', 'untracked.py'], cwd=repo, check=True)
+    second = base / 'second'
+    clean_checkout.export_index(repo, second)
+    assert (second / 'untracked.py').read_text() == 'untracked helper\n'
+    assert (second / 'tracked.txt').read_text() == 'staged source\n'
+print('PASS clean checkout uses staged Git contents; untracked files and unstaged edits excluded.')
 
 # A real complete allowlist with tiny synthetic contents, no build dependency.
 names = {package.DATA.lstrip('/') + '/' + p for p in set(package.ARTIFACTS) | set(package.SCRIPTS) | {'cs-runtime.md5'}} | set(package.EXTRAS)

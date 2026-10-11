@@ -16,9 +16,11 @@ pins Go 1.25.12 for the B03 memory limit. `sources.lock.json` pins all nine upst
 archives by URL and SHA256. `make deps` verifies existing archives or downloads
 and safely extracts missing ones. Downloaded/extracted trees remain ignored.
 `make fetch-check` independently downloads and verifies every locked archive.
-`make clean-checkout` starts a separate checkout containing only publication files
-and runs the complete `make ci`; its optional local cache contains only
-checksum-verified upstream archives.
+`make clean-checkout` exports the Git index into a separate checkout and runs the
+complete `make ci`. Stage intended source, test and documentation changes first:
+untracked files and unstaged contents are excluded, so local files cannot hide
+an incomplete commit. Its optional local cache contains only checksum-verified
+upstream archives.
 
 The Dockerfile pins Debian by digest and installs ARM soft-float compiler tools,
 native sanitizers, autotools/CMake, ARM GMP and qemu-user.

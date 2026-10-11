@@ -35,6 +35,7 @@ type Session struct {
 }
 type App struct {
 	smsIMS               *imsSMSStore
+	telegram             *telegramSMSBridge
 	systemmu             sync.Mutex
 	sshmu                sync.Mutex
 	sshDone              <-chan error
@@ -248,6 +249,8 @@ func (a *App) serve(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		a.mu.Lock()
+		// Webhooks use their own scoped Save; full settings clients preserve them.
+		value.Webhooks = a.settings.Webhooks
 		if a.pending != "" {
 			a.mu.Unlock()
 			failure(w, 409, errors.New("Confirm or roll back the network changes first"))
@@ -284,6 +287,8 @@ func (a *App) serve(w http.ResponseWriter, r *http.Request) {
 		a.settings = value
 		a.mu.Unlock()
 		respond(w, 200, map[string]any{"saved": true, "settings": publicSettings(value)})
+	case "/api/webhooks/telegram":
+		a.telegramSettings(w, r)
 	case "/api/status":
 		if r.Method != "GET" {
 			w.WriteHeader(405)
@@ -334,7 +339,7 @@ func (a *App) serve(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 		runtime := nativeRuntime()
-		respond(w, 200, map[string]any{"radio": radio, "vendorSession": vendorSession, "wifi": wifi, "gateway": gatewayStatus(), "runtime": runtime, "interfaces": interfaces, "bootstrapRemaining": remaining, "networkError": neterr, "networkNotice": netnotice, "pendingNetwork": pending, "networkReady": ready, "networkRollingBack": rollingBack, "networkRemaining": networkRemaining, "internetSharing": sharing, "operatorCodecs": []string{"AMR-WB / 23.85 kbit/s max", "AMR-NB fallback"}, "pcmRate": 16000, "hostRelayRequired": runtime["hostRelayRequired"] != false})
+		respond(w, 200, map[string]any{"telegramSMS": a.telegramStatus(), "radio": radio, "vendorSession": vendorSession, "wifi": wifi, "gateway": gatewayStatus(), "runtime": runtime, "interfaces": interfaces, "bootstrapRemaining": remaining, "networkError": neterr, "networkNotice": netnotice, "pendingNetwork": pending, "networkReady": ready, "networkRollingBack": rollingBack, "networkRemaining": networkRemaining, "internetSharing": sharing, "operatorCodecs": []string{"AMR-WB / 23.85 kbit/s max", "AMR-NB fallback"}, "pcmRate": 16000, "hostRelayRequired": runtime["hostRelayRequired"] != false})
 	case "/api/apply":
 		if r.Method != "POST" {
 			w.WriteHeader(405)
@@ -703,6 +708,9 @@ func main() {
 		}
 		if e := a.startSMSSIP(); e != nil {
 			fmt.Println("SMS_SIP_START_FAILED") // No socket errors or private data.
+		}
+		if e := a.startTelegramSMS(); e != nil {
+			fmt.Println("TELEGRAM_SMS_START_FAILED")
 		}
 	}
 	if e := srv.Serve(listener); e != nil {

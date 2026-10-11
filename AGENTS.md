@@ -17,7 +17,7 @@ untracked historical build files for a production build.
 - Run `make test`, the relevant component build, `make package package-check`
   and `make audit`. `make ci` is the complete GitHub Actions workflow.
 - Add meaningful isolated fixtures for changed behavior. UI changes need all
-  seven tabs at desktop/mobile widths and embedded-asset rebuilds.
+  eight tabs at desktop/mobile widths and embedded-asset rebuilds.
 - A build, fixture or old receipt is not proof of current physical behavior.
   Report source/fixture/device evidence separately and label remaining gaps.
 
