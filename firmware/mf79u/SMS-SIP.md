@@ -1,5 +1,17 @@
 > Imported project history, snapshot 2026-10-11. Read the [current repository status](../../docs/STATUS.md) and [agent rules](../../AGENTS.md) first. Dated experiments/commands below may be superseded; use the root Makefile. Private historical receipts and old images are excluded from publication.
 
+## Incoming multipart completion gate, 2026-10-12
+
+The shared Control reader now holds incomplete B03 GSM SMS until assembly is
+complete, before creating a SIP MESSAGE or Telegram job. Same-ID snapshots are
+deduplicated to the longest complete text; incomplete rows cannot be deleted by
+the forwarding path. Incoming body allowance is2680 UTF-8 bytes, matching the
+existing SIP wire buffer; outgoing submission remains670 characters. No SIP
+binary/media/radio change is required. Tests cover restart and whole-message
+retention across Telegram deletion before the independent SIP poll/ACK.
+Details and live evidence:
+[incoming SMS assembly](SMS-API.md#incoming-multipart-sms-2026-10-12).
+
 # Device-local SMS over SIP MESSAGE
 
 Audited 2026-10-11. [STATUS.md](STATUS.md) distinguishes installed runtime,

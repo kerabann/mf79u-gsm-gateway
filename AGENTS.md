@@ -44,6 +44,9 @@ untracked historical build files for a production build.
   driver requires a checked software reboot (`REBOOT=1`) within authorized scope.
 - Ordinary LTE data blocking must retain operator IMS `wan5`. VoWiFi-only
   forbids LTE/CS voice fallback and cellular SMS submission fallback/retries.
+  The explicitly selected `VOWIFI_SMS` compatibility option uses GSM as its
+  primary SMS path, with CS voice flags disabled and the adapter suspended;
+  it still forbids LTE/CS voice fallback and automatic SMS transport failover.
 - Never deploy link-only SDK shims. They exist solely for linking against the
   documented B03 ABI; the installer checks the real device libraries and CP ABI.
 - The old browser command console is removed. Do not restore `outputs/zte-shell`

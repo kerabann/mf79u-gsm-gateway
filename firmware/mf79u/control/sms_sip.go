@@ -327,6 +327,8 @@ func (b *smsSIPBridge) refresh() {
 
 func incomingSMS(list func(string) (map[string]any, error)) ([]smsSIPItem, error) {
 	items := []smsSIPItem{}
+	bySource := make(map[string]int)
+	ambiguous := make(map[string]bool)
 	for _, storage := range []string{"modem", "sim"} {
 		value, e := list(storage)
 		if e != nil {
@@ -338,11 +340,11 @@ func incomingSMS(list func(string) (map[string]any, error)) ([]smsSIPItem, error
 		}
 		for _, raw := range messages {
 			m, ok := raw.(map[string]any)
-			if !ok || smsDirection(str(m["tag"])) != "incoming" {
+			if !ok || smsDirection(str(m["tag"])) != "incoming" || !smsReceiveComplete(m) {
 				continue
 			}
 			number, text := smsNumber(str(m["number"])), str(m["text"])
-			if number == "" || len(number) > 128 || strings.ContainsAny(number, "\x00\r\n") || !utf8.ValidString(text) || strings.ContainsRune(text, 0) || len([]rune(text)) < 1 || len([]rune(text)) > 670 {
+			if number == "" || len(number) > 128 || strings.ContainsAny(number, "\x00\r\n") || !utf8.ValidString(text) || strings.ContainsRune(text, 0) || len(text) < 1 || len(text) > smsIncomingTextLimit {
 				continue
 			}
 			date := str(m["date"])
@@ -351,9 +353,30 @@ func incomingSMS(list func(string) (map[string]any, error)) ([]smsSIPItem, error
 			if normalized := smsDate(date); normalized != nil {
 				when = *normalized
 			}
-			items = append(items, smsSIPItem{ID: key, Number: number, Text: text, Date: when, Storage: storage, SourceID: str(m["id"])})
+			item := smsSIPItem{ID: key, Number: number, Text: text, Date: when, Storage: storage, SourceID: str(m["id"])}
+			source := storage + "\x00" + item.SourceID
+			if index, found := bySource[source]; found {
+				previous := items[index]
+				// Stock B03 can return repeated snapshots of one inbox ID.
+				// Select its longest complete content; never join unrelated IDs.
+				if previous.Number != item.Number || len(previous.Text) == len(item.Text) && previous.Text != item.Text {
+					ambiguous[source] = true
+				} else if len(item.Text) > len(previous.Text) {
+					items[index] = item
+				}
+				continue
+			}
+			bySource[source] = len(items)
+			items = append(items, item)
 		}
 	}
+	ready := items[:0]
+	for _, item := range items {
+		if !ambiguous[item.Storage+"\x00"+item.SourceID] {
+			ready = append(ready, item)
+		}
+	}
+	items = ready
 	sort.SliceStable(items, func(i, j int) bool { return items[i].Date < items[j].Date })
 	return items, nil
 }

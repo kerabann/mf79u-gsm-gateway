@@ -16,18 +16,20 @@ spec.loader.exec_module(update)
 previous = b'previous native fixture'
 digest = hashlib.md5(previous).hexdigest()
 
-for failure in ['active_call', 'wrong_executable', 'wrong_parent', 'no_staging_space', 'call_during_staging', 'guard_during_staging']:
+for failure in ['active_call', 'wrong_executable', 'wrong_parent', 'wrong_sip_executable', 'no_staging_space', 'call_during_staging', 'guard_during_staging']:
     calls, transfers = [], []
 
     def shell(command):
         calls.append(command)
         if command == 'cat /dev/.mf79u-native-status.json':
-            return json.dumps({'pid': 42, 'callBackend': 'none'})
+            return json.dumps({'pid': 42, 'sipPid': 43, 'callBackend': 'none'})
         if command == 'cat /dev/.mf79u-gateway-status.json':
             return json.dumps({'activeCall': failure == 'active_call' or (failure == 'call_during_staging' and len(transfers) == 2)})
         if command == 'cat /dev/.mf79u-native-supervisor.pid':
             return '33'
         if command.startswith('md5sum '):
+            if failure == 'wrong_sip_executable' and '/proc/43/' in command:
+                return '0' * 32 + ' fixture'
             if '.mf79u-native.update-next' in command:
                 return hashlib.md5(b'candidate fixture').hexdigest() + ' fixture'
             if failure == 'wrong_executable' and '/proc/' in command:
@@ -54,9 +56,10 @@ for failure in ['active_call', 'wrong_executable', 'wrong_parent', 'no_staging_s
         base = root / 'firmware/mf79u'
         (base / 'build').mkdir(parents=True)
         (base / 'build/mf79u-native-gateway').write_bytes(b'candidate fixture')
+        (base / 'build/modem-sip-gateway').write_bytes(b'sip candidate fixture')
         with patch.object(update, 'ROOT', root), patch.object(update, 'BASE', base), \
              patch.object(update, 'shell', shell), patch.object(update, 'push', lambda *args: transfers.append(args)), \
-             patch('sys.argv', ['fixture', '--install']):
+             patch('sys.argv', ['fixture', '--install'] + (['--with-sip'] if failure == 'wrong_sip_executable' else [])):
             try:
                 update.main()
             except RuntimeError:

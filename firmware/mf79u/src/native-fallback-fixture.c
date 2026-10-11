@@ -68,7 +68,7 @@ int main(int argc,char **argv){
      if(id==call){call=0;printf("CS_ENDED %u %u\nCS_CONNECTED %u %u\n",epoch,id,epoch,id);}
     } else if(!strcmp(action,"QUIT"))break;
    }
-   if(pcm>=0 && !announced && exists("/tmp/cs-incoming")) {
+   if(!announced && ((pcm>=0 && exists("/tmp/cs-incoming")) || exists("/tmp/cs-force-incoming"))) {
     announced=1;call=++sequence;printf("CS_INCOMING %u %u anonymous\n",epoch,call);
    }
    if(exists("/tmp/cs-crash"))return 11;
@@ -114,14 +114,14 @@ int main(int argc,char **argv){
  int q=msgget(0x100f,IPC_CREAT|IPC_EXCL|0600);if(q<0)return 1;
  cp_queue=q;signal(SIGTERM,cp_stop);signal(SIGINT,cp_stop);
  puts("FIXTURE_CP_READY");fflush(stdout);
- int profile=27,fun=1,voice=0,open_voice=0;
+ int profile=27,fun=exists("/tmp/gsm-sms-supported")?4:1,voice=0,open_voice=0;
  for(;;){
   struct message m;if(msgrcv(q,&m,sizeof(m)-4,0,0)<0)return 7;
   int destination=m.src,replyq=msgget(destination,0600);if(replyq<0)return 8;
   char reply[256];char command[3497];memcpy(command,m.payload,3496);command[3496]=0;command[strcspn(command,"\r\n")]=0;
   int lte=profile==27 && fun && exists("/tmp/radio-lte"),short_reply=exists("/tmp/radio-search"),non3gpp=exists("/tmp/ims-non3gpp-gated");const char *text="\r\nOK\r\n";
   if(!strncmp(command,"AT+CEREG?",9))text=exists("/tmp/cp-status-error")?"\r\nERROR\r\n":non3gpp?"\r\n+CEREG: 2,4\r\nOK\r\n":lte?"\r\n+CEREG: 2,5,\"00D3\",\"000052C4\",7\r\nOK\r\n":"\r\n+CEREG: 2,2\r\nOK\r\n";
-  else if(!strncmp(command,"AT+CREG?",8))text=non3gpp?"\r\n+CREG: 2,4\r\nOK\r\n":short_reply?"\r\n+CREG: 2,2\r\nOK\r\n":"\r\n+CREG: 2,5\r\nOK\r\n";
+  else if(!strncmp(command,"AT+CREG?",8))text=exists("/tmp/gsm-sms-supported") && profile==13 && fun==1?"\r\n+CREG: 2,5\r\nOK\r\n":non3gpp?"\r\n+CREG: 2,4\r\nOK\r\n":short_reply?"\r\n+CREG: 2,2\r\nOK\r\n":"\r\n+CREG: 2,5\r\nOK\r\n";
   else if(!strncmp(command,"AT^SYSINFO",10))text=short_reply?"\r\n^SYSINFO: 0,0,0,0,1\r\nOK\r\n":lte?"\r\n^SYSINFO: 2,2,1,5,1,,7\r\nOK\r\n":"\r\n^SYSINFO: 2,3,1,3,1,,3\r\nOK\r\n";
   else if(!strncmp(command,"AT+CIREP?",9))text=lte?"\r\n+CIREP: 0,1\r\nOK\r\n":"\r\n+CIREP: 0,0\r\nOK\r\n";
   else if(!strcmp(command,"AT+CFUN=0"))fun=0;
@@ -137,6 +137,11 @@ int main(int argc,char **argv){
   else if(!strcmp(command,"AT+ZSET=\"OPEN_VOICE_FLAG\",0"))open_voice=0;
   else if(!strcmp(command,"AT+ZSET=\"VOICE_SUPPORT\"")){snprintf(reply,sizeof(reply),"\r\n+ZSET: \"VOICE_SUPPORT\",%d\r\nOK\r\n",voice);text=reply;}
   else if(!strcmp(command,"AT+ZSET=\"OPEN_VOICE_FLAG\"")){snprintf(reply,sizeof(reply),"\r\n+ZSET: \"OPEN_VOICE_FLAG\",%d\r\nOK\r\n",open_voice);text=reply;}
+  if(exists("/tmp/gsm-sms-supported")) {
+   FILE *f=fopen("/tmp/gsm-sms-radio.json","w");assert(f);
+   fprintf(f,"{\"profile\":%d,\"fun\":%d,\"voice\":%d,\"openVoice\":%d}\n",profile,fun,voice,open_voice);fclose(f);
+   assert(strncmp(command,"ATD",3) && strcmp(command,"ATA"));
+  }
   m=(struct message){.type=1,.src=0x100f,.dst=destination,.cmd=0x152f,.len=(uint16_t)strlen(text),.magic=0x3a3a3a3a};memcpy(m.payload,text,m.len);
   if(msgsnd(replyq,&m,16+m.len,0))return 9;
  }

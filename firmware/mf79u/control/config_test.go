@@ -153,6 +153,23 @@ func TestCSRFAndUnauthenticatedConfig(t *testing.T) {
 	}
 }
 
+func TestCompatibilityModeRefusesUnsupportedNativeBeforeSaving(t *testing.T) {
+	if nativeRuntime()["vowifiCellularSmsSupported"] == true {
+		t.Skip("isolated legacy-runtime fixture only")
+	}
+	a := fixtureApp(nil)
+	a.dir = t.TempDir()
+	a.native = true
+	before := a.settings.VoiceMode
+	w := adminRequest(a, "PUT", "/api/settings", `{"voiceMode":"VOWIFI_SMS"}`, true, true)
+	if w.Code != 409 || a.settings.VoiceMode != before {
+		t.Fatal("unsupported native compatibility mode was accepted")
+	}
+	if _, e := os.Stat(filepath.Join(a.dir, "settings.json")); !os.IsNotExist(e) {
+		t.Fatal("unsupported mode persisted")
+	}
+}
+
 func TestSMSCommandCompletion(t *testing.T) {
 	for _, action := range []string{"send", "delete"} {
 		t.Run(action, func(t *testing.T) {
@@ -189,7 +206,7 @@ func TestSMSCommandCompletion(t *testing.T) {
 }
 
 func TestVoiceRegistrationSettings(t *testing.T) {
-	for _, mode := range []string{"AUTO", "VOLTE", "CS", "VOWIFI"} {
+	for _, mode := range []string{"AUTO", "VOLTE", "CS", "VOWIFI", "VOWIFI_SMS"} {
 		s := defaults()
 		s.VoiceMode = mode
 		if err := validate(s); err != nil {

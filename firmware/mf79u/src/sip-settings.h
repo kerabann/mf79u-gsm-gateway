@@ -25,7 +25,7 @@ static int sip_load_settings(const char *path,struct sip_settings *s){
   else if(!strcmp(line,"voice_mode")){
    /* Shared INI: the native controller owns radio registration. Validate its
     * field here so initial startup and SIGHUP accept the generated config. */
-   if(strcmp(eq,"AUTO") && strcmp(eq,"VOLTE") && strcmp(eq,"CS") && strcmp(eq,"VOWIFI")){result=1;break;}
+   if(strcmp(eq,"AUTO") && strcmp(eq,"VOLTE") && strcmp(eq,"CS") && strcmp(eq,"VOWIFI") && strcmp(eq,"VOWIFI_SMS")){result=1;break;}
    continue;
   }
   else if(!strcmp(line,"vowifi_uplink")){

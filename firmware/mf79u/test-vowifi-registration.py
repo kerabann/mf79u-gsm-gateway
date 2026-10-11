@@ -18,10 +18,11 @@ subprocess.run(['arm-linux-gnueabi-gcc', *flags, '-DMF79U_IMS_TIMEOUT=5', '-DMF7
                 'firmware/mf79u/src/cp-pdp.c', 'firmware/mf79u/src/native-gateway.c',
                 'firmware/mf79u/src/net-led-policy.c', '-o', str(build / 'vowifi-registration-test')], check=True)
 for name in ('radio-lte', 'radio-search', 'cp-status-error', 'ims-accept', 'ims-crash', 'test-call',
-             'guard-test', 'cs-incoming', 'cs-crash', 'charged-command', 'non3gpp-admitted', 'tunnel-permitted'):
+             'guard-test', 'cs-incoming', 'cs-force-incoming', 'cs-crash', 'charged-command', 'non3gpp-admitted', 'tunnel-permitted', 'gsm-sms-supported'):
     Path('/tmp/' + name).unlink(missing_ok=True)
 Path('/tmp/radio-search').touch()
 Path('/tmp/ims-non3gpp-gated').touch()
+Path('/tmp/gsm-sms-supported').touch()
 Path('/tmp/usb-carrier').write_text('1\n')
 runtime = Path('/dev/mf79u/vowifi')
 runtime.mkdir(parents=True, exist_ok=True)
@@ -98,6 +99,32 @@ try:
     recovered = wait(lambda s: s.get('imsReady') and s.get('voiceReady'))
     assert recovered['pid'] == pid and recovered['sipPid'] == sip and not recovered['cellularRegistered']
     assert 'event=cereg_field_missing' in logpath.read_text()
+    Path('/tmp/cp-status-error').unlink()
+    config.write_text('role=SERVER\nvoice_mode=VOWIFI_SMS\nvowifi_uplink=USB\n')
+    hybrid = wait(lambda s: s.get('effectiveVoiceMode') == 'VOWIFI_SMS' and s.get('cellularSmsRadioReady') and s.get('voiceReady'))
+    assert hybrid['imsAccess'] == 'WIFI' and hybrid['voiceBackend'] == 'ims' and hybrid['sipPid'] == sip
+    assert hybrid['csRegistration'] == 5 and hybrid['cellularRegistered'] and not hybrid['csAudioReady']
+    assert json.loads(Path('/tmp/gsm-sms-radio.json').read_text()) == {'profile': 13, 'fun': 1, 'voice': 0, 'openVoice': 0}
+    (base / 'native-ring-only').unlink()
+    Path('/tmp/usb-carrier').write_text('0\n')
+    lost = wait(lambda s: s.get('registrationState') == 'waiting_for_usb' and not s.get('imsReady'))
+    assert lost['cellularSmsRadioReady'] and lost['voiceBackend'] == 'none' and not lost['voiceReady']
+    with open('/proc/' + str(sip) + '/fd/0', 'wb', buffering=0) as pipe:
+        pipe.write(b'DIAL 1234567\nANSWER\n')
+    Path('/tmp/cs-force-incoming').touch()
+    time.sleep(1)
+    assert state()['callBackend'] == 'none' and not Path('/tmp/charged-command').exists()
+    commands = Path('/tmp/cs-commands').read_text()
+    assert 'DIAL ' not in commands and 'ANSWER ' not in commands and 'RESUME ' not in commands
+    assert 'HANGUP ' in commands
+    Path('/tmp/cs-force-incoming').unlink()
+    # A legacy CS-only marker must never override either VoWiFi-only mode.
+    (base / 'native-cs-only').touch()
+    time.sleep(2)
+    assert state()['voiceBackend'] == 'none' and 'RESUME ' not in Path('/tmp/cs-commands').read_text()
+    (base / 'native-cs-only').unlink()
+    Path('/tmp/usb-carrier').write_text('1\n')
+    wait(lambda s: s.get('voiceReady') and s.get('cellularSmsRadioReady'))
     proc.terminate()
     assert proc.wait(timeout=15) == 0
     Path('reports').mkdir(exist_ok=True)
@@ -106,7 +133,9 @@ try:
         'noCellularService': True, 'realCellularStatusPreserved': True,
         'privateImsPacketServiceQueriesAdapted': True, 'tunnelLossRevokesReadiness': True,
         'cellularQueryFailureDoesNotBlockRecovery': True, 'sipPidPreserved': True,
-        'ringOnlyBlocksDialAndAnswer': True}, indent=2) + '\n')
+        'ringOnlyBlocksDialAndAnswer': True, 'gsmSmsRadioRegisteredWithVoiceFlagsOff': True,
+        'hybridFreshCellularTelemetry': True, 'hybridTunnelLossNeverFallsBack': True,
+        'hybridUnexpectedCsCallRejected': True, 'csOnlyMarkerCannotOverrideVoWiFiOnly': True}, indent=2) + '\n')
     print('PASS actual ARM controller: SWu-gated IMS with no cellular service; private queries, tunnel loss/recovery, CP failure, stable SIP and ring-only')
 finally:
     if proc.poll() is None:

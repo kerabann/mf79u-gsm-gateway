@@ -41,6 +41,13 @@ let browser;
    checks.push({tab,width,overflow});
   }
  }
+ await page.goto('http://127.0.0.1:18093/#mobile');await page.locator('#shell').waitFor({state:'visible'});
+ await page.locator('#voice-vowifi-sms-option').waitFor({state:'attached'});
+ await page.locator('#voice-mode').selectOption('VOWIFI_SMS');await page.locator('#save-settings').click();
+ await page.waitForFunction(()=>document.getElementById('voice-cellular-sms').textContent.includes('registered'));
+ assert.equal(await page.locator('#voice-mode').inputValue(),'VOWIFI_SMS');
+ await page.goto('http://127.0.0.1:18093/#sms');await page.locator('#shell').waitFor({state:'visible'});
+ await page.waitForFunction(()=>document.getElementById('sms-transport').textContent.includes('Calls remain VoWiFi only'));
  await page.goto('http://127.0.0.1:18093/#webhooks');await page.locator('#shell').waitFor({state:'visible'});
  await page.locator('#telegram-enabled').check();await page.locator('#telegram-bot-token').fill('1234:'+ 'x'.repeat(30));await page.locator('#telegram-chat-id').fill('-1001234');await page.locator('#telegram-interface').selectOption('bridge0');await page.locator('#telegram-delete-after-send').check();
  let writes=[];page.on('request',r=>{if(r.method()!=='GET')writes.push(new URL(r.url()).pathname)});

@@ -7,6 +7,9 @@ docker run --rm -v "$(pwd):/work" -w /work mf79u-build-tools:local sh -eu -c '
     -mfloat-abi=soft firmware/mf79u/src/cp-ipc.c firmware/mf79u/src/cp-ipc-probe.c \
     -o firmware/mf79u/build/cp-ipc-probe
   arm-linux-gnueabi-gcc -Os -Wall -Wextra -Werror -static -s -march=armv7-a \
+    -mfloat-abi=soft firmware/mf79u/src/cp-ipc.c firmware/mf79u/src/network-registration-probe.c \
+    -o firmware/mf79u/build/network-registration-probe
+  arm-linux-gnueabi-gcc -Os -Wall -Wextra -Werror -static -s -march=armv7-a \
     -mfloat-abi=soft firmware/mf79u/src/cp-ipc.c firmware/mf79u/src/cp-pdp.c firmware/mf79u/src/native-gateway.c \
     firmware/mf79u/src/net-led-policy.c -o firmware/mf79u/build/mf79u-native-gateway
   arm-linux-gnueabi-gcc -Os -Wall -Wextra -Werror -static -s -march=armv7-a \

@@ -249,6 +249,10 @@ func (a *App) serve(w http.ResponseWriter, r *http.Request) {
 			failure(w, 400, e)
 			return
 		}
+		if a.native && value.VoiceMode == "VOWIFI_SMS" && nativeRuntime()["vowifiCellularSmsSupported"] != true {
+			failure(w, 409, errors.New("Update the native runtime before enabling VoWiFi with GSM SMS"))
+			return
+		}
 		a.mu.Lock()
 		// Webhooks use their own scoped Save; full settings clients preserve them.
 		value.Webhooks = a.settings.Webhooks
@@ -647,6 +651,7 @@ func main() {
 	native := flag.Bool("native", false, "enable modem service and network controls")
 	boot := flag.Bool("bootstrap", false, "apply the saved Wi-Fi profile")
 	telegramCheck := flag.Bool("telegram-diagnose", false, "read-only Telegram DNS/TLS/bot/chat diagnostic; no message submission")
+	smsReceiveCheck := flag.Bool("sms-receive-diagnose", false, "read-only incoming SMS concatenation metadata; no message fields or submission")
 	flag.Parse()
 	// This vendor Linux 3.4 kernel has a non-standard syscall 384: Go's
 	// getrandom probe does not return ENOSYS. Use the kernel CSPRNG device.
@@ -659,6 +664,10 @@ func main() {
 	}
 	if *telegramCheck {
 		_ = json.NewEncoder(os.Stdout).Encode(telegramDiagnostics(*dir))
+		return
+	}
+	if *smsReceiveCheck {
+		_ = json.NewEncoder(os.Stdout).Encode(smsReceiveDiagnostics(*base))
 		return
 	}
 	s, e := readSettings(*dir)

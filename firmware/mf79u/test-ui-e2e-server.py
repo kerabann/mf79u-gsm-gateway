@@ -66,13 +66,13 @@ class Handler(BaseHTTPRequestHandler):
             cs = settings['voiceMode'] == 'CS'
             return self.reply({'radio': {'network_provider': 'UI fixture', 'network_type': 'GSM' if cs else 'LTE', 'simcard_roam': 'Home', 'modem_main_state': 'modem_init_complete'},
                                'gateway': {'running': True, 'role': settings['sip']['role'], 'registered': True, 'registerMode': settings['sip']['register'], 'localRegistered': True, 'activeCall': False},
-                               'runtime': {'imsAccess': 'WIFI' if settings['voiceMode'] != 'VOLTE' else 'LTE', 'vowifiUplink': settings['vowifi']['uplink'], 'voiceBackend': 'cs' if cs else 'ims', 'voiceReady': True, 'imsReady': not cs, 'hostRelayRequired': False, 'registrationState': 'ready', 'callBackend': 'none'},
+                               'runtime': {'vowifiCellularSmsSupported': True, 'voiceMode': settings['voiceMode'], 'effectiveVoiceMode': settings['voiceMode'], 'cellularSmsRadioReady': settings['voiceMode'] == 'VOWIFI_SMS', 'imsAccess': 'WIFI' if settings['voiceMode'] != 'VOLTE' else 'LTE', 'vowifiUplink': settings['vowifi']['uplink'], 'voiceBackend': 'cs' if cs else 'ims', 'voiceReady': True, 'imsReady': not cs, 'hostRelayRequired': False, 'registrationState': 'ready', 'callBackend': 'none'},
                                'wifi': {'mode': settings['wifi']['mode'], 'state': 'COMPLETED' if settings['wifi']['mode'] == 'CLIENT' else 'ENABLED', 'ssid': 'Fixture AP'},
                                'telegramSMS': {'running': True, 'initialized': True, 'queued': 0, 'delivered': 2, 'error': ''},
                                'interfaces': [{'name': 'bridge0', 'up': True, 'addresses': ['192.168.0.1/24']}, {'name': 'wan0', 'up': True, 'addresses': []}, {'name': 'wan5', 'up': True, 'addresses': []}], 'internetSharing': settings['internetSharing'], 'pendingNetwork': pending, 'networkReady': bool(pending) and time.monotonic() - started > 3,
                                'networkRemaining': max(0, int(args.timeout - (time.monotonic() - started))), 'networkNotice': feedback, 'networkError': ''})
         if self.path.startswith('/api/sms?'):
-            return self.reply({'messages': messages, 'capacity': {'sms_nv_total': 100, 'sms_nvused_total': len(messages)}, 'transport': 'SMSoIP'})
+            return self.reply({'messages': messages, 'capacity': {'sms_nv_total': 100, 'sms_nvused_total': len(messages)}, 'transport': 'GSM' if settings['voiceMode'] == 'VOWIFI_SMS' else 'SMSoIP'})
         if self.path == '/api/system/info':
             return self.reply({'model': 'ZTE MF79U', 'controlVersion': '0.10', 'gateway': {'version': '0.8'}, 'runtime': {'version': '0.9'}, 'imei': '490154203237518', 'imeiWriteAvailable': True, 'operatorCodecs': ['AMR-WB', 'AMR-NB'], 'sipCodecs': ['Opus', 'G.722', 'PCMA', 'PCMU', 'G.729'], 'pcm': 'Mono PCM16LE 16000 Hz / 320 samples', 'native': True, 'ssh': ssh})
         if self.path.startswith('/api/system/logs?'):

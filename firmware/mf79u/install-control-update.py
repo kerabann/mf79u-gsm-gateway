@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """Guarded Control-only upgrade, preserving SIP/native/settings."""
 from pathlib import Path
-import base64,importlib.util,subprocess,gzip,hashlib,time,json,datetime
+import argparse,base64,importlib.util,subprocess,gzip,hashlib,time,json,datetime
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--require-sms-idle',action='store_true',help='Refuse SMS receive-policy updates while legacy forwarding jobs are pending')
+args=parser.parse_args()
 base=Path(__file__).resolve().parent;root=base.parents[1];build=base/'build';data='/mnt/userdata/mf79u'
 spec=importlib.util.spec_from_file_location('transfer',base/'device-transfer.py');transfer=importlib.util.module_from_spec(spec);spec.loader.exec_module(transfer);shell=transfer.shell;push=transfer.push
 backup=build/('pre-control-update-'+datetime.datetime.now().strftime('%Y%m%d'));backup.mkdir(mode=0o700,exist_ok=True)
@@ -11,6 +14,14 @@ def wait_exit(pid):
   if shell('test -e /proc/'+str(pid)+'/exe && echo YES')!='YES':return
   time.sleep(.2)
  raise RuntimeError('Owned process cleanup did not finish')
+def check_sms_idle():
+ if not args.require_sms_idle:return
+ for filename in ('sms-sip-state.json','sms-telegram-state.json'):
+  value=shell('if [ -f '+data+'/'+filename+' ]; then cat '+data+'/'+filename+'; fi')
+  state=json.loads(value) if value else {}
+  pending=state.get('Jobs',[]) if filename.startswith('sms-telegram') else [job for job in state.get('Jobs',[]) if job.get('State') in ('queued','sending')]
+  if pending or state.get('Inbox'):raise RuntimeError('Pending legacy SMS jobs must finish before this receive-policy update; services remain running')
+check_sms_idle()
 state=json.loads(shell('cat /dev/.mf79u-native-status.json'));gateway=json.loads(shell('cat /dev/.mf79u-gateway-status.json'))
 if gateway.get('activeCall') or state.get('callBackend','none')!='none':raise RuntimeError('Modem call active')
 settings=shell('md5sum '+data+'/settings.json '+data+'/gateway.ini')
@@ -46,6 +57,7 @@ new=build/'mf79u-control';packed=build/'control-update.gz';packed.write_bytes(gz
 restore=backup/'restore.gz';restore.write_bytes(gzip.compress(old.read_bytes(),9,mtime=0));push(restore,'/dev/.mf79u-control.update-restore.gz')
 pid=int(shell('cat /dev/.mf79u-control.pid'));parent=int(shell("sed -n 's/^PPid:[[:space:]]*//p' /proc/"+str(pid)+"/status"))
 if pid<2 or parent<2 or shell('test /proc/'+str(pid)+'/exe -ef '+data+'/.mf79u-control && grep -q start-control.sh /proc/'+str(parent)+'/cmdline && echo OWNED')!='OWNED':raise RuntimeError('Unexpected Control owner')
+check_sms_idle()
 shell('kill -TERM '+str(pid));wait_exit(pid);wait_exit(parent)
 shell(f'''set -e
 base={data}

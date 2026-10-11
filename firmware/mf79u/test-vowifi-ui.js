@@ -7,6 +7,11 @@ const ctx={$:get,api:async()=>snapshot,settings:{sip:{server:'pbx',port:5060,tra
 vm.createContext(ctx);vm.runInContext('async function renderStatus(){'+source,ctx);
 (async()=>{
  await ctx.renderStatus();assert.equal(get('voice-current').textContent,'VoWiFi');assert.equal(get('ims-state').textContent,'Registered');assert.equal(get('voice-vowifi-option').disabled,false);
+ assert.equal(get('voice-vowifi-sms-option').disabled,true);
+ Object.assign(snapshot.runtime,{vowifiCellularSmsSupported:true,effectiveVoiceMode:'VOWIFI_SMS',cellularSmsRadioReady:false});
+ await ctx.renderStatus();assert.equal(get('voice-vowifi-sms-option').disabled,false);assert.match(get('voice-cellular-sms').textContent,/waiting for cellular/);
+ snapshot.runtime.cellularSmsRadioReady=true;await ctx.renderStatus();assert.match(get('voice-cellular-sms').textContent,/registered/);
+ snapshot.runtime.effectiveVoiceMode='VOWIFI';await ctx.renderStatus();assert.equal(get('voice-cellular-sms').hidden,true);
  snapshot.gateway.imsReady=true;Object.assign(snapshot.runtime,{voiceReady:false,imsReady:false,voiceBackend:'none',imsAccess:'NONE',registrationState:'waiting_for_wifi',smsOnly:true});
  await ctx.renderStatus();assert.equal(get('voice-current').textContent,'Unavailable');assert.equal(get('ims-state').textContent,'Not registered');assert.match(get('call-state').textContent,/Voice unavailable/);
  Object.assign(snapshot.runtime,{voiceReady:true,imsReady:true,voiceBackend:'ims',imsAccess:'LTE',registrationState:'ready'});await ctx.renderStatus();assert.equal(get('voice-current').textContent,'VoLTE');

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guarded native-controller-only update; no driver, media, settings or reboot."""
+"""Guarded native update, optionally shared-INI SIP parser; preserve settings/media."""
 import argparse
 import base64
 import datetime
@@ -37,6 +37,7 @@ def wait_exit(pid):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--install', action='store_true')
+    parser.add_argument('--with-sip', action='store_true', help='Also install the SIP binary for a new shared-INI mode; preserve IMS media and CS driver')
     parser.add_argument('--ring-only', action='store_true', help='Enable persistent dial/answer protection for a roaming registration-only check')
     args = parser.parse_args()
     candidate = BASE / 'build/mf79u-native-gateway'
@@ -56,6 +57,10 @@ def main():
     if int(stat[1]) != parent or shell('grep -F -q start-native.sh /proc/' + str(parent) + '/cmdline && echo OWNED') != 'OWNED':
         raise RuntimeError('Unexpected native supervisor owner')
     boot = shell('cat /proc/sys/kernel/random/boot_id')
+    sip_candidate = BASE / 'build/modem-sip-gateway'
+    sip_hash = checksum(DATA + '/.mf79u-sip-gateway') if args.with_sip else None
+    if args.with_sip and (not sip_candidate.is_file() or checksum('/proc/' + str(native['sipPid']) + '/exe') != sip_hash):
+        raise RuntimeError('SIP candidate missing or unexpected installed SIP executable')
     if args.ring_only and not ring_guard_present():
         shell('set -e; umask 077; touch ' + DATA + '/native-ring-only')
     guard = ring_guard_present()
@@ -74,14 +79,27 @@ def main():
     old.chmod(0o600)
     if hashlib.md5(old.read_bytes()).hexdigest() != oldhash:
         raise RuntimeError('Native backup checksum mismatch')
+    sip_packed = None
+    if args.with_sip:
+        encoded = shell(DATA + '/tools/busybox gzip -c ' + DATA + '/.mf79u-sip-gateway | ' + DATA + '/tools/busybox base64')
+        sip_old = backup / 'modem-sip-gateway'
+        sip_old.write_bytes(gzip.decompress(base64.b64decode(encoded)))
+        sip_old.chmod(0o600)
+        if hashlib.md5(sip_old.read_bytes()).hexdigest() != sip_hash:
+            raise RuntimeError('SIP backup checksum mismatch')
+        sip_packed = backup / 'sip-candidate.gz'
+        sip_packed.write_bytes(gzip.compress(sip_candidate.read_bytes(), 9, mtime=0))
+        sip_packed.chmod(0o600)
     packed = backup / 'candidate.gz'
     packed.write_bytes(gzip.compress(candidate.read_bytes(), 9, mtime=0))
     packed.chmod(0o600)
-    required = candidate.stat().st_size + packed.stat().st_size + 65536
+    required = candidate.stat().st_size + packed.stat().st_size + (sip_packed.stat().st_size if sip_packed else 0) + 65536
     free = int(shell('df -k ' + DATA).splitlines()[-1].split()[3]) * 1024
     if free < required:
         raise RuntimeError('Insufficient staging space; services remain running')
     push(packed, DATA + '/.mf79u-native.update.gz')
+    if sip_packed:
+        push(sip_packed, DATA + '/.mf79u-sip.update.gz')
     digest = hashlib.md5(candidate.read_bytes()).hexdigest()
     shell('set -e; ' + DATA + '/tools/busybox gzip -dc ' + DATA + '/.mf79u-native.update.gz > ' + DATA + '/.mf79u-native.update-next; chmod 700 ' + DATA + '/.mf79u-native.update-next')
     if checksum(DATA + '/.mf79u-native.update-next') != digest:
@@ -103,6 +121,23 @@ def main():
     shell('kill -TERM ' + str(parent))
     wait_exit(pid)
     wait_exit(parent)
+    if args.with_sip:
+        wait_exit(native['sipPid'])
+        sip_digest = hashlib.md5(sip_candidate.read_bytes()).hexdigest()
+        try:
+            # The old child has exited, freeing its inode. Expand one checked
+            # backed-up executable at a time on the small userdata volume.
+            shell('set -e; rm -f ' + DATA + '/.mf79u-sip-gateway; ' + DATA + '/tools/busybox gzip -dc ' + DATA + '/.mf79u-sip.update.gz > ' + DATA + '/.mf79u-sip.update-next; chmod 700 ' + DATA + '/.mf79u-sip.update-next')
+            if checksum(DATA + '/.mf79u-sip.update-next') != sip_digest:
+                raise RuntimeError('Staged SIP checksum mismatch')
+            shell('set -e; mv ' + DATA + '/.mf79u-sip.update-next ' + DATA + '/.mf79u-sip-gateway; rm -f ' + DATA + '/.mf79u-sip.update.gz; sync')
+        except Exception:
+            restore = backup / 'sip-restore.gz'
+            restore.write_bytes(gzip.compress(sip_old.read_bytes(), 9, mtime=0))
+            restore.chmod(0o600)
+            push(restore, DATA + '/.mf79u-sip.restore.gz')
+            shell('set -e; rm -f ' + DATA + '/.mf79u-sip.update-next; ' + DATA + '/tools/busybox gzip -dc ' + DATA + '/.mf79u-sip.restore.gz > ' + DATA + '/.mf79u-sip-gateway; chmod 700 ' + DATA + '/.mf79u-sip-gateway; rm -f ' + DATA + '/.mf79u-sip.restore.gz; /dev/.mf79u-native-update-start')
+            raise
     shell('set -e; mv ' + DATA + '/.mf79u-native.update-next ' + DATA + '/.mf79u-native-gateway; sync; /dev/.mf79u-native-update-start; rm -f /dev/.mf79u-native-update-start ' + DATA + '/.mf79u-native.update.gz')
     for _ in range(120):
         current = json.loads(shell('cat /dev/.mf79u-native-status.json'))
@@ -111,7 +146,12 @@ def main():
         time.sleep(1)
     else:
         raise RuntimeError('Updated native controller did not become voice ready; checked backup retained')
-    if before != shell('md5sum ' + ' '.join(protected)) or boot != shell('cat /proc/sys/kernel/random/boot_id') or ring_guard_present() != guard:
+    after = shell('md5sum ' + ' '.join(protected))
+    if args.with_sip:
+        if checksum('/proc/' + str(current['sipPid']) + '/exe') != sip_digest:
+            raise RuntimeError('Updated SIP process differs from the candidate')
+        after = after.replace(sip_digest + '  ' + DATA + '/.mf79u-sip-gateway', sip_hash + '  ' + DATA + '/.mf79u-sip-gateway')
+    if before != after or boot != shell('cat /proc/sys/kernel/random/boot_id') or ring_guard_present() != guard:
         raise RuntimeError('Protected artifact, settings or boot changed')
     if checksum('/proc/' + str(current['pid']) + '/exe') != digest:
         raise RuntimeError('Updated native process differs from the candidate')
@@ -119,6 +159,7 @@ def main():
               'nativePid': current['pid'], 'sipPid': current.get('sipPid'), 'voiceMode': current.get('voiceMode'),
               'voiceBackend': current.get('voiceBackend'), 'voiceReady': current.get('voiceReady'),
               'ringOnlyGuard': guard,
+              'sipUpdated': args.with_sip, 'sipMD5': sip_digest if args.with_sip else None,
               'bootSettingsMediaDriverPreserved': True, 'realCallsSmsMade': False,
               'backup': str(backup.relative_to(ROOT))}
     (ROOT / 'reports/native-update-install.json').write_text(json.dumps(report, indent=2) + '\n')

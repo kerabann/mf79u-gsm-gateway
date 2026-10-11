@@ -19,6 +19,7 @@ from tests run during this migration and from a fresh live device test.
 | Caller ID / Privacy | `caller-id.*`, SIP gateway | From/PAI separate from auth username; Privacy retained |
 | Cellular SMS read/send/manage | Control `sms*.go`, vendor API/native CP | [SMS-API](../firmware/mf79u/SMS-API.md); B03 SEND_SMS in supported non-VOWIFI modes |
 | VoWiFi-only IMS SMS | `ims-sms-native.h`, Control `sms_ims*.go` + native/IMS | [SMS-IMS](../firmware/mf79u/SMS-IMS.md); no cellular fallback/retry; durable PDU before ACK, Unicode/concatenation inbox |
+| VoWiFi-only voice + GSM SMS compatibility | `VOWIFI_SMS`, native registration/call admission + Control cellular SMS | [Compatibility mode](../firmware/mf79u/SMS-IMS.md#vowifi-only-voice-with-gsm-sms-2026-10-12); GSM2G/CFUN1 with CS voice flags0; no cellular voice or SMS transport failover |
 | SIP MESSAGE/SMS confirmation/inbox delivery | `sip-sms.h`, Control SMS Unix IPC/job worker | [SMS-SIP](../firmware/mf79u/SMS-SIP.md); waits for confirmed submission, unconfirmed failure no auto resend; delivery ACK retained |
 | Telegram incoming SMS webhook | Control `sms_telegram.go`, bound DNS/HTTPS + private queue | [WEBHOOKS](WEBHOOKS.md); optional delete after Telegram confirmation with durable handoff to connected SIP; source/fixture/device boundaries below |
 | REST/login/CSRF/sessions/config | `control/*.go` embedded in Control | auth/error/recovery/config fixtures imported |

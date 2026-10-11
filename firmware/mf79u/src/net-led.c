@@ -132,7 +132,7 @@ static int vowifi_only(void){
     FILE *f=fopen("/mnt/userdata/mf79u/gateway.ini","r");if(!f)return 0;
     char line[1024];int only=0;
     while(fgets(line,sizeof(line),f))if(!strncmp(line,"voice_mode=",11)){
-        line[strcspn(line,"\r\n")]=0;only=!strcmp(line+11,"VOWIFI");break;
+        line[strcspn(line,"\r\n")]=0;only=!strcmp(line+11,"VOWIFI") || !strcmp(line+11,"VOWIFI_SMS");break;
     }
     memset(line,0,sizeof(line));fclose(f);return only;
 }

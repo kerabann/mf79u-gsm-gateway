@@ -91,6 +91,57 @@ required, 403 Origin/CSRF rejected, 405 unsupported method, 428 vendor re-login
 failed, 502 modem operation/response failure. Legacy `/api/sms` and
 `/api/sms/action` remain compatible with existing clients and WebUI.
 
+## Incoming multipart SMS, 2026-10-12
+
+B03 assembles cellular SMS segments in its own inbox. While receiving, the same
+row may expose only a prefix and later grow to the full text. Its stock frontend
+filters `received_all_concat_sms=0` and prefers the longest snapshot of a repeated
+inbox ID. The shared Telegram/SIP reader now applies that completion policy:
+an explicit incomplete flag, outstanding parts, malformed or contradictory
+concat metadata holds the row. Missing optional metadata retains legacy ordinary
+SMS behavior. `received_all_concat_sms=1` with consistent available counters, or
+complete counters when the flag is omitted, permits forwarding. The field names
+also appear in the [MF79U client reference](https://github.com/sebenik/zte-sms).
+
+No arbitrary delay is added to single SMS. Polling discovers the full message
+after B03 completes assembly; incomplete rows remain in modem memory without
+being marked seen, queued for Telegram/SIP, or automatically deleted. Missing
+segments do not cause a timed partial export. Repeated same-ID rows select the
+longest complete text; contradictory same-ID bodies/senders are held instead of
+guessing. Separate IDs are not combined by sender/time. The existing durable
+forwarding queues and receipt deduplication apply only after completion. Raw
+WebUI/REST inbox reads retain the original concat metadata and incomplete rows
+for administration; manual read/delete behavior is unchanged.
+
+Incoming text is bounded by the existing SIP receiver limit of 2680 UTF-8 bytes
+(up to 2680 ASCII or 1340 Cyrillic characters). This replaces the inappropriate
+outgoing 670-character check on incoming delivery, without increasing the SIP
+wire buffer. Outgoing UI/REST/SIP submission remains 1–670 characters. Larger
+incoming bodies remain in the modem inbox and are not truncated or exported.
+
+`mf79u-control -native -sms-receive-diagnose` performs read-only local vendor
+queries and reports only storage counts and concat flag/counter patterns. It
+does not expose IDs, senders, text, dates or credentials, nor submit/delete SMS.
+Isolated fixtures cover delayed snapshots, restart while incomplete, one full
+Telegram/SIP delivery, deletion after confirmation, duplicate/conflicting rows,
+legacy fields, Unicode and the existing wire bound. Live installation/metadata
+evidence is in `reports/sms-multipart-live-20261012.json`: installed Control MD5
+`2322c6d06d8233607ab5f9859be0ff7b`, seven complete B03 incoming rows, including
+four with two of two segments received, and unchanged native2147/SIP2148 with
+ready VOWIFI_SMS/IMS/local SIP registration. This confirms the device fields and
+installed runtime, not reception of a new delayed multipart SMS after the update.
+No real SMS/call or manual deletion was issued during verification.
+
+Use the maintained read-only check through the root Makefile:
+
+```sh
+make task TASK=verify-sms-multipart.py SERIAL=... ADB=/path/to/adb
+```
+
+The focused Control updater's `--require-sms-idle` option refuses replacement
+while Telegram or SIP has unfinished forwarding/submission work. It was used
+for this receive-policy installation; see [installation](../../docs/INSTALL.md).
+
 ## CLI client
 
 `sms-api.py` uses Python's standard library, prompts for the administrator

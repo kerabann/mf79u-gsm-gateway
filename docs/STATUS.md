@@ -8,7 +8,50 @@ The maintained delivery is the device-local userdata overlay. Full NAND/rootfs
 0.9 and SD 0.8 archives are historical and were not flashed or refreshed. Reset
 that preserves/restores a factory profile is designed, not implemented.
 
+## Incoming multipart SMS forwarding fix, 2026-10-12
+
+The user reported that long incoming GSM SMS were forwarded as fragments. B03
+exposes a growing inbox row with `received_all_concat_sms` and concat counters;
+the shared Telegram/SIP reader had ignored them. It now waits for completion,
+keeps unfinished rows in modem memory, and selects one longest complete snapshot
+per storage/ID. Incomplete rows do not enter either forwarding queue or its seen
+baseline and cannot trigger automatic deletion. Incoming text uses the existing
+2680-byte SIP body bound; outgoing submission stays at 670 characters. Go tests
+cover staggered/out-of-order snapshots, restart, no premature forwarding/delete,
+whole-message delivery/ACK/deduplication and conflicting metadata.
+
+Control MD5 `2322c6d06d8233607ab5f9859be0ff7b` is installed using the optional
+`--require-sms-idle` guard; legacy forwarding queues were clear before replacement.
+The update preserved settings, boot and native2147/SIP2148. A read-only installed
+metadata check found seven complete GSM inbox rows: three ordinary rows with
+`all=1,total=0,received=0` and four multipart rows with `all=1,total=2,received=2`.
+Two subsequent worker-poll snapshots retained VOWIFI_SMS, ready Wi-Fi IMS,
+GSM SMS registration, disabled CS signaling/audio and the registered Linphone
+client; SIP queued/pending/buffered counts stayed0. The complete test suite,
+28-file package/check and publication/documentation audit passed. No new SMS,
+call, answer or reboot was initiated. Reception of a new delayed multipart SMS
+after installation remains untested on hardware (`liveMultipartReceptionTested=false`);
+the staged completion/forwarding behavior is fixture evidence. Safe receipt:
+`reports/sms-multipart-live-20261012.json`. Details:
+[incoming SMS assembly](../firmware/mf79u/SMS-API.md#incoming-multipart-sms-2026-10-12).
+
 ## Roaming SIM VoWiFi registration fixed, 2026-10-12
+
+The owner subsequently authorized GSM registration for SMS with VoWiFi-only
+voice. The separate `VOWIFI_SMS` / **VoWiFi only + GSM SMS** option is installed
+and selected. Fresh CP checks confirmed GSM profile13, CFUN1, CREG5 (roaming)
+and both CS voice flags0. VoWiFi over USB remained ready, CS signaling/audio
+disabled; native2147/SIP2148 and the same boot stayed stable for60s after apply.
+The user confirmed incoming SMS: two new Telegram deliveries and two new SIP
+acknowledgements, with IMS received0 and the three earlier IMS incoming messages
+unchanged. Those forwarded inbox snapshots arrived through GSM; counters alone
+do not establish two distinct logical SMS, because the multipart bug above could
+forward a growing prefix more than once. Calendar date advanced
+from2000 to2026 after registration; Telegram GET-only bot/chat diagnostics now
+return200/OK with strict TLS. No manual clock setting, call/SMS submission or
+reboot was performed. The original VOWIFI IMS-SMS path is retained. Evidence:
+`reports/vowifi-gsm-sms-{live,stability,incoming-route}-20261012.json`. Details:
+[compatibility mode](../firmware/mf79u/SMS-IMS.md#vowifi-only-voice-with-gsm-sms-2026-10-12).
 
 Installed native MD5 `5baa88e88525c47f0c44cdba3a5a2327`: the owned B03 IMS
 engine now admits an authenticated SWu tunnel without cellular registration.
@@ -49,6 +92,43 @@ were preserved. Details, limitations and next diagnostic hypothesis:
 No settings, runtime installation, reboot, call or SMS submission was performed.
 The owner subsequently authorized repair and confirmed the SIM is roaming.
 The completed repair above supersedes this initial read-only diagnosis.
+
+## Incoming SMS diagnosis on the roaming SIM, 2026-10-12
+
+The owner sent an SMS to the new modem SIM and expected Telegram/Linphone;
+the sender showed sent, without a delivery report. Read-only inspection found
+the same boot/native2130/SIP2131, ready VoWiFi-only over USB, SMS IPC
+ready/configured/formatVerified=true and fenced=false, but received0 since this
+native start. No IMS MESSAGE/CMT/durable-receive event appeared in the retained
+small native log; no PDU, unsupported PDU or incomplete multipart remained.
+The three retained IMS incoming SMS are older, all acknowledged by SIP. Current
+SIP diagnostics reported vendorReady=true, no pending incoming or queued work;
+Telegram also had no pending job. Fresh CP reads returned CFUN4 and
+CREG/CGREG/CEREG state4, with SIM PIN ready. No current cellular attachment was
+observed. This locates the missing IMS delivery before the forwarding stages;
+the precise SMSC/IP-SM-GW routing/service cause is not established.
+
+A separate bound-interface Telegram GET-only check resolved DNS but returned
+`tls_invalid_certificate`: the modem's UTC date was 2000-01-01, while the public
+Telegram leaf observed from the host is valid2025-11-11 through2026-12-13.
+At that diagnostic point the clock was an additional Telegram blocker; the
+later GSM registration above supersedes this failure with working strict TLS.
+During the earlier diagnostic no clock/settings/runtime changes, SMS submission, manual
+Telegram message, call or reboot were performed. Reports:
+`reports/sms-delivery-path-20261012.json`,
+`reports/sms-delivery-network-20261012.json`. Further evidence and limitations:
+[SMS diagnosis](../firmware/mf79u/SMS-IMS.md#roaming-sim-incoming-sms-diagnosis-2026-10-12).
+
+MegaFon-specific research on2026-10-12 found an official VoWiFi condition:
+airplane-mode users should register in the cellular network every1.5 hours.
+The current FAQ does not promise incoming SMS through VoWiFi. Firsthand user
+reports include both working and failing SMS setups, so a universal carrier
+SMS prohibition is not established. Our fresh device-status check still showed
+ready VOWIFI with native2130/SIP2131; the published90-minute condition was not
+reproduced as a failure. SMS-over-IP subscriber provisioning/routing and accepted
+Contact capabilities require further evidence. No radio/clock/runtime changes
+or new SMS/call were initiated. Sources and compatibility limits:
+[MegaFon service check](../firmware/mf79u/SMS-IMS.md#megafon-specific-service-check-2026-10-12).
 
 ## Implemented and previously physically confirmed
 

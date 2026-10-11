@@ -140,8 +140,9 @@ static void hangup_owned(void) {
     else {query_ims("ATH");query_ims("AT+CHUP");}
 }
 static void reconcile_voice(void) {
-    struct mf79u_voice_inputs in={voice_enabled(),cs_only(),voice_ready,
-        cs_state==1 || cs_state==5,cs_voice>0 && cs_epoch && !cs_suspended && ims<0,effective_mode!=VOICE_VOLTE && effective_mode!=VOICE_VOWIFI && cs_ready};
+    struct mf79u_voice_inputs in={voice_enabled(),cs_only(),voice_ready &&
+        (!voice_mode_vowifi_only(effective_mode) || (ims_wifi && vowifi_tunnel_ready())),
+        cs_state==1 || cs_state==5,cs_voice>0 && cs_epoch && !cs_suspended && ims<0,effective_mode!=VOICE_VOLTE && !voice_mode_vowifi_only(effective_mode) && cs_ready};
     mf79u_voice_reconcile(&voice,&in,(unsigned long)monotonic());
     if(voice.end_call && !loss_notified){hangup_owned();send_sip("ENDED");loss_notified=1;}
     enum mf79u_voice_backend usable=voice.end_call?MF79U_VOICE_NONE:voice.selected;
@@ -160,15 +161,16 @@ static void publish(const char *state) {
         "\"smsOnly\":%s,\"cellularRegistered\":%s,\"epsRegistration\":%d,\"csRegistration\":%d,"
         "\"sipPid\":%ld,\"csPid\":%ld,\"ringOnly\":%s,\"csOnly\":%s,"
         "\"csSignalingReady\":%s,\"csCallState\":\"%s\",\"csAudioReady\":%s,"
-        "\"imsAccess\":\"%s\",\"vowifiUplink\":\"%s\",\"vowifiTunnelReady\":%s,\"voiceMode\":\"%s\",\"effectiveVoiceMode\":\"%s\",\"registrationMode\":\"%s\",\"registrationState\":\"%s\",\"fallbackReason\":\"%s\",\"volteRetrySeconds\":%ld}\n",
+        "\"imsAccess\":\"%s\",\"vowifiUplink\":\"%s\",\"vowifiTunnelReady\":%s,\"voiceMode\":\"%s\",\"effectiveVoiceMode\":\"%s\",\"registrationMode\":\"%s\",\"registrationState\":\"%s\",\"fallbackReason\":\"%s\",\"volteRetrySeconds\":%ld,\"vowifiCellularSmsSupported\":true,\"cellularSmsEnabled\":%s,\"cellularSmsRadioReady\":%s}\n",
         (long)getpid(),state,voice_ready?"true":"false",ready?"true":"false",
         mf79u_voice_name(ready?voice.selected:MF79U_VOICE_NONE),mf79u_voice_name(voice.owner),
         sip>0 && !ready?"true":"false",eps_state==1 || eps_state==5 || cs_state==1 || cs_state==5?"true":"false",
         eps_state,cs_state,(long)(sip>0?sip:0),(long)(cs_voice>0?cs_voice:0),ring_only()?"true":"false",cs_only()?"true":"false",
         signaling || cs_status.armed?"true":"false",voice.owner==MF79U_VOICE_CS?"active":mf79u_cs_state_name(cs_status.state),
         cs_ready && signaling?"true":"false",ims>0?(ims_wifi?"WIFI":"LTE"):"NONE",effective_usb?"USB":"WIFI",vowifi_tunnel_ready()?"true":"false",voice_mode_name(requested_mode),voice_mode_name(effective_mode),
-        (ims_wifi || effective_mode==VOICE_VOWIFI)?"VOWIFI":radio_profile==2?"CS":radio_profile==1?"VOLTE":"unknown",registration_phase,fallback_reason,
-        (long)(auto_fallback && promotion_at>monotonic()?promotion_at-monotonic():0));
+        (ims_wifi || voice_mode_vowifi_only(effective_mode))?"VOWIFI":radio_profile==2?"CS":radio_profile==1?"VOLTE":"unknown",registration_phase,fallback_reason,
+        (long)(auto_fallback && promotion_at>monotonic()?promotion_at-monotonic():0),effective_mode==VOICE_VOWIFI_SMS?"true":"false",
+        effective_mode==VOICE_VOWIFI_SMS && radio_profile==4 && (cs_state==1 || cs_state==5)?"true":"false");
     fclose(f);rename("/dev/.mf79u-native-status.tmp","/dev/.mf79u-native-status.json");
 }
 static void poll_cs_status(void) {
@@ -337,7 +339,7 @@ static int ims_messages(void) {
             }
             if(!cp_allowed(text)) {
                 /* A rejected IMS SMS fallback must not tear down voice/IMS. */
-                if(ims_wifi && effective_mode==VOICE_VOWIFI &&
+                if(ims_wifi && voice_mode_vowifi_only(effective_mode) &&
                    (!strncmp(text,"AT+ZMGS=",8) || !strncmp(text,"AT+CMGS=",8) || !strncmp(text,"AT+CMSS=",8))) {
                     const char *answer="\r\n+CMS ERROR: 331\r\n";
                     if(send_ims(0x150b,answer,strlen(answer),port))return -1;
@@ -376,8 +378,10 @@ static int ims_messages(void) {
 }
 static void sip_line(const char *line) {
     if(!strncmp(line,"DIAL ",5) && number(line+5)) {
+        read_voice_mode();
         reconcile_voice();enum mf79u_voice_backend backend=voice.selected;
-        if(!call_action_allowed(backend!=MF79U_VOICE_NONE && !voice.end_call,voice_enabled(),ring_only()) ||
+        int access_ok=!voice_mode_vowifi_only(requested_mode) || (backend==MF79U_VOICE_IMS && ims_wifi && vowifi_tunnel_ready());
+        if(!call_action_allowed(access_ok && backend!=MF79U_VOICE_NONE && !voice.end_call,voice_enabled(),ring_only()) ||
            !mf79u_voice_admit(&voice,backend)){send_sip("ENDED");event("outgoing_call_blocked");return;}
         int failed=0;
         if(backend==MF79U_VOICE_CS) {
@@ -394,8 +398,10 @@ static void sip_line(const char *line) {
     } else if(!strcmp(line,"HANGUP")) {
         hangup_owned();event("call_ended");
     } else if(!strcmp(line,"ANSWER")) {
+        read_voice_mode();
         reconcile_voice();
-        if(call_action_allowed(voice.owner!=MF79U_VOICE_NONE && !voice.end_call,voice_enabled(),ring_only())) {
+        int access_ok=!voice_mode_vowifi_only(requested_mode) || (voice.owner==MF79U_VOICE_IMS && ims_wifi && vowifi_tunnel_ready());
+        if(call_action_allowed(access_ok && voice.owner!=MF79U_VOICE_NONE && !voice.end_call,voice_enabled(),ring_only())) {
             if(voice.owner==MF79U_VOICE_CS)send_cs("ANSWER",cs_call_id,NULL);else query_ims("ATA");
             event("call_answered");
         } else {hangup_owned();send_sip("ENDED");event("voice_answer_blocked");}
@@ -735,16 +741,16 @@ static int radio_cfun(int value) {
 }
 static int switch_radio(int target) {
     if(ims>0 || voice.owner!=MF79U_VOICE_NONE || !suspend_cs())return -1;
-    const char *profile=target==2?"^SYSCONFIG: 13,0,1,2":"^SYSCONFIG: 27,0,1,2";
-    const char *voice_flag=target!=1?"+ZSET: \"VOICE_SUPPORT\",1":"+ZSET: \"VOICE_SUPPORT\",0";
-    const char *open_flag=target!=1?"+ZSET: \"OPEN_VOICE_FLAG\",1":"+ZSET: \"OPEN_VOICE_FLAG\",0";
+    const char *profile=(target==2 || target==4)?"^SYSCONFIG: 13,0,1,2":"^SYSCONFIG: 27,0,1,2";
+    const char *voice_flag=target==2?"+ZSET: \"VOICE_SUPPORT\",1":"+ZSET: \"VOICE_SUPPORT\",0";
+    const char *open_flag=target==2?"+ZSET: \"OPEN_VOICE_FLAG\",1":"+ZSET: \"OPEN_VOICE_FLAG\",0";
     if(!radio_query("AT^SYSCONFIG?",profile) &&
        !radio_query("AT+ZSET=\"VOICE_SUPPORT\"",voice_flag) &&
        !radio_query("AT+ZSET=\"OPEN_VOICE_FLAG\"",open_flag) && !radio_query("AT+CFUN?","+CFUN: 1"))return 0;
     if(radio_cfun(0))return -1;
-    int fail=radio_query(target==2?"AT^SYSCONFIG=13,0,1,2":"AT^SYSCONFIG=27,0,1,2",NULL) ||
-        radio_query(target!=1?"AT+ZSET=\"VOICE_SUPPORT\",1":"AT+ZSET=\"VOICE_SUPPORT\",0",NULL) ||
-        radio_query(target!=1?"AT+ZSET=\"OPEN_VOICE_FLAG\",1":"AT+ZSET=\"OPEN_VOICE_FLAG\",0",NULL) ||
+    int fail=radio_query((target==2 || target==4)?"AT^SYSCONFIG=13,0,1,2":"AT^SYSCONFIG=27,0,1,2",NULL) ||
+        radio_query(target==2?"AT+ZSET=\"VOICE_SUPPORT\",1":"AT+ZSET=\"VOICE_SUPPORT\",0",NULL) ||
+        radio_query(target==2?"AT+ZSET=\"OPEN_VOICE_FLAG\",1":"AT+ZSET=\"OPEN_VOICE_FLAG\",0",NULL) ||
         radio_query("AT^SYSCONFIG?",profile) || radio_query("AT+ZSET=\"VOICE_SUPPORT\"",voice_flag) ||
         radio_query("AT+ZSET=\"OPEN_VOICE_FLAG\"",open_flag);
     int on=radio_cfun(1);return fail || on?-1:0;
@@ -829,6 +835,17 @@ int main(int argc,char **argv) {
         if(monotonic()<next)continue;
         next=monotonic()+MF79U_RADIO_INTERVAL;
         int guarded=access(MF79U_CS_ONLY_FILE,F_OK)==0 || errno!=ENOENT;
+        /* Independent GSM SMS registration. CS stays suspended and its voice
+         * flags are disabled; never admit LTE IMS or CS as a voice fallback.
+         * Radio transitions require idle owned media, even with an SWu bearer. */
+        if(effective_mode==VOICE_VOWIFI_SMS && !guarded && voice.owner==MF79U_VOICE_NONE) {
+            if(radio_profile!=4 && monotonic()>=radio_retry && suspend_cs()) {
+                if(ims>0 && stop_ims_runtime())goto done;
+                if(switch_radio(4)) {radio_retry=monotonic()+15;event("gsm_sms_radio_failed");}
+                else {radio_profile=4;event("gsm_sms_radio_selected");}
+            }
+            if(cellular_network_status(0))eps_state=cs_state=-1;
+        }
         int wifi_available=vowifi_wifi_ready(voice.owner!=MF79U_VOICE_NONE);
         int vowifi_exit=0;
         if(vowifi_pid>1 && waitpid(vowifi_pid,&vowifi_exit,WNOHANG)==vowifi_pid){
@@ -836,7 +853,7 @@ int main(int argc,char **argv) {
             event("vowifi_manager_exited");kill(-vowifi_pid,SIGKILL);vowifi_pid=-1;vowifi_stop();vowifi_had_tunnel=0;vowifi_schedule_retry();fallback_reason="vowifi_start_failed";
         }
         if(ims_wifi && !wifi_available)event("vowifi_wifi_unavailable");
-        int wifi_wanted=!guarded && (effective_mode==VOICE_VOWIFI || (effective_mode==VOICE_AUTO && wifi_available && monotonic()>=vowifi_retry));
+        int wifi_wanted=!guarded && (voice_mode_vowifi_only(effective_mode) || (effective_mode==VOICE_AUTO && wifi_available && monotonic()>=vowifi_retry));
         if(voice.owner!=MF79U_VOICE_NONE && ims_wifi){
             if(ims_wifi && (!wifi_available || !vowifi_tunnel_ready())){voice_ready=0;reconcile_voice();}
             /* Existing calls retain their admitting access until cleanup. */
@@ -886,7 +903,7 @@ int main(int argc,char **argv) {
             vowifi_stop();vowifi_had_tunnel=0;vowifi_schedule_retry();
             ims_wifi=0;fallback_reason="vowifi_registration_failed";
         }
-        if(effective_mode==VOICE_VOWIFI && !guarded){
+        if(voice_mode_vowifi_only(effective_mode)){
             if(ims>0 && stop_ims_runtime())goto done;
             vowifi_stop();ims_wifi=0;
             registration_phase=wifi_available?"vowifi_unavailable":effective_usb?"waiting_for_usb":"waiting_for_wifi";

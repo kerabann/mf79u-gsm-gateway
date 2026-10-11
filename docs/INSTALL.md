@@ -1,5 +1,17 @@
 # Full overlay installation and recovery
 
+For an authorized idle update that needs a new shared-INI voice mode, the
+checked controller updater supports `--with-sip`. It verifies native/SIP
+executables and ownership, backs up both binaries, stages compressed SIP for
+small userdata, and preserves settings, boot, IMS media and CS artifacts:
+`make task TASK=install-native-update.py ARGS="--install --with-sip" SERIAL=...`.
+Control/UI uses the existing Control-only updater. Receive-policy changes can
+require clear Telegram/SIP forwarding queues immediately before replacement:
+`make task TASK=install-control-update.py ARGS="--require-sms-idle" SERIAL=...`.
+This optional guard also refuses unfinished outgoing SMS jobs. It preserves the
+existing durable inbox/state and native/SIP runtime. Neither update sends calls
+or SMS or changes the selected mode by itself.
+
 Use only the supported MF79U B03 kernel/CP ABI. Installation uses ADB plus an
 explicit USB-reachable host IP for a temporary, allowlisted HTTP artifact server.
 `adb` must be in PATH or passed as `ADB=/path/to/adb`; `SERIAL` maps to

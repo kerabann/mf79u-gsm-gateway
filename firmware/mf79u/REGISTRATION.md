@@ -1,5 +1,13 @@
 > Imported project history, snapshot 2026-10-11. Read the [current repository status](../../docs/STATUS.md) and [agent rules](../../AGENTS.md) first. Dated experiments/commands below may be superseded; use the root Makefile. Private historical receipts and old images are excluded from publication.
 
+## VoWiFi-only plus GSM SMS compatibility, 2026-10-12
+
+`VOWIFI_SMS` adds GSM2G/CFUN1 registration with CS voice flags0 and suspended CS
+adapter. Voice admission remains VoWiFi-only, even without internet/IMS. Fresh
+roaming CREG5, ready VoWiFi and incoming GSM SMS forwarding were verified; no
+real call/outgoing SMS was initiated. Details and receipts:
+[SMS compatibility](SMS-IMS.md#vowifi-only-voice-with-gsm-sms-2026-10-12).
+
 ## WCDMA removed (2026-10-11)
 
 WCDMA development was cancelled at the user's request. The current WebUI,

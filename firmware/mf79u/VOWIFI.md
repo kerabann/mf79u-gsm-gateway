@@ -1,5 +1,15 @@
 > Imported project history, snapshot 2026-10-11. Read the [current repository status](../../docs/STATUS.md) and [agent rules](../../AGENTS.md) first. Dated experiments/commands below may be superseded; use the root Makefile. Private historical receipts and old images are excluded from publication.
 
+## VoWiFi-only voice with cellular SMS, 2026-10-12
+
+The explicitly selected `VOWIFI_SMS` option now permits GSM2G registration/SMS
+while calls remain on SWu IMS only. On the roaming MegaFon SIM, fresh CP queries
+confirmed CREG5/CFUN1/profile13 with both CS voice flags0, simultaneous ready USB
+VoWiFi and two incoming SMS delivered through GSM to Telegram/SIP. Neither LTE
+IMS nor CS is admitted for new calls, including tunnel loss. The original VOWIFI
+option retains IMS SMS only. Implementation, fixture/device boundaries and receipts:
+[SMS compatibility](SMS-IMS.md#vowifi-only-voice-with-gsm-sms-2026-10-12).
+
 ## Roaming/no-cellular IMS compatibility correction, 2026-10-12
 
 The owner confirmed this is a roaming SIM and authorized a repair. B03's LTE IMS

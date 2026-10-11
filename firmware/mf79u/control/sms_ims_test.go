@@ -3,6 +3,8 @@ package main
 import (
 	"encoding/hex"
 	"net"
+	"net/http"
+	"net/http/httptest"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -142,6 +144,35 @@ func TestIMSOnlyNoCellularFallback(t *testing.T) {
 	a.smsIMS = testIMSStore(t)
 	if e := a.smsAction(nil, "send", nil, "12345", "hello", ""); e == nil || !strings.Contains(e.Error(), "fallback is disabled") {
 		t.Fatal("missing native service")
+	}
+}
+func TestVoWiFiGSMCompatibilityUsesCellularOnce(t *testing.T) {
+	sends := 0
+	backend := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		r.ParseForm()
+		switch {
+		case r.Form.Get("cmd") == "loginfo":
+			w.Write([]byte(`{"loginfo":"ok"}`))
+		case r.Form.Get("cmd") == "wa_inner_version,cr_version,RD":
+			w.Write([]byte(`{}`))
+		case r.Form.Get("goformId") == "SEND_SMS":
+			sends++
+			w.Write([]byte(`{"result":"success"}`))
+		case r.Form.Get("cmd") == "sms_cmd_status_info":
+			w.Write([]byte(`{"sms_cmd_status_result":"3"}`))
+		default:
+			t.Error("unexpected cellular operation")
+			w.WriteHeader(400)
+		}
+	}))
+	defer backend.Close()
+	a := &App{settings: defaults(), smsIMS: testIMSStore(t)}
+	a.settings.VoiceMode = "VOWIFI_SMS"
+	if e := a.smsAction(vendor(backend.URL), "send", nil, "12345", "fixture", ""); e != nil {
+		t.Fatal(e)
+	}
+	if sends != 1 || len(a.smsIMS.state.Messages) != 0 {
+		t.Fatal("compatibility SMS was duplicated or submitted to IMS")
 	}
 }
 func TestIMSIPCUncertainNeverResent(t *testing.T) {

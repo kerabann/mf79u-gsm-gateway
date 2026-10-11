@@ -116,8 +116,8 @@ func validate(s Settings) error {
 	if s.Version != 1 || s.BootstrapSeconds != 60 {
 		return errors.New("Unsupported settings version")
 	}
-	if s.VoiceMode != "AUTO" && s.VoiceMode != "VOLTE" && s.VoiceMode != "CS" && s.VoiceMode != "VOWIFI" {
-		return errors.New("Voice registration must be AUTO, VOLTE, CS or VOWIFI")
+	if s.VoiceMode != "AUTO" && s.VoiceMode != "VOLTE" && s.VoiceMode != "CS" && s.VoiceMode != "VOWIFI" && s.VoiceMode != "VOWIFI_SMS" {
+		return errors.New("Voice registration must be AUTO, VOLTE, CS, VOWIFI or VOWIFI_SMS")
 	}
 	p := s.SIP
 	if p.Role != "" && p.Role != "TRUNK" && p.Role != "SERVER" && p.Role != "DISABLED" {

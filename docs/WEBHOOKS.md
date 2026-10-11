@@ -1,9 +1,35 @@
 # Webhooks: Telegram SMS
 
-Updated 2026-10-11. Source of truth: this Git repository. The Webhooks tab has
+Updated 2026-10-12. Source of truth: this Git repository. The Webhooks tab has
 one framed **Telegram SMS** block and uses the existing common Save controls.
 
+The2026-10-12 incoming-SMS diagnostic found an additional TLS blocker after the
+CA repair: the device clock was2000-01-01, and the bound-interface GET-only probe
+returned `tls_invalid_certificate` despite working DNS. The host-observed public
+Telegram leaf validity starts2025-11-11. Correct time synchronization is required;
+certificate validation must stay enabled. The new roaming-SIM SMS had not arrived
+through private IMS and no Telegram job was queued, so this TLS fault alone does
+not explain the absence of that incoming SMS. See the
+[current SMS diagnosis](../firmware/mf79u/SMS-IMS.md#roaming-sim-incoming-sms-diagnosis-2026-10-12).
+
+Later the same day, the authorized VOWIFI_SMS GSM-registration apply was followed
+by a calendar date in2026. No manual clock command was issued. The bound-interface
+GET-only diagnostic now returned HTTP200/OK for both bot and chat with strict
+certificate validation. Telegram's delivered count increased3→5 and SIP
+acknowledgements increased14→16 for new GSM inbox deliveries; no forwarding job
+remained queued. These are forwarding counts, not proof of two distinct logical
+SMS: the subsequently fixed multipart reader could export a growing prefix.
+This supersedes the earlier clock blocker for this live state.
+See [compatibility verification](../firmware/mf79u/SMS-IMS.md#vowifi-only-voice-with-gsm-sms-2026-10-12).
+
 ## Configuration and behavior
+
+Incoming cellular multipart SMS is eligible for forwarding only after B03 marks
+assembly complete. Partial content never enters Telegram's queue/seen baseline
+or triggers Delete after send. SIP uses the same gate, and the full durable SIP
+copy is still retained before Telegram's independent deletion. Missing parts
+stay in modem memory; no timer exports a fragment. See
+[incoming assembly](../firmware/mf79u/SMS-API.md#incoming-multipart-sms-2026-10-12).
 
 - **Enabled** starts forwarding new incoming SMS independently of the SIP role.
 - **BOT-token** is the BotFather token. A blank field retains the saved token;

@@ -131,7 +131,7 @@ func (s *imsSMSStore) accept(p imsSMSPart) error {
 				for _, part := range parts {
 					text.WriteString(part.Text)
 				}
-				if len([]rune(text.String())) > 670 {
+				if len(text.String()) > smsIncomingTextLimit {
 					return errors.New("IMS SMS exceeds text limit")
 				}
 				next.Messages = append(next.Messages, imsSMSMessage{ID: "ims-" + smsSIPHash(parts[0].Hash+parts[len(parts)-1].Hash), Number: p.Number, Text: text.String(), Date: parts[0].Date, Tag: "1", State: "received"})
@@ -312,10 +312,13 @@ func (a *App) smsList(v *Vendor, storage, key string) (map[string]any, error) {
 	}
 	a.mu.Lock()
 	only := a.settings.VoiceMode == "VOWIFI"
+	gsm := a.settings.VoiceMode == "VOWIFI_SMS"
 	a.mu.Unlock()
 	value["transport"] = "cellular"
 	if only {
 		value["transport"] = "SMSoIP"
+	} else if gsm {
+		value["transport"] = "GSM"
 	}
 	return value, nil
 }
