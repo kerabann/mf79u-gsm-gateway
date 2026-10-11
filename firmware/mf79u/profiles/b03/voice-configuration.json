@@ -1,0 +1,395 @@
+{
+  "reference_sha256": "49c94841f7608e500302e6b4d4cbff1103f6be6e2ec2226b617bed312fb56513",
+  "device_access": false,
+  "configuration_hex": "010000000f0f0000401f000000010200010101000000010100000000",
+  "register_writes": [
+    {
+      "stage": "driver_init",
+      "pc": "0x247820c0",
+      "address": "0x140060",
+      "size": 4,
+      "value": "0xa9"
+    },
+    {
+      "stage": "open",
+      "pc": "0x2477e644",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x0"
+    },
+    {
+      "stage": "open",
+      "pc": "0x2477e650",
+      "address": "0x140500c",
+      "size": 4,
+      "value": "0x0"
+    },
+    {
+      "stage": "open",
+      "pc": "0x2477e658",
+      "address": "0x1405018",
+      "size": 4,
+      "value": "0xffff"
+    },
+    {
+      "stage": "open",
+      "pc": "0x2477e65c",
+      "address": "0x1405014",
+      "size": 4,
+      "value": "0x0"
+    },
+    {
+      "stage": "open",
+      "pc": "0x2477e660",
+      "address": "0x1405004",
+      "size": 4,
+      "value": "0x0"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x2477ffec",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x0"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x2477ff30",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x0"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x2477ff3c",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x0"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x2477ff54",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x0"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x2477ff60",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x0"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x2477ff88",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x0"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x2477ff98",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x2000"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x2477fc04",
+      "address": "0x1400014",
+      "size": 4,
+      "value": "0x10f03"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x2477fc10",
+      "address": "0x140005c",
+      "size": 4,
+      "value": "0x0"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x2477fc18",
+      "address": "0x1400058",
+      "size": 4,
+      "value": "0x200019"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x2477fc20",
+      "address": "0x140005c",
+      "size": 4,
+      "value": "0x32"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x2477fc2c",
+      "address": "0x140005c",
+      "size": 4,
+      "value": "0x10032"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x24780240",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x2001"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x247800b0",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x2001"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x247800c8",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x2001"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x247800e0",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x2001"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x247800f4",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x2001"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x2478010c",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x2001"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x24780118",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x1e02001"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x24780130",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x1e02001"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x2478013c",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x1ef2001"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x2478029c",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x1ef2001"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x247802b4",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x1ef2001"
+    },
+    {
+      "stage": "prepare_tx",
+      "pc": "0x24780c28",
+      "address": "0x1405004",
+      "size": 4,
+      "value": "0x4"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x2477ffec",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x1ef2001"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x2477ff30",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x1ef2001"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x2477ff3c",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x1ef2001"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x2477ff54",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x1ef2001"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x2477ff60",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x1ef2001"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x2477ff88",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x1ef0001"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x2477ff98",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x1ef2001"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x2477fc04",
+      "address": "0x1400014",
+      "size": 4,
+      "value": "0x10f03"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x2477fc10",
+      "address": "0x140005c",
+      "size": 4,
+      "value": "0x32"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x2477fc18",
+      "address": "0x1400058",
+      "size": 4,
+      "value": "0x200019"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x2477fc20",
+      "address": "0x140005c",
+      "size": 4,
+      "value": "0x32"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x2477fc2c",
+      "address": "0x140005c",
+      "size": 4,
+      "value": "0x10032"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x24780240",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x1ef2001"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x247800b0",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x1ef2001"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x247800c8",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x1ef2001"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x247800e0",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x1ef2001"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x247800f4",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x1ef2001"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x2478010c",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0xf2001"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x24780118",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x1ef2001"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x24780130",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x1e02001"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x2478013c",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x1ef2001"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x2478029c",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x1ef2001"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x247802b4",
+      "address": "0x1405008",
+      "size": 4,
+      "value": "0x1ef2001"
+    },
+    {
+      "stage": "prepare_rx",
+      "pc": "0x247810e8",
+      "address": "0x1405004",
+      "size": 4,
+      "value": "0x4"
+    },
+    {
+      "stage": "internal_loop",
+      "pc": "0x248958a4",
+      "address": "0x140060",
+      "size": 4,
+      "value": "0xa9"
+    }
+  ],
+  "fifo_sample_rate_hz": 8000,
+  "driver_init": true,
+  "arm_clock_master": true
+}

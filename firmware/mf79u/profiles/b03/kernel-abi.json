@@ -1,0 +1,26 @@
+{
+  "kernel_sha256": "a28f5ddbdeb3f4da80d367bd25fc7f6048222555057da2a2e3800364894c547f",
+  "kernel_md5": "4a29280dfa9e0c522de9e38091ea2533",
+  "cfg_sha256": "75b4308591cf6a3ed9ab423bb158c86da6e131dff6ef79ac75bc8d7f0178b1f5",
+  "exports": {
+    "__kmalloc_node": 3221827421,
+    "__memzero": 3222326301,
+    "kfree": 3221826665,
+    "kobject_create_and_add": 3222332225,
+    "kobject_put": 3222331051,
+    "kthread_create_on_node": 3221625633,
+    "kthread_should_stop": 3221625545,
+    "kthread_stop": 3221625797,
+    "ktime_get": 3221666889,
+    "memset": 3222326080,
+    "msleep": 3221590133,
+    "printk": 3224515349,
+    "probe_kernel_read": 3221733185,
+    "scnprintf": 3222352795,
+    "sysfs_create_file": 3222041035,
+    "sysfs_remove_file": 3222040865,
+    "try_module_get": 3221696837,
+    "usleep_range": 3221588709,
+    "wake_up_process": 3221648177
+  }
+}

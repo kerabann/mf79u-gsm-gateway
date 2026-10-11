@@ -1,0 +1,3 @@
+#!/bin/sh
+# Never publish a host-specific adb binary. ANDROID_SERIAL selects the device.
+exec "${ADB:-adb}" "$@"

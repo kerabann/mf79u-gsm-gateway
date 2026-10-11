@@ -1,0 +1,19 @@
+BLINK net_red: three pulses
+BLINK net_green: three pulses
+BLINK net_blue: three pulses
+BLINK wifi_blue: three pulses
+MIX net_red net_green
+READBACK net_red=1
+READBACK net_green=1
+MIX net_green net_blue
+READBACK net_green=1
+READBACK net_blue=1
+MIX net_red net_blue
+READBACK net_red=1
+READBACK net_blue=1
+MIX net_red net_green net_blue
+READBACK net_red=1
+READBACK net_green=1
+READBACK net_blue=1
+RESTORED LED state and service
+SCRIPT_EXIT=0

@@ -1,0 +1,3425 @@
+{
+  "schema": 1,
+  "snapshot_date": "2026-10-11",
+  "files": [
+    {
+      "source": "firmware/mf79u/test-registration-fallback.py",
+      "destination": "firmware/mf79u/test-registration-fallback.py",
+      "source_sha256": "c8eceb4a7c30f994254bfb4792c27d7e9f51c193a0754d0146fdffd270a9b63c",
+      "bytes": 5022,
+      "destination_sha256": "c8eceb4a7c30f994254bfb4792c27d7e9f51c193a0754d0146fdffd270a9b63c"
+    },
+    {
+      "source": "firmware/mf79u/test-sms-ims-live.py",
+      "destination": "firmware/mf79u/test-sms-ims-live.py",
+      "source_sha256": "25a6be19c03e2d755e99f0c8ad75060e96b7151256161d730b9cc71c620390d5",
+      "bytes": 3195,
+      "destination_sha256": "25a6be19c03e2d755e99f0c8ad75060e96b7151256161d730b9cc71c620390d5"
+    },
+    {
+      "source": "firmware/mf79u/pack-vowifi.py",
+      "destination": "firmware/mf79u/pack-vowifi.py",
+      "source_sha256": "b330a5c6c6d25dcb5822b36fa5cff525d975f52511c8b060705772f718f9ac88",
+      "bytes": 1069,
+      "destination_sha256": "b330a5c6c6d25dcb5822b36fa5cff525d975f52511c8b060705772f718f9ac88"
+    },
+    {
+      "source": "firmware/mf79u/AUTONOMOUS.md",
+      "destination": "firmware/mf79u/AUTONOMOUS.md",
+      "source_sha256": "3a82f03770725ca9e23a851158c5086a2bce6ead6470d2af8e3bc492182c8d27",
+      "bytes": 18437,
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained",
+        "publication privacy/path normalization"
+      ],
+      "destination_sha256": "f02821c6c82c61e57e143cb3737b47e040a98e8b16d7d00d37b820f27ca32811"
+    },
+    {
+      "source": "firmware/mf79u/test-roaming-ui.js",
+      "destination": "firmware/mf79u/test-roaming-ui.js",
+      "source_sha256": "f0f5ece8737962ef7c021e5eab5f96edada0878449c1d6efb23dd4b4d3aaaa4d",
+      "bytes": 1649,
+      "destination_sha256": "f0f5ece8737962ef7c021e5eab5f96edada0878449c1d6efb23dd4b4d3aaaa4d"
+    },
+    {
+      "source": "firmware/mf79u/backup-microsd.py",
+      "destination": "firmware/mf79u/backup-microsd.py",
+      "source_sha256": "07f6351750a62e0ee781b04e45aeacf12fcc3271f9477c6afa49670666793d0c",
+      "bytes": 10092,
+      "destination_sha256": "07f6351750a62e0ee781b04e45aeacf12fcc3271f9477c6afa49670666793d0c"
+    },
+    {
+      "source": "firmware/mf79u/GSM-VOICE.md",
+      "destination": "firmware/mf79u/GSM-VOICE.md",
+      "source_sha256": "83d5f3df808add7ae908e3466f991ccfc7aafd69718778b987d172e81c6d79d5",
+      "bytes": 221153,
+      "destination_sha256": "edb3157b292da129a216abab2efca0ce08cc8ba47f232f073d056a7e0dd782ec",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/test-cs-dsp-initial-load.py",
+      "destination": "firmware/mf79u/test-cs-dsp-initial-load.py",
+      "source_sha256": "da6a262342547a6a61766847694d7645db0f55bbc13934bfd9d033e4cd1b83ee",
+      "bytes": 14021,
+      "destination_sha256": "da6a262342547a6a61766847694d7645db0f55bbc13934bfd9d033e4cd1b83ee"
+    },
+    {
+      "source": "firmware/mf79u/SMS-API.md",
+      "destination": "firmware/mf79u/SMS-API.md",
+      "source_sha256": "ac2a7cd613cb001b0a1aacff9343eceeba9ff37437df05b59d5035d6a3712fd8",
+      "bytes": 5887,
+      "destination_sha256": "db6aa07288a6bd2e190eafaf2bf960fb61644038c9e12a96ee1320d7c06c1a93",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/start-control-userdata.sh",
+      "destination": "firmware/mf79u/start-control-userdata.sh",
+      "source_sha256": "1ffa6e97e1ac138b073b477d924183eda912a65f672ab7a0a85f00c5986b3d02",
+      "bytes": 3280,
+      "destination_sha256": "1ffa6e97e1ac138b073b477d924183eda912a65f672ab7a0a85f00c5986b3d02"
+    },
+    {
+      "source": "firmware/mf79u/build-system-tools.sh",
+      "destination": "firmware/mf79u/build-system-tools.sh",
+      "source_sha256": "8a5e09ec9f2048dbe954d5780783a9de7df9af9d0318858d583bf48183bd4046",
+      "bytes": 1483,
+      "destination_sha256": "8a5e09ec9f2048dbe954d5780783a9de7df9af9d0318858d583bf48183bd4046"
+    },
+    {
+      "source": "firmware/mf79u/install-sms-submission-status.py",
+      "destination": "firmware/mf79u/install-sms-submission-status.py",
+      "source_sha256": "8991b392916c7a2146dd7e03b8a985be679a5c1ff97baaa649394a519f1a2383",
+      "bytes": 6306,
+      "destination_sha256": "8991b392916c7a2146dd7e03b8a985be679a5c1ff97baaa649394a519f1a2383"
+    },
+    {
+      "source": "firmware/mf79u/set-registration-mode.py",
+      "destination": "firmware/mf79u/set-registration-mode.py",
+      "source_sha256": "bd6f090f36965c7c5ea2bfd8995789309970a0d31555d91853aa0b481355e477",
+      "bytes": 1771,
+      "destination_sha256": "bd6f090f36965c7c5ea2bfd8995789309970a0d31555d91853aa0b481355e477"
+    },
+    {
+      "source": "firmware/mf79u/install-adb-boot.py",
+      "destination": "firmware/mf79u/install-adb-boot.py",
+      "source_sha256": "b66fff02cc96495125b9c4058d6b495559b3353bfffb132c3f87283af7b6fbda",
+      "bytes": 5524,
+      "destination_sha256": "b66fff02cc96495125b9c4058d6b495559b3353bfffb132c3f87283af7b6fbda"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-nsd-b03.py",
+      "destination": "firmware/mf79u/test-cs-nsd-b03.py",
+      "source_sha256": "38a40fa3b4a2cbc79249460dacb72bdeebc575c9ecd6eafbd0e88fe42ac826d8",
+      "bytes": 2609,
+      "destination_sha256": "38a40fa3b4a2cbc79249460dacb72bdeebc575c9ecd6eafbd0e88fe42ac826d8"
+    },
+    {
+      "source": "firmware/mf79u/test-sip-registrar-live.py",
+      "destination": "firmware/mf79u/test-sip-registrar-live.py",
+      "source_sha256": "84655183932e2b9ed74ff1b00b17fe1972e611119e21a5c1715cd2fdea8c5b50",
+      "bytes": 9261,
+      "destination_sha256": "84655183932e2b9ed74ff1b00b17fe1972e611119e21a5c1715cd2fdea8c5b50"
+    },
+    {
+      "source": "firmware/mf79u/test-b03-kernel-relocations.py",
+      "destination": "firmware/mf79u/test-b03-kernel-relocations.py",
+      "source_sha256": "a40d34d740dfacfaddebdebd2e62ec41a2f882ac6438a068766bcaef5c4194c9",
+      "bytes": 1384,
+      "destination_sha256": "a40d34d740dfacfaddebdebd2e62ec41a2f882ac6438a068766bcaef5c4194c9"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-pcm-metadata-tone.py",
+      "destination": "firmware/mf79u/test-cs-pcm-metadata-tone.py",
+      "source_sha256": "0c985701fdfcc4b484473f9d5123ebe6bcda5ad9e0ece2f7eef7a3b8fda5a5e6",
+      "bytes": 8647,
+      "destination_sha256": "0c985701fdfcc4b484473f9d5123ebe6bcda5ad9e0ece2f7eef7a3b8fda5a5e6"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-sip-dsp-load.py",
+      "destination": "firmware/mf79u/test-cs-sip-dsp-load.py",
+      "source_sha256": "96eef69ff8003b603983402e78a8001e6ab9a2d7c5a54ef0e674cf5e212417f0",
+      "bytes": 7097,
+      "destination_sha256": "96eef69ff8003b603983402e78a8001e6ab9a2d7c5a54ef0e674cf5e212417f0"
+    },
+    {
+      "source": "firmware/mf79u/test-persistent-cs-incoming.py",
+      "destination": "firmware/mf79u/test-persistent-cs-incoming.py",
+      "source_sha256": "fcba99facd713731fce5c4b0aa83ae2526819d366891f62c798d3657e2b48dae",
+      "bytes": 6491,
+      "destination_sha256": "fcba99facd713731fce5c4b0aa83ae2526819d366891f62c798d3657e2b48dae"
+    },
+    {
+      "source": "firmware/mf79u/build-media-codec.sh",
+      "destination": "firmware/mf79u/build-media-codec.sh",
+      "source_sha256": "023cb4924c732f91cdbdcdb78670b3a8c1a21e81dd1997a3e630408a22a70a77",
+      "bytes": 1398,
+      "destination_sha256": "023cb4924c732f91cdbdcdb78670b3a8c1a21e81dd1997a3e630408a22a70a77"
+    },
+    {
+      "source": "firmware/mf79u/build-cs-voice.py",
+      "destination": "firmware/mf79u/build-cs-voice.py",
+      "source_sha256": "2c495a58608c6f1b33d70d3cb66d6bb49935f39d9d760e190a1ac410982f0a84",
+      "bytes": 3572,
+      "destination_sha256": "841ab3236e897c06b858735e9b65e7bb0efbd3c8df7ab120905e4ba094d2b36a",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/NETWORK.md",
+      "destination": "firmware/mf79u/NETWORK.md",
+      "source_sha256": "455481773061f031c270162d216ce32fb086851fc320598a086e99b0b9437ff0",
+      "bytes": 7148,
+      "destination_sha256": "5d29d27b58a13b706ff7d1290d7a85375c3ad3d67ee5fa7e77e08677e4501127",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/test-sip-registrar.py",
+      "destination": "firmware/mf79u/test-sip-registrar.py",
+      "source_sha256": "f7e0d3da715eba7e1d47f44dc8712adbfdb0fc88714336a838e0ccf52178f900",
+      "bytes": 11046,
+      "destination_sha256": "f7e0d3da715eba7e1d47f44dc8712adbfdb0fc88714336a838e0ccf52178f900"
+    },
+    {
+      "source": "firmware/mf79u/start-private-ims.py",
+      "destination": "firmware/mf79u/start-private-ims.py",
+      "source_sha256": "0dbfa2b8844531de03055c75792633b018b44b3aeb3c6db7a7a1e3b674d1e33d",
+      "bytes": 4889,
+      "destination_sha256": "0dbfa2b8844531de03055c75792633b018b44b3aeb3c6db7a7a1e3b674d1e33d"
+    },
+    {
+      "source": "firmware/mf79u/CS-AUDIO.md",
+      "destination": "firmware/mf79u/CS-AUDIO.md",
+      "source_sha256": "9ee27007bc3befac4bf8575e9b9bfa87b9ca72287e935a5a1282d2f9fa48fd46",
+      "bytes": 7686,
+      "destination_sha256": "fba82b5218d1dda2b5e8d03e3ce4b4e46c4968ac55bef0939b11f4c431a6f6cf",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/start-control.sh",
+      "destination": "firmware/mf79u/start-control.sh",
+      "source_sha256": "b5264f14ab180e3705f2df63b924c33587f096a4cd76ab3a643cac7be1d8b751",
+      "bytes": 789,
+      "destination_sha256": "b5264f14ab180e3705f2df63b924c33587f096a4cd76ab3a643cac7be1d8b751"
+    },
+    {
+      "source": "firmware/mf79u/build-sd-tools.sh",
+      "destination": "firmware/mf79u/build-sd-tools.sh",
+      "source_sha256": "30f290b6989122d0bc8604fa1db5122a9ce12afad265ce675c8136732a345179",
+      "bytes": 302,
+      "destination_sha256": "30f290b6989122d0bc8604fa1db5122a9ce12afad265ce675c8136732a345179"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-reattach.py",
+      "destination": "firmware/mf79u/test-cs-reattach.py",
+      "source_sha256": "64da48b7cae0f20dfbd1e060d632f0aa8efcba7c917364df4416f0faa3b62b95",
+      "bytes": 3747,
+      "destination_sha256": "64da48b7cae0f20dfbd1e060d632f0aa8efcba7c917364df4416f0faa3b62b95"
+    },
+    {
+      "source": "firmware/mf79u/verify-vowifi-uplink.py",
+      "destination": "firmware/mf79u/verify-vowifi-uplink.py",
+      "source_sha256": "edbedbce8370863f5bee147c89300715798c32a5e9c3c4f9c770c8b6c1a29155",
+      "bytes": 3880,
+      "destination_sha256": "edbedbce8370863f5bee147c89300715798c32a5e9c3c4f9c770c8b6c1a29155"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-sms-submit.py",
+      "destination": "firmware/mf79u/test-cs-sms-submit.py",
+      "source_sha256": "491ab3caa2cea9c2f115778db1417106cd09f811f616f1b15945d80d8aa31689",
+      "bytes": 2984,
+      "destination_sha256": "491ab3caa2cea9c2f115778db1417106cd09f811f616f1b15945d80d8aa31689"
+    },
+    {
+      "source": "firmware/mf79u/test-diagnostic-fault.py",
+      "destination": "firmware/mf79u/test-diagnostic-fault.py",
+      "source_sha256": "741992247583c8185e55c2790c573c6ac5f9c711ae8846c924b6dc493f2f5eb5",
+      "bytes": 1259,
+      "destination_sha256": "741992247583c8185e55c2790c573c6ac5f9c711ae8846c924b6dc493f2f5eb5"
+    },
+    {
+      "source": "firmware/mf79u/test-native-management.py",
+      "destination": "firmware/mf79u/test-native-management.py",
+      "source_sha256": "fa67f20decfdde17ee7d2664072ed76d569af51032e6d19285b6b1002a6e3955",
+      "bytes": 4556,
+      "destination_sha256": "fa67f20decfdde17ee7d2664072ed76d569af51032e6d19285b6b1002a6e3955"
+    },
+    {
+      "source": "firmware/mf79u/test-native-codecs.py",
+      "destination": "firmware/mf79u/test-native-codecs.py",
+      "source_sha256": "1f01e01197f58474910eec08760b2b6ae3c8f13042f5c3d595dee4cd9da96c51",
+      "bytes": 1479,
+      "destination_sha256": "1f01e01197f58474910eec08760b2b6ae3c8f13042f5c3d595dee4cd9da96c51"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-clarity-call.py",
+      "destination": "firmware/mf79u/test-cs-clarity-call.py",
+      "source_sha256": "3ad91d1bab8cd61ba5b7bf6454f77e4d7160470c683b44240ff4a26310dc2f8f",
+      "bytes": 2829,
+      "destination_sha256": "3ad91d1bab8cd61ba5b7bf6454f77e4d7160470c683b44240ff4a26310dc2f8f"
+    },
+    {
+      "source": "firmware/mf79u/start-native.sh",
+      "destination": "firmware/mf79u/start-native.sh",
+      "source_sha256": "a5465ca131f248dc7b9fb1d221e1013b2e93cbbd68a7b0e0b506211e40e980ab",
+      "bytes": 4258,
+      "destination_sha256": "a5465ca131f248dc7b9fb1d221e1013b2e93cbbd68a7b0e0b506211e40e980ab"
+    },
+    {
+      "source": "firmware/mf79u/test-vowifi-ui.js",
+      "destination": "firmware/mf79u/test-vowifi-ui.js",
+      "source_sha256": "b202f6318d2d9c617d09d7bfe87ed81fc9151f557b1de9cfec83fd4d9e1ab96c",
+      "bytes": 2127,
+      "destination_sha256": "b202f6318d2d9c617d09d7bfe87ed81fc9151f557b1de9cfec83fd4d9e1ab96c"
+    },
+    {
+      "source": "firmware/mf79u/install-registration-runtime.py",
+      "destination": "firmware/mf79u/install-registration-runtime.py",
+      "source_sha256": "6e62d88d03d1e4c0676b2d17bb3424b48ef19839e45384ed5b85146951fba545",
+      "bytes": 6785,
+      "destination_sha256": "3b52fff6b5f8909706c6f90a29926ee4daf0c6eaaf60cadb61f53262219d57da",
+      "transformations": [
+        "Publication whitespace/LF normalization; behavior unchanged"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/install-imei-patch.py",
+      "destination": "firmware/mf79u/install-imei-patch.py",
+      "source_sha256": "5c169437c6f5c2b51ca5871bebd3cf2fbd959ed35d06ac70dc22db46a26164bb",
+      "bytes": 6115,
+      "destination_sha256": "5c169437c6f5c2b51ca5871bebd3cf2fbd959ed35d06ac70dc22db46a26164bb"
+    },
+    {
+      "source": "firmware/mf79u/build-cs-kernel-probe.py",
+      "destination": "firmware/mf79u/build-cs-kernel-probe.py",
+      "source_sha256": "017391e0ae16831ee9a668b5694dad2045107f0d1a8c86102f56d73fcd383be7",
+      "bytes": 41114,
+      "destination_sha256": "017391e0ae16831ee9a668b5694dad2045107f0d1a8c86102f56d73fcd383be7"
+    },
+    {
+      "source": "firmware/mf79u/start-vowifi.sh",
+      "destination": "firmware/mf79u/start-vowifi.sh",
+      "source_sha256": "5dc14d288eedbc6298d5755d1058d8521f3f34308485b7b203341487d0ce0def",
+      "bytes": 3347,
+      "destination_sha256": "5dc14d288eedbc6298d5755d1058d8521f3f34308485b7b203341487d0ce0def"
+    },
+    {
+      "source": "firmware/mf79u/inspect-rootfs.py",
+      "destination": "firmware/mf79u/inspect-rootfs.py",
+      "source_sha256": "a65e1c2ef48a820603da4a3cfcea5cc00a56bf365bca5a017930e600e1b24285",
+      "bytes": 3459,
+      "destination_sha256": "a65e1c2ef48a820603da4a3cfcea5cc00a56bf365bca5a017930e600e1b24285"
+    },
+    {
+      "source": "firmware/mf79u/prepare-cs-public-pcm.py",
+      "destination": "firmware/mf79u/prepare-cs-public-pcm.py",
+      "source_sha256": "fdc37e048cbcbb672e4d4f437d6f3d387f4cb24591f9dc071f64b20d65841603",
+      "bytes": 3731,
+      "destination_sha256": "fdc37e048cbcbb672e4d4f437d6f3d387f4cb24591f9dc071f64b20d65841603"
+    },
+    {
+      "source": "firmware/mf79u/pack-image.py",
+      "destination": "firmware/mf79u/pack-image.py",
+      "source_sha256": "8da0b9759a293392b1fc29e07e150ba3ff856d7c177e8453b083f0cbb2f38115",
+      "bytes": 2086,
+      "destination_sha256": "8da0b9759a293392b1fc29e07e150ba3ff856d7c177e8453b083f0cbb2f38115"
+    },
+    {
+      "source": "firmware/mf79u/run-usb-gateway.py",
+      "destination": "firmware/mf79u/run-usb-gateway.py",
+      "source_sha256": "728fec8b09319bbac17607d6378992d4af1e92e8bf0ba121e81c7205f512e916",
+      "bytes": 4026,
+      "destination_sha256": "728fec8b09319bbac17607d6378992d4af1e92e8bf0ba121e81c7205f512e916"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-i2s-extra-cycle.py",
+      "destination": "firmware/mf79u/test-cs-i2s-extra-cycle.py",
+      "source_sha256": "3948098ee7c03c086c74aba034420ad09d48bf9fe084d79f6f86e877ca20b47d",
+      "bytes": 5718,
+      "destination_sha256": "3948098ee7c03c086c74aba034420ad09d48bf9fe084d79f6f86e877ca20b47d"
+    },
+    {
+      "source": "firmware/mf79u/build-sd-backup.sh",
+      "destination": "firmware/mf79u/build-sd-backup.sh",
+      "source_sha256": "f33c3012d5c919c293bc1fbb03ce1d75c6b5738553fa7d6c35aef5374b50833d",
+      "bytes": 334,
+      "destination_sha256": "f33c3012d5c919c293bc1fbb03ce1d75c6b5738553fa7d6c35aef5374b50833d"
+    },
+    {
+      "source": "firmware/mf79u/ADB.md",
+      "destination": "firmware/mf79u/ADB.md",
+      "source_sha256": "b18d699938bbfca8ddfe26eff160430de8b5eb988412df83bd64244ff028c4b9",
+      "bytes": 7207,
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained",
+        "publication privacy/path normalization"
+      ],
+      "destination_sha256": "f700c60a8248dff0b4378c281b108f3d42b21f47eb2c7d9477b77c128e39d0d4"
+    },
+    {
+      "source": "firmware/mf79u/inspect-media-abi.py",
+      "destination": "firmware/mf79u/inspect-media-abi.py",
+      "source_sha256": "f3c94bbde5bb98f0ba896454b5c1e6a8f0af6f7cbfc16120e3db2929bea0a084",
+      "bytes": 1423,
+      "destination_sha256": "f3c94bbde5bb98f0ba896454b5c1e6a8f0af6f7cbfc16120e3db2929bea0a084"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-full-voice-call.py",
+      "destination": "firmware/mf79u/test-cs-full-voice-call.py",
+      "source_sha256": "ed14bea65cd197f546e07b1ce4f52bab2d93f5721e0333d4ad2f9cbfd32109d5",
+      "bytes": 6584,
+      "destination_sha256": "ed14bea65cd197f546e07b1ce4f52bab2d93f5721e0333d4ad2f9cbfd32109d5"
+    },
+    {
+      "source": "firmware/mf79u/VOICE-BACKEND.md",
+      "destination": "firmware/mf79u/VOICE-BACKEND.md",
+      "source_sha256": "06fb24e3d67ca5007e40bbaa5f1770343e973011b57f70d37a22bebcd46fd227",
+      "bytes": 162743,
+      "destination_sha256": "0f5ace769c56904f4070beb9d2dc022d2d9edc2d8f2a46bfb593bbc06c154091",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/test-cs-i2s-clock-readonly.py",
+      "destination": "firmware/mf79u/test-cs-i2s-clock-readonly.py",
+      "source_sha256": "0fb3928bfe9bb6f065b953c82a83a1bfe661062d2c11748bcfc76f6e68eff4e6",
+      "bytes": 3294,
+      "destination_sha256": "0fb3928bfe9bb6f065b953c82a83a1bfe661062d2c11748bcfc76f6e68eff4e6"
+    },
+    {
+      "source": "firmware/mf79u/test-registration-fallback-live.py",
+      "destination": "firmware/mf79u/test-registration-fallback-live.py",
+      "source_sha256": "825a6b7e52c75593634d879156191453fce0d17608bc75734f03979f9a57c262",
+      "bytes": 3336,
+      "destination_sha256": "825a6b7e52c75593634d879156191453fce0d17608bc75734f03979f9a57c262"
+    },
+    {
+      "source": "firmware/mf79u/Dockerfile",
+      "destination": "firmware/mf79u/Dockerfile",
+      "source_sha256": "8c7a586955ad455f2a65f8ca2aaa76e2efa3ef5fee577264a4fcff04eacefe08",
+      "bytes": 348,
+      "destination_sha256": "81021db4d0cf895b1d7de154c354714dc3f85b2ea34eccb89704dcff4f89ae7e",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/audit-cs-voice.py",
+      "destination": "firmware/mf79u/audit-cs-voice.py",
+      "source_sha256": "e5a0ca0513a2c6230c64c80698d01d077ff784242c2e7a7e9572ba882aad66e5",
+      "bytes": 1210,
+      "destination_sha256": "e5a0ca0513a2c6230c64c80698d01d077ff784242c2e7a7e9572ba882aad66e5"
+    },
+    {
+      "source": "firmware/mf79u/build-native-cp.sh",
+      "destination": "firmware/mf79u/build-native-cp.sh",
+      "source_sha256": "0d91d1bc4f05ce40d8ceedafafa57df9410b00e3e4523e270cf05f139fefbce5",
+      "bytes": 2459,
+      "destination_sha256": "0d91d1bc4f05ce40d8ceedafafa57df9410b00e3e4523e270cf05f139fefbce5"
+    },
+    {
+      "source": "firmware/mf79u/prepare-cs-channel-test.py",
+      "destination": "firmware/mf79u/prepare-cs-channel-test.py",
+      "source_sha256": "ca20dba4d6f805080686268621de804f2dc4c7aec7220f262dfbe3c8844dd4e4",
+      "bytes": 3561,
+      "destination_sha256": "ca20dba4d6f805080686268621de804f2dc4c7aec7220f262dfbe3c8844dd4e4"
+    },
+    {
+      "source": "firmware/mf79u/prepare-cs-i2s-parameters.py",
+      "destination": "firmware/mf79u/prepare-cs-i2s-parameters.py",
+      "source_sha256": "18ae95f58d37463c530b8bcf32f998aa9cc365ce982a5edfd0ae7dd48b61949e",
+      "bytes": 8993,
+      "destination_sha256": "18ae95f58d37463c530b8bcf32f998aa9cc365ce982a5edfd0ae7dd48b61949e"
+    },
+    {
+      "source": "firmware/mf79u/build-vowifi.sh",
+      "destination": "firmware/mf79u/build-vowifi.sh",
+      "source_sha256": "0e6c03e05c1a8b3074545e27f69935fca15b53dbab18e17bf8ade5414d57a2df",
+      "bytes": 4482,
+      "destination_sha256": "0e6c03e05c1a8b3074545e27f69935fca15b53dbab18e17bf8ade5414d57a2df"
+    },
+    {
+      "source": "firmware/mf79u/build-sip-deps.sh",
+      "destination": "firmware/mf79u/build-sip-deps.sh",
+      "source_sha256": "963b41dcd48d53f458cbdf6d97eb047a99f048c33d146f5c4aaeeae2454f9d95",
+      "bytes": 1759,
+      "destination_sha256": "963b41dcd48d53f458cbdf6d97eb047a99f048c33d146f5c4aaeeae2454f9d95"
+    },
+    {
+      "source": "firmware/mf79u/IMEI.md",
+      "destination": "firmware/mf79u/IMEI.md",
+      "source_sha256": "94d457767422c337cfe510b2bcf66b022a4a870f2ea325da2099b78d3b165603",
+      "bytes": 11825,
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained",
+        "publication privacy/path normalization"
+      ],
+      "destination_sha256": "b5d4390e3698936ad2d6d7765dac4df88d3adf5a768bec68686090fb068a1ee1"
+    },
+    {
+      "source": "firmware/mf79u/verify-registration-runtime.py",
+      "destination": "firmware/mf79u/verify-registration-runtime.py",
+      "source_sha256": "8b8bb3f461eacd725ce72ac5ce0a8f6e82f97490cbf5c69d912a944955b5721e",
+      "bytes": 4761,
+      "destination_sha256": "8b8bb3f461eacd725ce72ac5ce0a8f6e82f97490cbf5c69d912a944955b5721e"
+    },
+    {
+      "source": "firmware/mf79u/CONNECTIVITY-20261011.md",
+      "destination": "firmware/mf79u/CONNECTIVITY-20261011.md",
+      "source_sha256": "209f90fac5c106990a6b3964d9626109ca7843d023c48204ed07c610884a798b",
+      "bytes": 10437,
+      "destination_sha256": "05279213785d39e1eb72f7a31e1a35d3f5d9d1e1d5893172a8606890842fa6d3",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/test-cs-pcm-metadata-idle.py",
+      "destination": "firmware/mf79u/test-cs-pcm-metadata-idle.py",
+      "source_sha256": "059521d299a5a6d49405502f3cdb267d2b20c2b6c28eb391f9c92e95883de0f2",
+      "bytes": 4452,
+      "destination_sha256": "059521d299a5a6d49405502f3cdb267d2b20c2b6c28eb391f9c92e95883de0f2"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-module-notifier.py",
+      "destination": "firmware/mf79u/test-cs-module-notifier.py",
+      "source_sha256": "20cae7130bafa0e79a00b3b3fe5158b8f2e84ab116004f6af1d535ff2b5908be",
+      "bytes": 4015,
+      "destination_sha256": "20cae7130bafa0e79a00b3b3fe5158b8f2e84ab116004f6af1d535ff2b5908be"
+    },
+    {
+      "source": "firmware/mf79u/stop-private-ims.py",
+      "destination": "firmware/mf79u/stop-private-ims.py",
+      "source_sha256": "c3ef95495870cc370953b9e521d7e275dae99262f6f0abdd43e2a6b4ed6b55ac",
+      "bytes": 2833,
+      "destination_sha256": "c3ef95495870cc370953b9e521d7e275dae99262f6f0abdd43e2a6b4ed6b55ac"
+    },
+    {
+      "source": "firmware/mf79u/ssh-shell.sh",
+      "destination": "firmware/mf79u/ssh-shell.sh",
+      "source_sha256": "e10deea700d3668720db520039083d2619cfb820ffd25630285e159ac4b824d5",
+      "bytes": 202,
+      "destination_sha256": "e10deea700d3668720db520039083d2619cfb820ffd25630285e159ac4b824d5"
+    },
+    {
+      "source": "firmware/mf79u/test-sip-cs-media.py",
+      "destination": "firmware/mf79u/test-sip-cs-media.py",
+      "source_sha256": "4106979cb57fb8140265da192830b44c625ffac1e02f786e2243661797720727",
+      "bytes": 11954,
+      "destination_sha256": "4106979cb57fb8140265da192830b44c625ffac1e02f786e2243661797720727"
+    },
+    {
+      "source": "firmware/mf79u/cs_kernel_failure_capture.py",
+      "destination": "firmware/mf79u/cs_kernel_failure_capture.py",
+      "source_sha256": "586d8d2b9772a5fcb31a46f5b640ff4ad36495941bc2865b6774172df607b7f4",
+      "bytes": 4355,
+      "destination_sha256": "586d8d2b9772a5fcb31a46f5b640ff4ad36495941bc2865b6774172df607b7f4"
+    },
+    {
+      "source": "firmware/mf79u/set-imei.py",
+      "destination": "firmware/mf79u/set-imei.py",
+      "source_sha256": "cccd1fb022ed5343206ae5b165f3e7b7753a36a7ace23e27a551be46eb3e7b25",
+      "bytes": 8532,
+      "destination_sha256": "cccd1fb022ed5343206ae5b165f3e7b7753a36a7ace23e27a551be46eb3e7b25"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-audio-lifecycle.py",
+      "destination": "firmware/mf79u/test-cs-audio-lifecycle.py",
+      "source_sha256": "d2623f2951576fab5c59d1390387d1bc23bc32a5e4af90d3933805481a5f5b4e",
+      "bytes": 6089,
+      "destination_sha256": "d2623f2951576fab5c59d1390387d1bc23bc32a5e4af90d3933805481a5f5b4e"
+    },
+    {
+      "source": "firmware/mf79u/STATUS.md",
+      "destination": "firmware/mf79u/STATUS.md",
+      "source_sha256": "fb566e9468ba483b1bb81af622c71ef134bb2aad14d7c69a7b435e2d0dca3af8",
+      "bytes": 167980,
+      "destination_sha256": "54dc23ef7419891f05e38421882388fed961a58f35f4996f31f48861789c343f",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained",
+        "Remove publication article index entries at owner request"
+      ],
+      "destination_bytes": 168315
+    },
+    {
+      "source": "firmware/mf79u/test-cs-kernel-probe.py",
+      "destination": "firmware/mf79u/test-cs-kernel-probe.py",
+      "source_sha256": "bdcc3d8ae9015849a662848ee15a52859852d557f3606871c6e61892f91c8916",
+      "bytes": 8159,
+      "destination_sha256": "bdcc3d8ae9015849a662848ee15a52859852d557f3606871c6e61892f91c8916"
+    },
+    {
+      "source": "firmware/mf79u/audit-cs-command-table.py",
+      "destination": "firmware/mf79u/audit-cs-command-table.py",
+      "source_sha256": "1e9ecb7ac6fcba5544ca66e61c5e14ddcd5d9c57a15ca80aa88393a060f39aa7",
+      "bytes": 2603,
+      "destination_sha256": "1e9ecb7ac6fcba5544ca66e61c5e14ddcd5d9c57a15ca80aa88393a060f39aa7"
+    },
+    {
+      "source": "firmware/mf79u/test-sip-signalling.py",
+      "destination": "firmware/mf79u/test-sip-signalling.py",
+      "source_sha256": "e162be37ffa44cbcbcafecf4cc177ef16ac5a773ad51dbadf5f1995949353ae8",
+      "bytes": 7789,
+      "destination_sha256": "e162be37ffa44cbcbcafecf4cc177ef16ac5a773ad51dbadf5f1995949353ae8"
+    },
+    {
+      "source": "firmware/mf79u/test-private-ims.py",
+      "destination": "firmware/mf79u/test-private-ims.py",
+      "source_sha256": "9571126ebc5592b4a9275e04c8f9662d2933598f32ecc7e4d39876a213fb0d10",
+      "bytes": 15184,
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained",
+        "publication privacy/path normalization"
+      ],
+      "destination_sha256": "e7ec05fd7bfcdc619409d1a51ebb819778d7499fd9e95be9bbd203844e587687"
+    },
+    {
+      "source": "firmware/mf79u/verify-cs-test-restored.py",
+      "destination": "firmware/mf79u/verify-cs-test-restored.py",
+      "source_sha256": "978983959f16e123cb035e066422916c4e3b45d460448048cc9927b5c2c6e610",
+      "bytes": 4276,
+      "destination_sha256": "978983959f16e123cb035e066422916c4e3b45d460448048cc9927b5c2c6e610"
+    },
+    {
+      "source": "firmware/mf79u/test-codec-on-modem.py",
+      "destination": "firmware/mf79u/test-codec-on-modem.py",
+      "source_sha256": "1bb90d4c82195b1ce158fcab5f0a7e4d58f473a968d052c948204b1f0f72327e",
+      "bytes": 3540,
+      "destination_sha256": "1bb90d4c82195b1ce158fcab5f0a7e4d58f473a968d052c948204b1f0f72327e"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-status-lifecycle-live.py",
+      "destination": "firmware/mf79u/test-cs-status-lifecycle-live.py",
+      "source_sha256": "cee89430bad1461b716cce879fccdf8ca9ec1bedebc016ff6b8aa469ffe299a9",
+      "bytes": 2588,
+      "destination_sha256": "cee89430bad1461b716cce879fccdf8ca9ec1bedebc016ff6b8aa469ffe299a9"
+    },
+    {
+      "source": "firmware/mf79u/test-imei-patch-live.py",
+      "destination": "firmware/mf79u/test-imei-patch-live.py",
+      "source_sha256": "5e90d6b380c92208ff6b5cdb484f9de1733f81e3230e4e75b0959dce3512b4c6",
+      "bytes": 6211,
+      "destination_sha256": "5e90d6b380c92208ff6b5cdb484f9de1733f81e3230e4e75b0959dce3512b4c6"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-pcm-transport.py",
+      "destination": "firmware/mf79u/test-cs-pcm-transport.py",
+      "source_sha256": "93f78665a8b3acbfb6d18547e4e76969933fbb7abca7c7928691f69a594de9c4",
+      "bytes": 3242,
+      "destination_sha256": "93f78665a8b3acbfb6d18547e4e76969933fbb7abca7c7928691f69a594de9c4"
+    },
+    {
+      "source": "firmware/mf79u/verify-sms-fallback.py",
+      "destination": "firmware/mf79u/verify-sms-fallback.py",
+      "source_sha256": "62ba8d6724077d8282d39d2ff3af279f48666d605f0603189832ac719a7fc3ed",
+      "bytes": 4089,
+      "destination_sha256": "62ba8d6724077d8282d39d2ff3af279f48666d605f0603189832ac719a7fc3ed"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-pcm-bridge-stream.py",
+      "destination": "firmware/mf79u/test-cs-pcm-bridge-stream.py",
+      "source_sha256": "2ff2bbcf281bcede54318771a6cecc24b1ae028ebef040e8983bc072133c5446",
+      "bytes": 5746,
+      "destination_sha256": "2ff2bbcf281bcede54318771a6cecc24b1ae028ebef040e8983bc072133c5446"
+    },
+    {
+      "source": "firmware/mf79u/restore-cs-test.py",
+      "destination": "firmware/mf79u/restore-cs-test.py",
+      "source_sha256": "ba28b726e9f69d6c93e2d45693708461ee7b1c2d5d582c7612f5a9db7c4fecaa",
+      "bytes": 5141,
+      "destination_sha256": "ba28b726e9f69d6c93e2d45693708461ee7b1c2d5d582c7612f5a9db7c4fecaa"
+    },
+    {
+      "source": "firmware/mf79u/prepare-system-tools.py",
+      "destination": "firmware/mf79u/prepare-system-tools.py",
+      "source_sha256": "ed37288ea51dd5d0923b6630791dfdf2babd22c347c26a3d6de0375a6c418f35",
+      "bytes": 2555,
+      "destination_sha256": "e0e6b16e3d2c981c619706fafc577d525b4d789f599766ddc52aa8fd01a0d02e",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/test-ipv4-fragments.py",
+      "destination": "firmware/mf79u/test-ipv4-fragments.py",
+      "source_sha256": "51fd62796c77249ced81a307d77b8176a15264171d28a57c175a345a46a30427",
+      "bytes": 2631,
+      "destination_sha256": "51fd62796c77249ced81a307d77b8176a15264171d28a57c175a345a46a30427"
+    },
+    {
+      "source": "firmware/mf79u/install-led-update.py",
+      "destination": "firmware/mf79u/install-led-update.py",
+      "source_sha256": "7eaedb643ecc24afc3c60c3c0e5849952a5eb47d63f8756b848292dbb1ebdc1a",
+      "bytes": 2212,
+      "destination_sha256": "7eaedb643ecc24afc3c60c3c0e5849952a5eb47d63f8756b848292dbb1ebdc1a"
+    },
+    {
+      "source": "firmware/mf79u/test-vowifi-updown.py",
+      "destination": "firmware/mf79u/test-vowifi-updown.py",
+      "source_sha256": "2f1273abd7ff6e02dc0ded5b36bdcda039b4ca742f6e24dab76c9a391592f2da",
+      "bytes": 3113,
+      "destination_sha256": "2f1273abd7ff6e02dc0ded5b36bdcda039b4ca742f6e24dab76c9a391592f2da"
+    },
+    {
+      "source": "firmware/mf79u/build-cs-pcm-diagnostic.sh",
+      "destination": "firmware/mf79u/build-cs-pcm-diagnostic.sh",
+      "source_sha256": "4eeec8595635610b37d5c5b48f9163952651a152adce5dc3a856b5866becae5e",
+      "bytes": 1796,
+      "destination_sha256": "4eeec8595635610b37d5c5b48f9163952651a152adce5dc3a856b5866becae5e"
+    },
+    {
+      "source": "firmware/mf79u/NETWORK-LED.md",
+      "destination": "firmware/mf79u/NETWORK-LED.md",
+      "source_sha256": "f5e2b162a8b8418246c05de19169e451ad5c1bb02f89dc756d835e13fd38fb97",
+      "bytes": 10227,
+      "destination_sha256": "f7ac059dad0eeb3e772d181a86b9bff98a4bfcac74f0503b30e2d940abfd57bc",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/test-adb-boot.py",
+      "destination": "firmware/mf79u/test-adb-boot.py",
+      "source_sha256": "ae2ece197634f18b210ccb7394147ce67fd95048107ff44b3db4634204caedb3",
+      "bytes": 3139,
+      "destination_sha256": "ae2ece197634f18b210ccb7394147ce67fd95048107ff44b3db4634204caedb3"
+    },
+    {
+      "source": "firmware/mf79u/recover-usb-at.py",
+      "destination": "firmware/mf79u/recover-usb-at.py",
+      "source_sha256": "edae3702981ca31f69d7e0971403b440a3352ed4e56f93e58fffc9646ab27f62",
+      "bytes": 3877,
+      "destination_sha256": "edae3702981ca31f69d7e0971403b440a3352ed4e56f93e58fffc9646ab27f62"
+    },
+    {
+      "source": "firmware/mf79u/prepare-cs-tone-frames.py",
+      "destination": "firmware/mf79u/prepare-cs-tone-frames.py",
+      "source_sha256": "830661817a5c5dbb86cb4564c30fe64dcc1ec8ab2c9654e93e3da6d8bcf58ed8",
+      "bytes": 4188,
+      "destination_sha256": "830661817a5c5dbb86cb4564c30fe64dcc1ec8ab2c9654e93e3da6d8bcf58ed8"
+    },
+    {
+      "source": "firmware/mf79u/test-wcdma-amr-flag-live.py",
+      "destination": "firmware/mf79u/test-wcdma-amr-flag-live.py",
+      "source_sha256": "a4dee1f5ec0379e43fa000338bcf3674cca67e46c7ba9b134b4c93798ec98564",
+      "bytes": 3603,
+      "destination_sha256": "a4dee1f5ec0379e43fa000338bcf3674cca67e46c7ba9b134b4c93798ec98564"
+    },
+    {
+      "source": "firmware/mf79u/prepare-sd.py",
+      "destination": "firmware/mf79u/prepare-sd.py",
+      "source_sha256": "51be6d6017837f730e43d4658284750e2120b963e3f920412bb64e08f895ede1",
+      "bytes": 5777,
+      "destination_sha256": "51be6d6017837f730e43d4658284750e2120b963e3f920412bb64e08f895ede1"
+    },
+    {
+      "source": "firmware/mf79u/test-native-cp.py",
+      "destination": "firmware/mf79u/test-native-cp.py",
+      "source_sha256": "8da9769f1f050e7c6d70353d550bdcd96d592608f7b55cee046a7d5e99de30d1",
+      "bytes": 2727,
+      "destination_sha256": "8da9769f1f050e7c6d70353d550bdcd96d592608f7b55cee046a7d5e99de30d1"
+    },
+    {
+      "source": "firmware/mf79u/build-cs-runtime.sh",
+      "destination": "firmware/mf79u/build-cs-runtime.sh",
+      "source_sha256": "ce474909e93804a2d8201ceb67f1786551fdd38c37dbcbb96fea26d39f8d3e44",
+      "bytes": 614,
+      "destination_sha256": "8e00a56358fbf2a439efeea80f76b9fc2820988bcaba5dfd771b88aa75658841",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/DSP-ABI.md",
+      "destination": "firmware/mf79u/DSP-ABI.md",
+      "source_sha256": "ec8a5a3cabc9cae06abd10bd5bcfc94edafa6322a6f893c8f11c49b4e7302a07",
+      "bytes": 89740,
+      "destination_sha256": "ee7d66c17da6d64df5a7f052db7a23ce55468b28d484172022316459f2e9811a",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/SD.md",
+      "destination": "firmware/mf79u/SD.md",
+      "source_sha256": "74afcdc1a66ed8735b8d2fbec50c49b0140466f51456ecc5b5d6a114f4832056",
+      "bytes": 5866,
+      "destination_sha256": "26d6e8d807d593355dbedfa1a8b4d6757a2e533017f476a149623ea771ab2e30",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/install-usb-vowifi-fix.py",
+      "destination": "firmware/mf79u/install-usb-vowifi-fix.py",
+      "source_sha256": "e932809e631acd6c86a51878a636590a31825b4da27f50502989cc2ed3768cb5",
+      "bytes": 3535,
+      "destination_sha256": "e932809e631acd6c86a51878a636590a31825b4da27f50502989cc2ed3768cb5"
+    },
+    {
+      "source": "firmware/mf79u/ram_transfer.py",
+      "destination": "firmware/mf79u/ram_transfer.py",
+      "source_sha256": "1b79f436254ec28f5b78625b0f355eae39a6b5077fa1032949d4fcbda728bd90",
+      "bytes": 2657,
+      "destination_sha256": "1b79f436254ec28f5b78625b0f355eae39a6b5077fa1032949d4fcbda728bd90"
+    },
+    {
+      "source": "firmware/mf79u/build-control.sh",
+      "destination": "firmware/mf79u/build-control.sh",
+      "source_sha256": "257e59fe400004ce78035a0fb61ad94c7cc4069af231e55a8789d90fc389a946",
+      "bytes": 556,
+      "destination_sha256": "aae3358794e7ae06d559d97d69b0b727eca4099da17496bf1faa1513efb80f1c",
+      "destination_bytes": 572,
+      "transformations": [
+        "Portable Make build without VCS-dependent Go output"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/test-sip-sms.py",
+      "destination": "firmware/mf79u/test-sip-sms.py",
+      "source_sha256": "47eea87489002c73b78957fd3070c5b63a963e640cd0bf4c670377462adb5ac8",
+      "bytes": 11944,
+      "destination_sha256": "47eea87489002c73b78957fd3070c5b63a963e640cd0bf4c670377462adb5ac8"
+    },
+    {
+      "source": "firmware/mf79u/README.md",
+      "destination": "firmware/mf79u/README.md",
+      "source_sha256": "adc46529b1dd6f2fffe365e5fdd5cd02c42f9fed649f5c13d1f66831d289375e",
+      "bytes": 19368,
+      "destination_sha256": "a851dd6c5d328baca1505a9893fa08aa92a41cedf2e2a121ed010b7c51af5bf1",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/test-cs-restore-route-guard.py",
+      "destination": "firmware/mf79u/test-cs-restore-route-guard.py",
+      "source_sha256": "73512f0ddbecb8d8c83cbc207f6c5130ae5ebdc6aca5edd0469b8185d541ac69",
+      "bytes": 3177,
+      "destination_sha256": "73512f0ddbecb8d8c83cbc207f6c5130ae5ebdc6aca5edd0469b8185d541ac69"
+    },
+    {
+      "source": "firmware/mf79u/install-cs-status.py",
+      "destination": "firmware/mf79u/install-cs-status.py",
+      "source_sha256": "238229a17a2b36262566a3579fc8b6831c60cb4649d198584fa567df05b5d8ef",
+      "bytes": 3999,
+      "destination_sha256": "238229a17a2b36262566a3579fc8b6831c60cb4649d198584fa567df05b5d8ef"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-tone-pack.py",
+      "destination": "firmware/mf79u/test-cs-tone-pack.py",
+      "source_sha256": "646302a09158d3e45d88cbecb5c12bfd6c050b44a0bfcc0a95b471397d602fc9",
+      "bytes": 2321,
+      "destination_sha256": "646302a09158d3e45d88cbecb5c12bfd6c050b44a0bfcc0a95b471397d602fc9"
+    },
+    {
+      "source": "firmware/mf79u/SMS-IMS.md",
+      "destination": "firmware/mf79u/SMS-IMS.md",
+      "source_sha256": "f627dc4a5798c0562156d1d1203d8fdb5a28d588f996fdca3551dc5b5886cbd8",
+      "bytes": 6768,
+      "destination_sha256": "6ae0887fd2663e38f5224547d97ca83f2491ca9f5e3529b1194554965f5790e9",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/LINPHONE-VOWIFI-TEST.md",
+      "destination": "firmware/mf79u/LINPHONE-VOWIFI-TEST.md",
+      "source_sha256": "ad876479d8dd74176b62846643c219becaddecf4887e31a9e33cbe0a8348365d",
+      "bytes": 1835,
+      "destination_sha256": "eb608ad3cf8e7e9cc79429dd73ed69f37540b032898cdd78fcc4c05c2adeec54",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/test-cs-sip-hangup.py",
+      "destination": "firmware/mf79u/test-cs-sip-hangup.py",
+      "source_sha256": "705b9eb6eeba9f67f08ceaed25cd9ca4e82790776d924dd9fb2ed7dc36f19794",
+      "bytes": 1904,
+      "destination_sha256": "705b9eb6eeba9f67f08ceaed25cd9ca4e82790776d924dd9fb2ed7dc36f19794"
+    },
+    {
+      "source": "firmware/mf79u/test-native-lifecycle.sh",
+      "destination": "firmware/mf79u/test-native-lifecycle.sh",
+      "source_sha256": "b3c861e6a44b0c60125b03a422a5c4b28d97e06747ec4606eb50edb2809192b8",
+      "bytes": 2425,
+      "destination_sha256": "b3c861e6a44b0c60125b03a422a5c4b28d97e06747ec4606eb50edb2809192b8"
+    },
+    {
+      "source": "firmware/mf79u/WEBUI.md",
+      "destination": "firmware/mf79u/WEBUI.md",
+      "source_sha256": "0f9c27626f52eefc78ca275dcacf696f432fe264c1604876dbb46f7783ae3546",
+      "bytes": 36853,
+      "destination_sha256": "2ac5b8988bfe31affd7af3bd1acf6ca41e7961ec789d63f110ef6f15fbf6fe45",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build.sh",
+      "destination": "firmware/mf79u/build.sh",
+      "source_sha256": "77e9f85d9fd701e1ea33ae58f0426d67c5a83608fd8779e0368f5eb629296fd4",
+      "bytes": 1904,
+      "destination_sha256": "77e9f85d9fd701e1ea33ae58f0426d67c5a83608fd8779e0368f5eb629296fd4"
+    },
+    {
+      "source": "firmware/mf79u/patch-vowifi-idr.py",
+      "destination": "firmware/mf79u/patch-vowifi-idr.py",
+      "source_sha256": "eda5a97ac9f9cd416e3c0ab914cd7e73b7e8a30494cedae46b508129349bde0a",
+      "bytes": 1607,
+      "destination_sha256": "eda5a97ac9f9cd416e3c0ab914cd7e73b7e8a30494cedae46b508129349bde0a"
+    },
+    {
+      "source": "firmware/mf79u/vowifi-updown.sh",
+      "destination": "firmware/mf79u/vowifi-updown.sh",
+      "source_sha256": "fb33ffa7cb14a737b91118323eee53c345fe179a3fb23a76bdc82e34268ce794",
+      "bytes": 2106,
+      "destination_sha256": "fb33ffa7cb14a737b91118323eee53c345fe179a3fb23a76bdc82e34268ce794"
+    },
+    {
+      "source": "firmware/mf79u/test-registration-fallback.sh",
+      "destination": "firmware/mf79u/test-registration-fallback.sh",
+      "source_sha256": "985d5925091f948c25524dc369e73f238114bc31ed447dd31f84ea3b985ecf3e",
+      "bytes": 814,
+      "destination_sha256": "985d5925091f948c25524dc369e73f238114bc31ed447dd31f84ea3b985ecf3e"
+    },
+    {
+      "source": "firmware/mf79u/prepare-cs-dsp-audio-parameters.py",
+      "destination": "firmware/mf79u/prepare-cs-dsp-audio-parameters.py",
+      "source_sha256": "1c90f1465401c79ad46601cab361079f24adcf98f88ea411db533619bb8fedf4",
+      "bytes": 3139,
+      "destination_sha256": "1c90f1465401c79ad46601cab361079f24adcf98f88ea411db533619bb8fedf4"
+    },
+    {
+      "source": "firmware/mf79u/build-net-led.sh",
+      "destination": "firmware/mf79u/build-net-led.sh",
+      "source_sha256": "18079a53ce84d655b34ecba13291e892bf389e5ef0b7bcff16681582a9e36382",
+      "bytes": 362,
+      "destination_sha256": "18079a53ce84d655b34ecba13291e892bf389e5ef0b7bcff16681582a9e36382"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-only.py",
+      "destination": "firmware/mf79u/test-cs-only.py",
+      "source_sha256": "7d2b5ef4d4d445df844d194db233c6fde81855feebc6ade6a057128bf97cd129",
+      "bytes": 2023,
+      "destination_sha256": "7d2b5ef4d4d445df844d194db233c6fde81855feebc6ade6a057128bf97cd129"
+    },
+    {
+      "source": "firmware/mf79u/build-adb-boot.sh",
+      "destination": "firmware/mf79u/build-adb-boot.sh",
+      "source_sha256": "885a320d93156602665e062cf58f49cf7b6844dc8b89c33140a1096ced059094",
+      "bytes": 645,
+      "destination_sha256": "4593c590ac084ec77ee412530bed308425359d89f5e81db445584ed73a81b43d",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/install-system.py",
+      "destination": "firmware/mf79u/install-system.py",
+      "source_sha256": "65486afdb122f6ca1aae13ea90a9b269adddadad18a6815d3d7ce0ad8e370659",
+      "bytes": 5456,
+      "destination_sha256": "65486afdb122f6ca1aae13ea90a9b269adddadad18a6815d3d7ce0ad8e370659"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-public-pcm-call.py",
+      "destination": "firmware/mf79u/test-cs-public-pcm-call.py",
+      "source_sha256": "757904858f6e7cbefac035e302a7d2cf085308540d314523eef19eafa3905977",
+      "bytes": 18457,
+      "destination_sha256": "757904858f6e7cbefac035e302a7d2cf085308540d314523eef19eafa3905977"
+    },
+    {
+      "source": "firmware/mf79u/test-sms-ims.sh",
+      "destination": "firmware/mf79u/test-sms-ims.sh",
+      "source_sha256": "e2e10968be00a958990f579723bc583358e2e9b9c4746eab7faa7cd10bb2b20b",
+      "bytes": 500,
+      "destination_sha256": "0f9904e7696ef30d76f7ea157bc1b8cea55f6903c6304f5404fe9c6aab28645c",
+      "transformations": [
+        "Publication whitespace/LF normalization; behavior unchanged"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/test-cs-wire-mo.py",
+      "destination": "firmware/mf79u/test-cs-wire-mo.py",
+      "source_sha256": "a84bffa44ac823a80ee449c654b9f11cb253ef7962b54405bec3e56c457b3205",
+      "bytes": 6446,
+      "destination_sha256": "a84bffa44ac823a80ee449c654b9f11cb253ef7962b54405bec3e56c457b3205"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-audio-mailbox-ack.py",
+      "destination": "firmware/mf79u/test-cs-audio-mailbox-ack.py",
+      "source_sha256": "fa6ea8ec5f6b2df15e8de3a49c5a604a3ff1d4056476a383accdfddd11aa26d2",
+      "bytes": 11491,
+      "destination_sha256": "fa6ea8ec5f6b2df15e8de3a49c5a604a3ff1d4056476a383accdfddd11aa26d2"
+    },
+    {
+      "source": "firmware/mf79u/sms-api.py",
+      "destination": "firmware/mf79u/sms-api.py",
+      "source_sha256": "57c8326aabcd8d1d4941790c102667d46315121fa4c5f00d78e710dddf6a5e42",
+      "bytes": 2872,
+      "destination_sha256": "57c8326aabcd8d1d4941790c102667d46315121fa4c5f00d78e710dddf6a5e42"
+    },
+    {
+      "source": "firmware/mf79u/test-system-ui.js",
+      "destination": "firmware/mf79u/test-system-ui.js",
+      "source_sha256": "228fe67d78827b578351018ccbe2482dc815d798ad47fffd8924d117f746a003",
+      "bytes": 2900,
+      "destination_sha256": "228fe67d78827b578351018ccbe2482dc815d798ad47fffd8924d117f746a003"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-driver-control.py",
+      "destination": "firmware/mf79u/test-cs-driver-control.py",
+      "source_sha256": "ec0d3f92b81c465ab0dbf25cf88fc456a12868b3b90d97754a483d8fea835c70",
+      "bytes": 2718,
+      "destination_sha256": "ec0d3f92b81c465ab0dbf25cf88fc456a12868b3b90d97754a483d8fea835c70"
+    },
+    {
+      "source": "firmware/mf79u/isolate-volte.py",
+      "destination": "firmware/mf79u/isolate-volte.py",
+      "source_sha256": "cd0dce46ef28bd6faaf185799c759f2c84f468abeb75fe93aff8c0973f9496d5",
+      "bytes": 2941,
+      "destination_sha256": "cd0dce46ef28bd6faaf185799c759f2c84f468abeb75fe93aff8c0973f9496d5"
+    },
+    {
+      "source": "firmware/mf79u/run-pbx-gateway.py",
+      "destination": "firmware/mf79u/run-pbx-gateway.py",
+      "source_sha256": "cd1f0f8d46251fb83ef7a99444b2e2b08c7e506288901189b6d3b3f8995ad45e",
+      "bytes": 13144,
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained",
+        "publication privacy/path normalization"
+      ],
+      "destination_sha256": "fd6f6519dc160f01976de15c73f9a23a9f3177bef9cefff3694dd93959662559"
+    },
+    {
+      "source": "firmware/mf79u/verify-sms-submission-status.py",
+      "destination": "firmware/mf79u/verify-sms-submission-status.py",
+      "source_sha256": "624cbea6aacf9630699f5c0a6ff87c4d8a7d538d20781fbb0514d02dffa8cb5c",
+      "bytes": 2708,
+      "destination_sha256": "624cbea6aacf9630699f5c0a6ff87c4d8a7d538d20781fbb0514d02dffa8cb5c"
+    },
+    {
+      "source": "firmware/mf79u/compress-web.py",
+      "destination": "firmware/mf79u/compress-web.py",
+      "source_sha256": "20b1bec264facb18e47a161570eca82fb75197d9b922ba7950a15f3533cf9132",
+      "bytes": 394,
+      "destination_sha256": "20b1bec264facb18e47a161570eca82fb75197d9b922ba7950a15f3533cf9132"
+    },
+    {
+      "source": "firmware/mf79u/install-control.py",
+      "destination": "firmware/mf79u/install-control.py",
+      "source_sha256": "3e884c95b7df4519ea62b8a27a0bab2f647db95c89187e5e2a75627ce8c8da8f",
+      "bytes": 4907,
+      "destination_sha256": "3e884c95b7df4519ea62b8a27a0bab2f647db95c89187e5e2a75627ce8c8da8f"
+    },
+    {
+      "source": "firmware/mf79u/start-net-led.py",
+      "destination": "firmware/mf79u/start-net-led.py",
+      "source_sha256": "d5f16c5870609d2c930c85c5e77cfdaa9ee5d7b34ebcfccb898aa288020f1003",
+      "bytes": 2465,
+      "destination_sha256": "d5f16c5870609d2c930c85c5e77cfdaa9ee5d7b34ebcfccb898aa288020f1003"
+    },
+    {
+      "source": "firmware/mf79u/OPERATOR-UMTS.md",
+      "destination": "firmware/mf79u/OPERATOR-UMTS.md",
+      "source_sha256": "1cb3e4ee5b0b29864aca075accca5530d9aa9412755e326834b45129839cf833",
+      "bytes": 5307,
+      "destination_sha256": "004898096ba18973d09644cd3c438af260a5be7df4e60d0813dc26f6d3461c6b",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/REGISTRATION.md",
+      "destination": "firmware/mf79u/REGISTRATION.md",
+      "source_sha256": "a7fde69432ab931bab48fa24d1e14b6b3487ac3bf1c2453125d35350a75baeb9",
+      "bytes": 9969,
+      "destination_sha256": "6789f37b7fec37d5a2eca88b5af16275ad63d3f235ff87c316e911d643bffe83",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/test-wifi-ui.js",
+      "destination": "firmware/mf79u/test-wifi-ui.js",
+      "source_sha256": "89570c220d334629243023488f94ae0f6289b5c88fdf969cfb23a9a26b3213a2",
+      "bytes": 1824,
+      "destination_sha256": "89570c220d334629243023488f94ae0f6289b5c88fdf969cfb23a9a26b3213a2"
+    },
+    {
+      "source": "firmware/mf79u/WIFI.md",
+      "destination": "firmware/mf79u/WIFI.md",
+      "source_sha256": "79cbbe0a554853f163cc633d073607f3568e1a3d6eeabc0864d92306eb06d4a6",
+      "bytes": 9472,
+      "destination_sha256": "6a3c0f82911d517c73c0d93dcea948717f9fb1a44dae659e3226ac504ecd46fa",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/collect-cs-mt-tone.py",
+      "destination": "firmware/mf79u/collect-cs-mt-tone.py",
+      "source_sha256": "5112fed61cdc200b286d878f1828060e32cdf2ff405c222b5c9955987e346294",
+      "bytes": 4631,
+      "destination_sha256": "5112fed61cdc200b286d878f1828060e32cdf2ff405c222b5c9955987e346294"
+    },
+    {
+      "source": "firmware/mf79u/dial-cs-mo-probe.py",
+      "destination": "firmware/mf79u/dial-cs-mo-probe.py",
+      "source_sha256": "5e0f6cb0b01e419dd96aff80834aee5a904320347eeba27700ba849496a9380f",
+      "bytes": 6654,
+      "destination_sha256": "5e0f6cb0b01e419dd96aff80834aee5a904320347eeba27700ba849496a9380f"
+    },
+    {
+      "source": "firmware/mf79u/test-system-live.py",
+      "destination": "firmware/mf79u/test-system-live.py",
+      "source_sha256": "bfc7356fbdee10a313247f2941f9f0c7c76c2cbe108224e97315552a07879649",
+      "bytes": 6007,
+      "destination_sha256": "bfc7356fbdee10a313247f2941f9f0c7c76c2cbe108224e97315552a07879649"
+    },
+    {
+      "source": "firmware/mf79u/SYSTEM.md",
+      "destination": "firmware/mf79u/SYSTEM.md",
+      "source_sha256": "e348ae77b3f7a8482189d6f38d7265cadc4f0037012fb781b0d2acf9f3a1b758",
+      "bytes": 10374,
+      "destination_sha256": "4bda3787131fb6ff7d2deba21eed5f29b44e3e7a50ef015807f2e7ec8ac37ec6",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/adb_boot.py",
+      "destination": "firmware/mf79u/adb_boot.py",
+      "source_sha256": "46cb9f59020ab20963ee07b02df6c0d33083e5b2fb17470c4a6f26916055e42a",
+      "bytes": 1198,
+      "destination_sha256": "46cb9f59020ab20963ee07b02df6c0d33083e5b2fb17470c4a6f26916055e42a"
+    },
+    {
+      "source": "firmware/mf79u/build-ims-diagnostics.sh",
+      "destination": "firmware/mf79u/build-ims-diagnostics.sh",
+      "source_sha256": "a19b3443ce4fead0819e2fe958f5482e173c023016e159c7c3b8f1e138270af0",
+      "bytes": 4820,
+      "destination_sha256": "2b6b35fb9f90ee3a1750899e6982f742de26320a48cdb1e7bcf106557a7b005f",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/zx-rpmsg.py",
+      "destination": "firmware/mf79u/zx-rpmsg.py",
+      "source_sha256": "9e6e8aa250f6a87a846d43c2d2a0bc11e27d7725cc5a26cc03fbc00a93b2c9bf",
+      "bytes": 3135,
+      "destination_sha256": "9e6e8aa250f6a87a846d43c2d2a0bc11e27d7725cc5a26cc03fbc00a93b2c9bf"
+    },
+    {
+      "source": "firmware/mf79u/FACTORY-RESET.md",
+      "destination": "firmware/mf79u/FACTORY-RESET.md",
+      "source_sha256": "234365caea8aacca6a6a827d9811fce0cc1e64994a944cfbe517ffb522bb3d19",
+      "bytes": 7002,
+      "destination_sha256": "94364e8d77da7c43d65b8d99e2dba1c500f5d0022888f87dd4714d4338370266",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/SMS-SIP.md",
+      "destination": "firmware/mf79u/SMS-SIP.md",
+      "source_sha256": "888947e1e5862546c615a551da8d0b5b65baa61666138f012e6a453d5c849786",
+      "bytes": 18525,
+      "destination_sha256": "71bf0e97ccedfd5ce6b1b154e27154638328d39952d876f9b775655bfa2c1ffc",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/BOOT-MEMORY.md",
+      "destination": "firmware/mf79u/BOOT-MEMORY.md",
+      "source_sha256": "288e6357b27acf629d1ed3d7354b628cd596111c92defa970ab542df027ae09e",
+      "bytes": 3685,
+      "destination_sha256": "407032afec2d061815e9167ddf71e080398a567a6e14ed22824972e6b8d67d15",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/test-native-fallback.py",
+      "destination": "firmware/mf79u/test-native-fallback.py",
+      "source_sha256": "e38556b5e24c71e24a305e602c4ad5e8d45ce8de2baffd1494ba55233fa5ed24",
+      "bytes": 2964,
+      "destination_sha256": "e38556b5e24c71e24a305e602c4ad5e8d45ce8de2baffd1494ba55233fa5ed24"
+    },
+    {
+      "source": "firmware/mf79u/install-cs-only-test.py",
+      "destination": "firmware/mf79u/install-cs-only-test.py",
+      "source_sha256": "4e7b3558a2c6c896fb54bd06828f5952cb03c4383648d0bc6fc3f7891e7e400d",
+      "bytes": 2692,
+      "destination_sha256": "4e7b3558a2c6c896fb54bd06828f5952cb03c4383648d0bc6fc3f7891e7e400d"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-mt-state.py",
+      "destination": "firmware/mf79u/test-cs-mt-state.py",
+      "source_sha256": "f003b4d8b0de9bb4fb8d548bced485d49798c61c22bc7023a00899bc89934ec3",
+      "bytes": 2685,
+      "destination_sha256": "f003b4d8b0de9bb4fb8d548bced485d49798c61c22bc7023a00899bc89934ec3"
+    },
+    {
+      "source": "firmware/mf79u/test-management-session-live.py",
+      "destination": "firmware/mf79u/test-management-session-live.py",
+      "source_sha256": "9b00396fa7afcfc83383b950a76cc889307726bc5a1c9f9c103e5e4c9934dc42",
+      "bytes": 1497,
+      "destination_sha256": "9b00396fa7afcfc83383b950a76cc889307726bc5a1c9f9c103e5e4c9934dc42"
+    },
+    {
+      "source": "firmware/mf79u/test-sip-incoming-transport.py",
+      "destination": "firmware/mf79u/test-sip-incoming-transport.py",
+      "source_sha256": "01beb97b96db5d88edf4ac9fcd34b139e3dca9ee687c70f6a62712b5d4ee5747",
+      "bytes": 3469,
+      "destination_sha256": "01beb97b96db5d88edf4ac9fcd34b139e3dca9ee687c70f6a62712b5d4ee5747"
+    },
+    {
+      "source": "firmware/mf79u/recover-voice-abi.py",
+      "destination": "firmware/mf79u/recover-voice-abi.py",
+      "source_sha256": "cf8a1d023f99d936ca612ef8827b92517c8a55fe90276cd3e7a9d60798528acd",
+      "bytes": 2924,
+      "destination_sha256": "cf8a1d023f99d936ca612ef8827b92517c8a55fe90276cd3e7a9d60798528acd"
+    },
+    {
+      "source": "firmware/mf79u/build-sip-gateway.sh",
+      "destination": "firmware/mf79u/build-sip-gateway.sh",
+      "source_sha256": "3ea3b2d3c8902c043dec9d87938aed52aa5aabae855e27510c63c9cdc55d4712",
+      "bytes": 2722,
+      "destination_sha256": "1385ff33e59f23ebb8389768405e83a25de703be154b9f49ce33f9cb1da039ee",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/prepare-cs-full-voice-parameters.py",
+      "destination": "firmware/mf79u/prepare-cs-full-voice-parameters.py",
+      "source_sha256": "84318eaaecb7e0c607fd977682a1329f290b42737422ec7b6edee5a3b9f58054",
+      "bytes": 4278,
+      "destination_sha256": "84318eaaecb7e0c607fd977682a1329f290b42737422ec7b6edee5a3b9f58054"
+    },
+    {
+      "source": "firmware/mf79u/VOWIFI.md",
+      "destination": "firmware/mf79u/VOWIFI.md",
+      "source_sha256": "238fe1e7e71de20586e4f1b759eb166701d09418cf742f7045be45486f6c4311",
+      "bytes": 19462,
+      "destination_sha256": "098c542f7ed97e4ad0030f8e5710285d7ef660095fa76703b9b8f79873f5bba2",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/verify.py",
+      "destination": "firmware/mf79u/verify.py",
+      "source_sha256": "1d4cd620f13402eae3f17741345ee36d5371f74529e2bd2df8ff7cbb9a518eee",
+      "bytes": 5619,
+      "destination_sha256": "1d4cd620f13402eae3f17741345ee36d5371f74529e2bd2df8ff7cbb9a518eee"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-clear-tone.py",
+      "destination": "firmware/mf79u/test-cs-clear-tone.py",
+      "source_sha256": "21792c267f758cd4ce19e370265683b1c4cb34d1f448994f3fc5371f2f921840",
+      "bytes": 8408,
+      "destination_sha256": "21792c267f758cd4ce19e370265683b1c4cb34d1f448994f3fc5371f2f921840"
+    },
+    {
+      "source": "firmware/mf79u/device-transfer.py",
+      "destination": "firmware/mf79u/device-transfer.py",
+      "source_sha256": "6e3ce53d7e38c044958d208b9b5e095c56466983a32b5150da4611d60e3f6ea5",
+      "bytes": 1215,
+      "destination_sha256": "6e3ce53d7e38c044958d208b9b5e095c56466983a32b5150da4611d60e3f6ea5"
+    },
+    {
+      "source": "firmware/mf79u/verify-standalone.py",
+      "destination": "firmware/mf79u/verify-standalone.py",
+      "source_sha256": "88dc856d0c74c8565c19f91dc2907fdb1204748de69ef7bd8966870009350fb0",
+      "bytes": 8008,
+      "destination_sha256": "88dc856d0c74c8565c19f91dc2907fdb1204748de69ef7bd8966870009350fb0"
+    },
+    {
+      "source": "firmware/mf79u/boot-wait.html",
+      "destination": "firmware/mf79u/boot-wait.html",
+      "source_sha256": "7010f1788015d40d0cb09ae6f31d1ec6d2d76f6cc64d445844e924928122df92",
+      "bytes": 400,
+      "destination_sha256": "7010f1788015d40d0cb09ae6f31d1ec6d2d76f6cc64d445844e924928122df92"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-sip-pcm.py",
+      "destination": "firmware/mf79u/test-cs-sip-pcm.py",
+      "source_sha256": "3d77bfb204657fabef4b3d137e36714bfe87ba21ec67f56be25ac646f8032db3",
+      "bytes": 3455,
+      "destination_sha256": "3d77bfb204657fabef4b3d137e36714bfe87ba21ec67f56be25ac646f8032db3"
+    },
+    {
+      "source": "firmware/mf79u/test-voice-flags.py",
+      "destination": "firmware/mf79u/test-voice-flags.py",
+      "source_sha256": "7564ad7e7df086c393a267b4982a0b483e317e8c9d328b0c23c61257d7f49fc2",
+      "bytes": 1707,
+      "destination_sha256": "7564ad7e7df086c393a267b4982a0b483e317e8c9d328b0c23c61257d7f49fc2"
+    },
+    {
+      "source": "firmware/mf79u/install-sms-ims.py",
+      "destination": "firmware/mf79u/install-sms-ims.py",
+      "source_sha256": "2eafa904505dd2f313ae1a6b22a78931e012422b9e21b2c8018773ccfacaa006",
+      "bytes": 6879,
+      "destination_sha256": "2eafa904505dd2f313ae1a6b22a78931e012422b9e21b2c8018773ccfacaa006"
+    },
+    {
+      "source": "firmware/mf79u/AUDIO-PATH.md",
+      "destination": "firmware/mf79u/AUDIO-PATH.md",
+      "source_sha256": "d8f4c6cdb425c036c1f0d9f6b228428b852686f72938a4b14fd096c388b0cd13",
+      "bytes": 11122,
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained",
+        "publication privacy/path normalization"
+      ],
+      "destination_sha256": "d8e2b7714547d224bc13581af714cdffb0dd52814c4e2fcef5ba75d759395d02"
+    },
+    {
+      "source": "firmware/mf79u/collect-cs-channel-call.py",
+      "destination": "firmware/mf79u/collect-cs-channel-call.py",
+      "source_sha256": "b825308967053f0c5ce9dbcdad263508c50bfe60c2676513c1225905b79c0bce",
+      "bytes": 4677,
+      "destination_sha256": "b825308967053f0c5ce9dbcdad263508c50bfe60c2676513c1225905b79c0bce"
+    },
+    {
+      "source": "firmware/mf79u/test-esp-null.py",
+      "destination": "firmware/mf79u/test-esp-null.py",
+      "source_sha256": "a70dfbd754ef27d21f0a4cd18d36646056df3aa5a7a870eadd10c47f9b9fcfe6",
+      "bytes": 5508,
+      "destination_sha256": "a70dfbd754ef27d21f0a4cd18d36646056df3aa5a7a870eadd10c47f9b9fcfe6"
+    },
+    {
+      "source": "firmware/mf79u/cs_observation_evidence.py",
+      "destination": "firmware/mf79u/cs_observation_evidence.py",
+      "source_sha256": "7e1aa169a3ec0d5ded6fb81533de84045ed0a5a858f3ad84d0bac5e7e1b4b68f",
+      "bytes": 1879,
+      "destination_sha256": "7e1aa169a3ec0d5ded6fb81533de84045ed0a5a858f3ad84d0bac5e7e1b4b68f"
+    },
+    {
+      "source": "firmware/mf79u/audit-b03-kernel-relocations.py",
+      "destination": "firmware/mf79u/audit-b03-kernel-relocations.py",
+      "source_sha256": "921106a6d0f34e4dc1bbeacf4f459ee2b3c8ac2ee016b7d3d2e39a858ffeb97f",
+      "bytes": 333,
+      "destination_sha256": "921106a6d0f34e4dc1bbeacf4f459ee2b3c8ac2ee016b7d3d2e39a858ffeb97f"
+    },
+    {
+      "source": "firmware/mf79u/UMTS.md",
+      "destination": "firmware/mf79u/UMTS.md",
+      "source_sha256": "628ed0ac04ec8d96eca45424a15798a7bf971e2f97d3ebc73fc0b87e523e31f0",
+      "bytes": 13866,
+      "destination_sha256": "2297ede0a9053977c5370ed82d33d20d2958d33b59b680dd4ca9977599e54c8f",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/b03_kernel_relocations.py",
+      "destination": "firmware/mf79u/b03_kernel_relocations.py",
+      "source_sha256": "8c7682cc404825a2c96ee2262484fc03e9eda03a8268c434cad0be37e9635d57",
+      "bytes": 2804,
+      "destination_sha256": "172120e625774edcba5bfe0aef3b48ba4fa73953e317caedc3d122cd8143d2d3",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/verify-adb-boot.py",
+      "destination": "firmware/mf79u/verify-adb-boot.py",
+      "source_sha256": "a633c1205ec34a90e0573027f34a748c185e0cdd1c9bfaf3db9c3705c5028d2d",
+      "bytes": 5657,
+      "destination_sha256": "a633c1205ec34a90e0573027f34a748c185e0cdd1c9bfaf3db9c3705c5028d2d"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-dsp-boot-watch.py",
+      "destination": "firmware/mf79u/test-cs-dsp-boot-watch.py",
+      "source_sha256": "ad8f8dc053e0e9121fc956db36126c5b8c2baac9f7989e12fe95778ec29474c3",
+      "bytes": 6724,
+      "destination_sha256": "ad8f8dc053e0e9121fc956db36126c5b8c2baac9f7989e12fe95778ec29474c3"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-adapter.py",
+      "destination": "firmware/mf79u/test-cs-adapter.py",
+      "source_sha256": "7c6022a98052c83121417ab42ca1c06606a19c5c862d61b38ca7f2a9dc0ffed0",
+      "bytes": 5729,
+      "destination_sha256": "7c6022a98052c83121417ab42ca1c06606a19c5c862d61b38ca7f2a9dc0ffed0"
+    },
+    {
+      "source": "firmware/mf79u/serve-artifact.py",
+      "destination": "firmware/mf79u/serve-artifact.py",
+      "source_sha256": "cb3ebbdc1081bcb74c8c20e447914dd8592cf2cd7e9269f8eea0024db085d6c3",
+      "bytes": 1196,
+      "destination_sha256": "cb3ebbdc1081bcb74c8c20e447914dd8592cf2cd7e9269f8eea0024db085d6c3"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-status.py",
+      "destination": "firmware/mf79u/test-cs-status.py",
+      "source_sha256": "12d2bcb8240fe836c14145badbde9e074d0491b4d4a952e4637ee440fddd9ba2",
+      "bytes": 3044,
+      "destination_sha256": "12d2bcb8240fe836c14145badbde9e074d0491b4d4a952e4637ee440fddd9ba2"
+    },
+    {
+      "source": "firmware/mf79u/build-codec.sh",
+      "destination": "firmware/mf79u/build-codec.sh",
+      "source_sha256": "8c121649529b0e549fed155b72887936221bfea0ca7cd9943c68ec26ebfa3232",
+      "bytes": 1244,
+      "destination_sha256": "8c121649529b0e549fed155b72887936221bfea0ca7cd9943c68ec26ebfa3232"
+    },
+    {
+      "source": "firmware/mf79u/install-native.py",
+      "destination": "firmware/mf79u/install-native.py",
+      "source_sha256": "a253452a63007df6a6afe1097ce22078a5f4f04d88606d9e729570bd84c3af19",
+      "bytes": 6152,
+      "destination_sha256": "a253452a63007df6a6afe1097ce22078a5f4f04d88606d9e729570bd84c3af19"
+    },
+    {
+      "source": "firmware/mf79u/install-sms-sip.py",
+      "destination": "firmware/mf79u/install-sms-sip.py",
+      "source_sha256": "83afff6e2eb8ea4371fbd3dabceee799df6fc68f3dbdb3bdfc1d9bd2b338306f",
+      "bytes": 7241,
+      "destination_sha256": "83afff6e2eb8ea4371fbd3dabceee799df6fc68f3dbdb3bdfc1d9bd2b338306f"
+    },
+    {
+      "source": "firmware/mf79u/cs_i2s_signal.py",
+      "destination": "firmware/mf79u/cs_i2s_signal.py",
+      "source_sha256": "596f5b46dba0b1e9caababe9b15734026065e119e2383557d7120825cc7370b0",
+      "bytes": 1692,
+      "destination_sha256": "596f5b46dba0b1e9caababe9b15734026065e119e2383557d7120825cc7370b0"
+    },
+    {
+      "source": "firmware/mf79u/cs_sip_media_diagnostic.py",
+      "destination": "firmware/mf79u/cs_sip_media_diagnostic.py",
+      "source_sha256": "98baa996943e9b97064af726e48fb6d162f0eb146ae16b1ed4f47bdc2bf1dc0f",
+      "bytes": 11610,
+      "destination_sha256": "98baa996943e9b97064af726e48fb6d162f0eb146ae16b1ed4f47bdc2bf1dc0f"
+    },
+    {
+      "source": "firmware/mf79u/prepare.py",
+      "destination": "firmware/mf79u/prepare.py",
+      "source_sha256": "802484a26702c1a11f9d44d119aadf618dab095f9c5c2f90359e39791235e647",
+      "bytes": 9657,
+      "destination_sha256": "802484a26702c1a11f9d44d119aadf618dab095f9c5c2f90359e39791235e647"
+    },
+    {
+      "source": "firmware/mf79u/install-control-update.py",
+      "destination": "firmware/mf79u/install-control-update.py",
+      "source_sha256": "8f3008f34d34d3b29474ffee530e16f6f0d1ea35f48ae3b878ecbe1fec51275d",
+      "bytes": 5540,
+      "destination_sha256": "8f3008f34d34d3b29474ffee530e16f6f0d1ea35f48ae3b878ecbe1fec51275d"
+    },
+    {
+      "source": "firmware/mf79u/test-native-cs-backend.py",
+      "destination": "firmware/mf79u/test-native-cs-backend.py",
+      "source_sha256": "299a55b3366f187b08482012e26fb29897111915b363b4ca93f0ace61b4be957",
+      "bytes": 4167,
+      "destination_sha256": "299a55b3366f187b08482012e26fb29897111915b363b4ca93f0ace61b4be957"
+    },
+    {
+      "source": "firmware/mf79u/arm-cs-kernel-watch.py",
+      "destination": "firmware/mf79u/arm-cs-kernel-watch.py",
+      "source_sha256": "1e903219d678ab1c9ee4390f16184cce0272c37110802cdfa0844b173821985a",
+      "bytes": 21039,
+      "destination_sha256": "1e903219d678ab1c9ee4390f16184cce0272c37110802cdfa0844b173821985a"
+    },
+    {
+      "source": "firmware/mf79u/test-umts-registration-live.py",
+      "destination": "firmware/mf79u/test-umts-registration-live.py",
+      "source_sha256": "1ed80ddfd5a346a01b2efa4682963244339517b275686b2aa4f4b8d23453a1d4",
+      "bytes": 4874,
+      "destination_sha256": "1ed80ddfd5a346a01b2efa4682963244339517b275686b2aa4f4b8d23453a1d4"
+    },
+    {
+      "source": "firmware/mf79u/share-usb-internet-macos.py",
+      "destination": "firmware/mf79u/share-usb-internet-macos.py",
+      "source_sha256": "dfae700b474ffeada30f4ec9cc9f81f3b0f8fcfae5307fc1f1342104bdb5400d",
+      "bytes": 3550,
+      "destination_sha256": "dfae700b474ffeada30f4ec9cc9f81f3b0f8fcfae5307fc1f1342104bdb5400d"
+    },
+    {
+      "source": "firmware/mf79u/CODECS.md",
+      "destination": "firmware/mf79u/CODECS.md",
+      "source_sha256": "ef7babd7e7c4a810d56e0de51a8c5466aad37f1541be42060ac066706be48eff",
+      "bytes": 7864,
+      "destination_sha256": "ce071b7f71f1adf2ab0a2f68b4ad89b7163baf2754d5435b5ba37975d69af191",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/test-sip-cellular-call.py",
+      "destination": "firmware/mf79u/test-sip-cellular-call.py",
+      "source_sha256": "6244d7ccf2758e78f7c30871272283cae6f8c9d3d9e909ff7ac36cb30e320558",
+      "bytes": 11651,
+      "destination_sha256": "6244d7ccf2758e78f7c30871272283cae6f8c9d3d9e909ff7ac36cb30e320558"
+    },
+    {
+      "source": "firmware/mf79u/test-cs-observation-evidence.py",
+      "destination": "firmware/mf79u/test-cs-observation-evidence.py",
+      "source_sha256": "99c140ba46aa07d4c0fc9c3d1c1b0032ff10b65f1c5fa633d24c3e2412d99d79",
+      "bytes": 1931,
+      "destination_sha256": "99c140ba46aa07d4c0fc9c3d1c1b0032ff10b65f1c5fa633d24c3e2412d99d79"
+    },
+    {
+      "source": "firmware/mf79u/test-registration-ui-server.py",
+      "destination": "firmware/mf79u/test-registration-ui-server.py",
+      "source_sha256": "710c1824e0a2a41e87eaabf3384991420ac57017595d931ac2e272c5589d0d3d",
+      "bytes": 3373,
+      "destination_sha256": "710c1824e0a2a41e87eaabf3384991420ac57017595d931ac2e272c5589d0d3d"
+    },
+    {
+      "source": "firmware/mf79u/test-ring-only.py",
+      "destination": "firmware/mf79u/test-ring-only.py",
+      "source_sha256": "59ffd08ba35bf9cd3de2d953c62245d86f1494aad726b72582b4b0f2fd224cd5",
+      "bytes": 1703,
+      "destination_sha256": "59ffd08ba35bf9cd3de2d953c62245d86f1494aad726b72582b4b0f2fd224cd5"
+    },
+    {
+      "source": "firmware/mf79u/control/firewall_test.go",
+      "destination": "firmware/mf79u/control/firewall_test.go",
+      "source_sha256": "7aa6df0d671ec5edfc7f5c5a1f40cc89d4a761a9534a9c46105b19df168613a2",
+      "bytes": 2730,
+      "destination_sha256": "7aa6df0d671ec5edfc7f5c5a1f40cc89d4a761a9534a9c46105b19df168613a2"
+    },
+    {
+      "source": "firmware/mf79u/control/network_compat_test.go",
+      "destination": "firmware/mf79u/control/network_compat_test.go",
+      "source_sha256": "337e6f1dd4c3fe3b64726f3b49da110a5757d53cd3556d4c676a6ad5fec19624",
+      "bytes": 1057,
+      "destination_sha256": "337e6f1dd4c3fe3b64726f3b49da110a5757d53cd3556d4c676a6ad5fec19624"
+    },
+    {
+      "source": "firmware/mf79u/control/config.go",
+      "destination": "firmware/mf79u/control/config.go",
+      "source_sha256": "d8239675f04019d0a00d42222b0a78b3d085e29a65fb22df6534eee41f664431",
+      "bytes": 11194,
+      "destination_sha256": "d8239675f04019d0a00d42222b0a78b3d085e29a65fb22df6534eee41f664431"
+    },
+    {
+      "source": "firmware/mf79u/control/go.mod",
+      "destination": "firmware/mf79u/control/go.mod",
+      "source_sha256": "ddaa43afd9f68be4b054a9f17d628c553dac02709edb346c8d6aecb493b434cf",
+      "bytes": 30,
+      "destination_sha256": "ddaa43afd9f68be4b054a9f17d628c553dac02709edb346c8d6aecb493b434cf"
+    },
+    {
+      "source": "firmware/mf79u/control/vendor.go",
+      "destination": "firmware/mf79u/control/vendor.go",
+      "source_sha256": "60193dc5bafbeaed61a94f0a0bf9eb717d375aaf2bdd8a96c8c493b8782910fa",
+      "bytes": 8894,
+      "destination_sha256": "60193dc5bafbeaed61a94f0a0bf9eb717d375aaf2bdd8a96c8c493b8782910fa"
+    },
+    {
+      "source": "firmware/mf79u/control/system.go",
+      "destination": "firmware/mf79u/control/system.go",
+      "source_sha256": "40e1295ea4459957b3fc7053d43be32b01f21a479d8d9be017e22a17d4e1e8f3",
+      "bytes": 16814,
+      "destination_sha256": "40e1295ea4459957b3fc7053d43be32b01f21a479d8d9be017e22a17d4e1e8f3"
+    },
+    {
+      "source": "firmware/mf79u/control/wifi.go",
+      "destination": "firmware/mf79u/control/wifi.go",
+      "source_sha256": "910a54af1dab924d6da706bd4e0a2eb6f35ad865496b0484405f5fc034031596",
+      "bytes": 8585,
+      "destination_sha256": "910a54af1dab924d6da706bd4e0a2eb6f35ad865496b0484405f5fc034031596"
+    },
+    {
+      "source": "firmware/mf79u/control/sms_ims_test.go",
+      "destination": "firmware/mf79u/control/sms_ims_test.go",
+      "source_sha256": "693a872b51e9ad7d0c5acc1247fd35bf714614df4137d6babc74d450193fb97e",
+      "bytes": 5714,
+      "destination_sha256": "693a872b51e9ad7d0c5acc1247fd35bf714614df4137d6babc74d450193fb97e"
+    },
+    {
+      "source": "firmware/mf79u/control/static_test.go",
+      "destination": "firmware/mf79u/control/static_test.go",
+      "source_sha256": "59a330b552af18a9bc3d89a109ebf2f40f3fd1ea0c1c60824acc16566f05f1c8",
+      "bytes": 1217,
+      "destination_sha256": "59a330b552af18a9bc3d89a109ebf2f40f3fd1ea0c1c60824acc16566f05f1c8"
+    },
+    {
+      "source": "firmware/mf79u/control/admin_rest_test.go",
+      "destination": "firmware/mf79u/control/admin_rest_test.go",
+      "source_sha256": "15d9ecfae5c80a0eafaf519530d160b1e419ee0f5eb50ec82d1c00868e31850f",
+      "bytes": 7677,
+      "destination_sha256": "15d9ecfae5c80a0eafaf519530d160b1e419ee0f5eb50ec82d1c00868e31850f"
+    },
+    {
+      "source": "firmware/mf79u/control/sms_sip_test.go",
+      "destination": "firmware/mf79u/control/sms_sip_test.go",
+      "source_sha256": "c031142d430c4acaba22e2fc74016823b05c4fc77bef538c4212e60569a54235",
+      "bytes": 6099,
+      "destination_sha256": "c031142d430c4acaba22e2fc74016823b05c4fc77bef538c4212e60569a54235"
+    },
+    {
+      "source": "firmware/mf79u/control/sms_format.go",
+      "destination": "firmware/mf79u/control/sms_format.go",
+      "source_sha256": "e55d982c12c3cc1c9e8fd0890ae85b0f8a296abd8de5088f27d46fd65f4b1a67",
+      "bytes": 2405,
+      "destination_sha256": "e55d982c12c3cc1c9e8fd0890ae85b0f8a296abd8de5088f27d46fd65f4b1a67"
+    },
+    {
+      "source": "firmware/mf79u/control/lan.go",
+      "destination": "firmware/mf79u/control/lan.go",
+      "source_sha256": "a8349f82c265eb3fcf847b84e9fd98d87d74e61a0d343e6593f9fe04243b1c39",
+      "bytes": 8795,
+      "destination_sha256": "a8349f82c265eb3fcf847b84e9fd98d87d74e61a0d343e6593f9fe04243b1c39"
+    },
+    {
+      "source": "firmware/mf79u/control/sms_format_test.go",
+      "destination": "firmware/mf79u/control/sms_format_test.go",
+      "source_sha256": "2ad0bb0017f5e70c06f655c047f9e4b0874e9976a09b6ca88827b771a07d0bcf",
+      "bytes": 2592,
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained",
+        "publication privacy/path normalization"
+      ],
+      "destination_sha256": "6c5ea70f56a10ff1d18f8110b0039f2a04d74417ff0c332509cf03aec531a7ca"
+    },
+    {
+      "source": "firmware/mf79u/control/static.go",
+      "destination": "firmware/mf79u/control/static.go",
+      "source_sha256": "adb1e9b556b3f79368deff0ed6e98e6697f0c7c603fe3b6bee4ab9655dca1f9b",
+      "bytes": 2069,
+      "destination_sha256": "adb1e9b556b3f79368deff0ed6e98e6697f0c7c603fe3b6bee4ab9655dca1f9b"
+    },
+    {
+      "source": "firmware/mf79u/control/network.go",
+      "destination": "firmware/mf79u/control/network.go",
+      "source_sha256": "b9797f29e5677c6c35087a53d8f737946f351b48bc868cf90899be2e1d405a03",
+      "bytes": 29338,
+      "destination_sha256": "b9797f29e5677c6c35087a53d8f737946f351b48bc868cf90899be2e1d405a03"
+    },
+    {
+      "source": "firmware/mf79u/control/sms_rest.go",
+      "destination": "firmware/mf79u/control/sms_rest.go",
+      "source_sha256": "efaa75ec2463b6125b4be2a2f394966bbbe513387a3c9beb1a260f77f6e9b2bd",
+      "bytes": 3267,
+      "destination_sha256": "efaa75ec2463b6125b4be2a2f394966bbbe513387a3c9beb1a260f77f6e9b2bd"
+    },
+    {
+      "source": "firmware/mf79u/control/lan_test.go",
+      "destination": "firmware/mf79u/control/lan_test.go",
+      "source_sha256": "2a24ce87e21cb428f550e639758eab75acfe2459c0416f3a41b194cd1b61223a",
+      "bytes": 2195,
+      "destination_sha256": "2a24ce87e21cb428f550e639758eab75acfe2459c0416f3a41b194cd1b61223a"
+    },
+    {
+      "source": "firmware/mf79u/control/sms_sip.go",
+      "destination": "firmware/mf79u/control/sms_sip.go",
+      "source_sha256": "9b9d8880fa3f735ed33528d4514cecd723290ce1b22fb30b1f6a704945e2a9e9",
+      "bytes": 11843,
+      "destination_sha256": "9b9d8880fa3f735ed33528d4514cecd723290ce1b22fb30b1f6a704945e2a9e9"
+    },
+    {
+      "source": "firmware/mf79u/control/vowifi_uplink_test.go",
+      "destination": "firmware/mf79u/control/vowifi_uplink_test.go",
+      "source_sha256": "2458de7e264adfea6517b3ad1ab4606a9df7d2076ec5fb6a7e35a7ebb84e4fc4",
+      "bytes": 739,
+      "destination_sha256": "2458de7e264adfea6517b3ad1ab4606a9df7d2076ec5fb6a7e35a7ebb84e4fc4"
+    },
+    {
+      "source": "firmware/mf79u/control/sms_ims.go",
+      "destination": "firmware/mf79u/control/sms_ims.go",
+      "source_sha256": "3153df38c6e3bef5f5742760ef006a898f5f01f6ab2b68ee25aa47129ada11b7",
+      "bytes": 9929,
+      "destination_sha256": "3153df38c6e3bef5f5742760ef006a898f5f01f6ab2b68ee25aa47129ada11b7"
+    },
+    {
+      "source": "firmware/mf79u/control/sms_pdu.go",
+      "destination": "firmware/mf79u/control/sms_pdu.go",
+      "source_sha256": "37fa82fe1f8441072719580e88476f1f850686a44c15d74961089c99a9cc68fd",
+      "bytes": 8426,
+      "destination_sha256": "37fa82fe1f8441072719580e88476f1f850686a44c15d74961089c99a9cc68fd"
+    },
+    {
+      "source": "firmware/mf79u/control/sms_test.go",
+      "destination": "firmware/mf79u/control/sms_test.go",
+      "source_sha256": "656605af547c67ee9a1572d0268354aaf027313222d1c1b8fd64106f957e6c1f",
+      "bytes": 4823,
+      "destination_sha256": "656605af547c67ee9a1572d0268354aaf027313222d1c1b8fd64106f957e6c1f"
+    },
+    {
+      "source": "firmware/mf79u/control/wifi_test.go",
+      "destination": "firmware/mf79u/control/wifi_test.go",
+      "source_sha256": "af3e86e0a44cacc69625fd64394b90e80ee06fbaec32f93c4194dd5458a81a69",
+      "bytes": 4798,
+      "destination_sha256": "af3e86e0a44cacc69625fd64394b90e80ee06fbaec32f93c4194dd5458a81a69"
+    },
+    {
+      "source": "firmware/mf79u/control/config_test.go",
+      "destination": "firmware/mf79u/control/config_test.go",
+      "source_sha256": "c9332e442903fc6723e579b6694f21752ca60fdbaf76c9b81268c24189504ef9",
+      "bytes": 6428,
+      "destination_sha256": "c9332e442903fc6723e579b6694f21752ca60fdbaf76c9b81268c24189504ef9"
+    },
+    {
+      "source": "firmware/mf79u/control/main.go",
+      "destination": "firmware/mf79u/control/main.go",
+      "source_sha256": "397b563080463777fa8155e16637d68716174fe542177fbb75244c437610a937",
+      "bytes": 19191,
+      "destination_sha256": "397b563080463777fa8155e16637d68716174fe542177fbb75244c437610a937"
+    },
+    {
+      "source": "firmware/mf79u/control/system_test.go",
+      "destination": "firmware/mf79u/control/system_test.go",
+      "source_sha256": "5246320b2f8eace3ea52da8d9351c60d75c188110c9aad30434ca38054301571",
+      "bytes": 6965,
+      "destination_sha256": "5246320b2f8eace3ea52da8d9351c60d75c188110c9aad30434ca38054301571"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-sysfs-probe.c",
+      "destination": "firmware/mf79u/src/cs-sysfs-probe.c",
+      "source_sha256": "4c7b2ee5ce0e8f2cbfba43f0819f83c6db3291d4bc94c8ad210a7d2034e500e7",
+      "bytes": 1790,
+      "destination_sha256": "4c7b2ee5ce0e8f2cbfba43f0819f83c6db3291d4bc94c8ad210a7d2034e500e7"
+    },
+    {
+      "source": "firmware/mf79u/src/voice-probe.c",
+      "destination": "firmware/mf79u/src/voice-probe.c",
+      "source_sha256": "4e00c18c3e37750431fef382db47f4e74fab540573230697afa82cd6eb7ec3bf",
+      "bytes": 1836,
+      "destination_sha256": "4e00c18c3e37750431fef382db47f4e74fab540573230697afa82cd6eb7ec3bf"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-voice-probe.c",
+      "destination": "firmware/mf79u/src/cs-voice-probe.c",
+      "source_sha256": "1840497175f93d6c8ea545f7f5273b89874772c378af0bd38e9b871b25cf1caa",
+      "bytes": 934,
+      "destination_sha256": "1840497175f93d6c8ea545f7f5273b89874772c378af0bd38e9b871b25cf1caa"
+    },
+    {
+      "source": "firmware/mf79u/src/pcm-clock.h",
+      "destination": "firmware/mf79u/src/pcm-clock.h",
+      "source_sha256": "48057c7d6818af027ee03949a03268af0dcfc51e057af3f1a6642618bfb4621d",
+      "bytes": 712,
+      "destination_sha256": "48057c7d6818af027ee03949a03268af0dcfc51e057af3f1a6642618bfb4621d"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-usb-watch.c",
+      "destination": "firmware/mf79u/src/cs-usb-watch.c",
+      "source_sha256": "57452711041534b9692c56d8e7019bbeaea07a546758bd6f56148223b644fe7f",
+      "bytes": 2285,
+      "destination_sha256": "57452711041534b9692c56d8e7019bbeaea07a546758bd6f56148223b644fe7f"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-mt-state.h",
+      "destination": "firmware/mf79u/src/cs-mt-state.h",
+      "source_sha256": "e31a2e64840eb300098a7fe3ab1415ee14a9a05d9d1a87bed7c5842963c4d8aa",
+      "bytes": 2141,
+      "destination_sha256": "e31a2e64840eb300098a7fe3ab1415ee14a9a05d9d1a87bed7c5842963c4d8aa"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-pcm-loop-probe.c",
+      "destination": "firmware/mf79u/src/cs-pcm-loop-probe.c",
+      "source_sha256": "ec286cbcb4f6c0f1064013362f77505c636759c7d88c1621c1a780575b45b0cb",
+      "bytes": 853,
+      "destination_sha256": "ec286cbcb4f6c0f1064013362f77505c636759c7d88c1621c1a780575b45b0cb"
+    },
+    {
+      "source": "firmware/mf79u/src/pcm-queue.h",
+      "destination": "firmware/mf79u/src/pcm-queue.h",
+      "source_sha256": "c7951285df50cfa7f042d02058df8fdeb4296c1f49633827b69e5f566f7d1b6e",
+      "bytes": 1360,
+      "destination_sha256": "c7951285df50cfa7f042d02058df8fdeb4296c1f49633827b69e5f566f7d1b6e"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-kernel-watch.c",
+      "destination": "firmware/mf79u/src/cs-kernel-watch.c",
+      "source_sha256": "718121de51152008056317610f35ac3693845160c0bf41b0ae3a2e6297ef0ef1",
+      "bytes": 10499,
+      "destination_sha256": "718121de51152008056317610f35ac3693845160c0bf41b0ae3a2e6297ef0ef1"
+    },
+    {
+      "source": "firmware/mf79u/src/ims-sms-native-selftest.c",
+      "destination": "firmware/mf79u/src/ims-sms-native-selftest.c",
+      "source_sha256": "81d63bd2782efb8ac7dc3784b0d112c717ea9e25cf1aff55085bcf301a439845",
+      "bytes": 4001,
+      "destination_sha256": "81d63bd2782efb8ac7dc3784b0d112c717ea9e25cf1aff55085bcf301a439845"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-pcm-clarity-selftest.c",
+      "destination": "firmware/mf79u/src/cs-pcm-clarity-selftest.c",
+      "source_sha256": "bce44f579dfaead21c5825d8da45e6914c5389514486f32ec83fe35eaa5ff944",
+      "bytes": 1388,
+      "destination_sha256": "bce44f579dfaead21c5825d8da45e6914c5389514486f32ec83fe35eaa5ff944"
+    },
+    {
+      "source": "firmware/mf79u/src/sip-codec-selftest.c",
+      "destination": "firmware/mf79u/src/sip-codec-selftest.c",
+      "source_sha256": "f9c0ddd1b702e9f8a22d6c66190d9376c923a445e84b766f29f44b3b5c4902e2",
+      "bytes": 3943,
+      "destination_sha256": "f9c0ddd1b702e9f8a22d6c66190d9376c923a445e84b766f29f44b3b5c4902e2"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-ring-state-selftest.c",
+      "destination": "firmware/mf79u/src/cs-ring-state-selftest.c",
+      "source_sha256": "77e16e5cfbad90a5a41c889286d4de19275120d7192c7e9d30d81266404ea7d6",
+      "bytes": 1783,
+      "destination_sha256": "77e16e5cfbad90a5a41c889286d4de19275120d7192c7e9d30d81266404ea7d6"
+    },
+    {
+      "source": "firmware/mf79u/src/pcm-resample.h",
+      "destination": "firmware/mf79u/src/pcm-resample.h",
+      "source_sha256": "bf663edcce63291b634dc532d925412a2eac53301810e4d77a2c8edb1fdac65a",
+      "bytes": 1212,
+      "destination_sha256": "bf663edcce63291b634dc532d925412a2eac53301810e4d77a2c8edb1fdac65a"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-driver-runtime.inc",
+      "destination": "firmware/mf79u/src/cs-driver-runtime.inc",
+      "source_sha256": "f118254615c255d9286e1c41a59998ac54efff06396ba156f68b1a80191b034f",
+      "bytes": 15065,
+      "destination_sha256": "f118254615c255d9286e1c41a59998ac54efff06396ba156f68b1a80191b034f"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-dtmf-tone.h",
+      "destination": "firmware/mf79u/src/cs-dtmf-tone.h",
+      "source_sha256": "f010b439779de6de4f631a7ccfee1512e9a76562bb93b522d47abaf5b071f4fe",
+      "bytes": 1785,
+      "destination_sha256": "f010b439779de6de4f631a7ccfee1512e9a76562bb93b522d47abaf5b071f4fe"
+    },
+    {
+      "source": "firmware/mf79u/src/ims-sms-probe.c",
+      "destination": "firmware/mf79u/src/ims-sms-probe.c",
+      "source_sha256": "75a471d9d1fa9234dd2f70aab3d93dd8aab628d2e293c8384ee180f8a03fcfd4",
+      "bytes": 766,
+      "destination_sha256": "75a471d9d1fa9234dd2f70aab3d93dd8aab628d2e293c8384ee180f8a03fcfd4"
+    },
+    {
+      "source": "firmware/mf79u/src/vowifi-access.h",
+      "destination": "firmware/mf79u/src/vowifi-access.h",
+      "source_sha256": "e8c051a457fbdbef8b3178cdc09ccd4914c178f103e406f402e0c37f5f45b08f",
+      "bytes": 2177,
+      "destination_sha256": "e8c051a457fbdbef8b3178cdc09ccd4914c178f103e406f402e0c37f5f45b08f"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-connect-probe-selftest.c",
+      "destination": "firmware/mf79u/src/cs-connect-probe-selftest.c",
+      "source_sha256": "99c03241cd9025ec49927f3c8a384b5e51d8e74b4d20ad90091a2a6e20cfcbb7",
+      "bytes": 1344,
+      "destination_sha256": "99c03241cd9025ec49927f3c8a384b5e51d8e74b4d20ad90091a2a6e20cfcbb7"
+    },
+    {
+      "source": "firmware/mf79u/src/ipv4-fragments.c",
+      "destination": "firmware/mf79u/src/ipv4-fragments.c",
+      "source_sha256": "ab13b214293275d350a4ee08c758bec684daaa524e2b4175581226a5fb2d0b7a",
+      "bytes": 1194,
+      "destination_sha256": "ab13b214293275d350a4ee08c758bec684daaa524e2b4175581226a5fb2d0b7a"
+    },
+    {
+      "source": "firmware/mf79u/src/modem-sip-gateway.c",
+      "destination": "firmware/mf79u/src/modem-sip-gateway.c",
+      "source_sha256": "04d7b2a4e9ec8196c7975992a1cca8c0c1958b3dfd9db362ce6033430ddbe33a",
+      "bytes": 21440,
+      "destination_sha256": "04d7b2a4e9ec8196c7975992a1cca8c0c1958b3dfd9db362ce6033430ddbe33a"
+    },
+    {
+      "source": "firmware/mf79u/src/vowifi-prepare.c",
+      "destination": "firmware/mf79u/src/vowifi-prepare.c",
+      "source_sha256": "ae959ed7fdecbac0e4622e5738003f5c84bbe67d699bf3064e1919f358c784bc",
+      "bytes": 4589,
+      "destination_sha256": "ae959ed7fdecbac0e4622e5738003f5c84bbe67d699bf3064e1919f358c784bc"
+    },
+    {
+      "source": "firmware/mf79u/src/esp-null.h",
+      "destination": "firmware/mf79u/src/esp-null.h",
+      "source_sha256": "40ffa18902cb0da4fd92bdbc0a274c69c4dcc120df4587f327d7af63b8b5a597",
+      "bytes": 1501,
+      "destination_sha256": "40ffa18902cb0da4fd92bdbc0a274c69c4dcc120df4587f327d7af63b8b5a597"
+    },
+    {
+      "source": "firmware/mf79u/src/net-led-policy.c",
+      "destination": "firmware/mf79u/src/net-led-policy.c",
+      "source_sha256": "5e3a5c6b28733022e9619cc01254daf6acc4fcdcb03ef6d9a9045ad73a782d01",
+      "bytes": 6910,
+      "destination_sha256": "5e3a5c6b28733022e9619cc01254daf6acc4fcdcb03ef6d9a9045ad73a782d01"
+    },
+    {
+      "source": "firmware/mf79u/src/amr-rate-policy.c",
+      "destination": "firmware/mf79u/src/amr-rate-policy.c",
+      "source_sha256": "bf2d3ba9a6af09e7b12b0143ea5303fd9668f2261b03250a0ea20fb4c017df54",
+      "bytes": 17639,
+      "destination_sha256": "bf2d3ba9a6af09e7b12b0143ea5303fd9668f2261b03250a0ea20fb4c017df54"
+    },
+    {
+      "source": "firmware/mf79u/src/ims-software-media.h",
+      "destination": "firmware/mf79u/src/ims-software-media.h",
+      "source_sha256": "96da992a002baf43a66cf7103a8cbd2d933f5cdb7de2cbf886c0b04dfc6f21a9",
+      "bytes": 588,
+      "destination_sha256": "96da992a002baf43a66cf7103a8cbd2d933f5cdb7de2cbf886c0b04dfc6f21a9"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-channel-selftest.c",
+      "destination": "firmware/mf79u/src/cs-channel-selftest.c",
+      "source_sha256": "5a51b9a437b769c8663dc2349c7e4e9e75ee2749befe77340c5818a319c88258",
+      "bytes": 974,
+      "destination_sha256": "5a51b9a437b769c8663dc2349c7e4e9e75ee2749befe77340c5818a319c88258"
+    },
+    {
+      "source": "firmware/mf79u/src/vowifi-packet-device.c",
+      "destination": "firmware/mf79u/src/vowifi-packet-device.c",
+      "source_sha256": "19a896dcd54399ff9b1f07bd5dd0ed448955b33d92000b80b85cbc886a2c518f",
+      "bytes": 5029,
+      "destination_sha256": "0ef100c78339a6d7e3707d3b70f26eeb1bb90cdba8f323b22ef49c203d9c03d8",
+      "transformations": [
+        "Publication whitespace/LF normalization; behavior unchanged"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/src/tun-capability.c",
+      "destination": "firmware/mf79u/src/tun-capability.c",
+      "source_sha256": "b1a05e2d06ab6d684afa433fb45a9a4a40d2d4b886949e767659635a851040cd",
+      "bytes": 1028,
+      "destination_sha256": "b1a05e2d06ab6d684afa433fb45a9a4a40d2d4b886949e767659635a851040cd"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-pcm-ring.h",
+      "destination": "firmware/mf79u/src/cs-pcm-ring.h",
+      "source_sha256": "392ce0dd161719c8a3ba406cbeb630d15c55aa12dfffc10220aced8d8a8a011e",
+      "bytes": 1503,
+      "destination_sha256": "392ce0dd161719c8a3ba406cbeb630d15c55aa12dfffc10220aced8d8a8a011e"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-kernel-status.h",
+      "destination": "firmware/mf79u/src/cs-kernel-status.h",
+      "source_sha256": "b50f0b328da879486d709b72e7e7347556dcf3e09a7888bb74aff4499e97be8d",
+      "bytes": 3249,
+      "destination_sha256": "b50f0b328da879486d709b72e7e7347556dcf3e09a7888bb74aff4499e97be8d"
+    },
+    {
+      "source": "firmware/mf79u/src/vowifi-runtime.h",
+      "destination": "firmware/mf79u/src/vowifi-runtime.h",
+      "source_sha256": "806e2ac861a4534ed0ed94daea8bfe9bd25307052215faec222ad14bb790ed7c",
+      "bytes": 6243,
+      "destination_sha256": "806e2ac861a4534ed0ed94daea8bfe9bd25307052215faec222ad14bb790ed7c"
+    },
+    {
+      "source": "firmware/mf79u/src/caller-id.c",
+      "destination": "firmware/mf79u/src/caller-id.c",
+      "source_sha256": "69f9699dd6082ef131e94c0fff345e62584b56a9806fe6dd58c8e35c301c5ddd",
+      "bytes": 2141,
+      "destination_sha256": "69f9699dd6082ef131e94c0fff345e62584b56a9806fe6dd58c8e35c301c5ddd"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-tone-pack.h",
+      "destination": "firmware/mf79u/src/cs-tone-pack.h",
+      "source_sha256": "616cf527b7f40310cd5f9ad5fe1ad332daba28de05560cf68c42629e3c2e2101",
+      "bytes": 991,
+      "destination_sha256": "616cf527b7f40310cd5f9ad5fe1ad332daba28de05560cf68c42629e3c2e2101"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-dsp-pcm-period-selftest.c",
+      "destination": "firmware/mf79u/src/cs-dsp-pcm-period-selftest.c",
+      "source_sha256": "9af2ecb5b71e43cebd62026a2041de67ef6d0ea162d3c60e463d63cbce258d8a",
+      "bytes": 1189,
+      "destination_sha256": "9af2ecb5b71e43cebd62026a2041de67ef6d0ea162d3c60e463d63cbce258d8a"
+    },
+    {
+      "source": "firmware/mf79u/src/ims-sip-observer.c",
+      "destination": "firmware/mf79u/src/ims-sip-observer.c",
+      "source_sha256": "ef267e9349fa1582a1eb2fa48b83901e7af01fc57df73193edff919bfa409e55",
+      "bytes": 4783,
+      "destination_sha256": "ef267e9349fa1582a1eb2fa48b83901e7af01fc57df73193edff919bfa409e55"
+    },
+    {
+      "source": "firmware/mf79u/src/caller-id-selftest.c",
+      "destination": "firmware/mf79u/src/caller-id-selftest.c",
+      "source_sha256": "273c0e05e8b862f10dded43d45058380fe5a74af3f7fd2bcf91febe9eff3ef2d",
+      "bytes": 1111,
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained",
+        "publication privacy/path normalization"
+      ],
+      "destination_sha256": "796d40b0eeaa9e128851e2f7a6152e440c686decc7dcac04eea4f9dbb2277c3e"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-voice-driver.c",
+      "destination": "firmware/mf79u/src/cs-voice-driver.c",
+      "source_sha256": "98411721da32a5595f5da36a345f10f8e7de14fa841dabb2b8e943b12cae7f9d",
+      "bytes": 13152,
+      "destination_sha256": "98411721da32a5595f5da36a345f10f8e7de14fa841dabb2b8e943b12cae7f9d"
+    },
+    {
+      "source": "firmware/mf79u/src/cp-memory.h",
+      "destination": "firmware/mf79u/src/cp-memory.h",
+      "source_sha256": "cf69de058ba91a06d8f2512bffa31dd5ef82a04bc08698836134d92a5cf6ac3a",
+      "bytes": 525,
+      "destination_sha256": "cf69de058ba91a06d8f2512bffa31dd5ef82a04bc08698836134d92a5cf6ac3a"
+    },
+    {
+      "source": "firmware/mf79u/src/volte-signal-watch.c",
+      "destination": "firmware/mf79u/src/volte-signal-watch.c",
+      "source_sha256": "523c893de7cfa730f5b44fa1f9681eceba7f11f2e31973620acdc5b233919e6a",
+      "bytes": 3410,
+      "destination_sha256": "523c893de7cfa730f5b44fa1f9681eceba7f11f2e31973620acdc5b233919e6a"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-sip-pcm-selftest.c",
+      "destination": "firmware/mf79u/src/cs-sip-pcm-selftest.c",
+      "source_sha256": "96e5e2075ccde13eb710a098bcdd8bb32f05d0ba9b1de77d710f61af66e6b133",
+      "bytes": 2671,
+      "destination_sha256": "96e5e2075ccde13eb710a098bcdd8bb32f05d0ba9b1de77d710f61af66e6b133"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-dsp-pcm-metadata.h",
+      "destination": "firmware/mf79u/src/cs-dsp-pcm-metadata.h",
+      "source_sha256": "646bab162f0ee2b46ff622b73dd5327bab29cf653f04b2d55141dd70a023b804",
+      "bytes": 2361,
+      "destination_sha256": "646bab162f0ee2b46ff622b73dd5327bab29cf653f04b2d55141dd70a023b804"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-sip-clock-diagnostic.c",
+      "destination": "firmware/mf79u/src/cs-sip-clock-diagnostic.c",
+      "source_sha256": "1dd716ddd019a1a2a8007315742e00d8b053de7a12a3fac04de3de894062d4cd",
+      "bytes": 102,
+      "destination_sha256": "1dd716ddd019a1a2a8007315742e00d8b053de7a12a3fac04de3de894062d4cd"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-voice-adapter.c",
+      "destination": "firmware/mf79u/src/cs-voice-adapter.c",
+      "source_sha256": "6cd94ae51f94a2a590bb7d2f7bac05f202988191d3d05a1ec1cd241b220d7ca7",
+      "bytes": 10606,
+      "destination_sha256": "6cd94ae51f94a2a590bb7d2f7bac05f202988191d3d05a1ec1cd241b220d7ca7"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-dsp-mailbox.h",
+      "destination": "firmware/mf79u/src/cs-dsp-mailbox.h",
+      "source_sha256": "bcdf3e90c4311e09984f8ef83558178bef0305479bf54669922dd488b246db54",
+      "bytes": 3868,
+      "destination_sha256": "bcdf3e90c4311e09984f8ef83558178bef0305479bf54669922dd488b246db54"
+    },
+    {
+      "source": "firmware/mf79u/src/native-fallback-fixture.c",
+      "destination": "firmware/mf79u/src/native-fallback-fixture.c",
+      "source_sha256": "297e9b32a1a1d88164626e236acee851c95cffc9d14b8f123a36d645086e01d3",
+      "bytes": 6925,
+      "destination_sha256": "297e9b32a1a1d88164626e236acee851c95cffc9d14b8f123a36d645086e01d3"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-dsp-tone-candidate.h",
+      "destination": "firmware/mf79u/src/cs-dsp-tone-candidate.h",
+      "source_sha256": "8cc6d069b7410cdb5dbaf5a0442dca71c0d2838fa45579af3ef10e5215c08fce",
+      "bytes": 4209,
+      "destination_sha256": "8cc6d069b7410cdb5dbaf5a0442dca71c0d2838fa45579af3ef10e5215c08fce"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-pcm-bridge.c",
+      "destination": "firmware/mf79u/src/cs-pcm-bridge.c",
+      "source_sha256": "086b2d50662250ced461e047a0ebae1293509f74ee95bedabbeb2326223d0ea8",
+      "bytes": 9373,
+      "destination_sha256": "086b2d50662250ced461e047a0ebae1293509f74ee95bedabbeb2326223d0ea8"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-pcm-bridge-fixture.c",
+      "destination": "firmware/mf79u/src/cs-pcm-bridge-fixture.c",
+      "source_sha256": "54193c5b4392f7d1af0eeaa62bb0d84173a03ef98611e09439eb343f15842eed",
+      "bytes": 3142,
+      "destination_sha256": "54193c5b4392f7d1af0eeaa62bb0d84173a03ef98611e09439eb343f15842eed"
+    },
+    {
+      "source": "firmware/mf79u/src/vendor-codecs.h",
+      "destination": "firmware/mf79u/src/vendor-codecs.h",
+      "source_sha256": "71525ab0e0d72602a8efa6403851b3f4881ecc5e7f788835a07c1230fcb51b1f",
+      "bytes": 194,
+      "destination_sha256": "71525ab0e0d72602a8efa6403851b3f4881ecc5e7f788835a07c1230fcb51b1f"
+    },
+    {
+      "source": "firmware/mf79u/src/udp-injection-selftest.c",
+      "destination": "firmware/mf79u/src/udp-injection-selftest.c",
+      "source_sha256": "164bc4312ded37ca7897afd70046e63768f33cd4e99942e0d6e7846cc9052d5e",
+      "bytes": 1766,
+      "destination_sha256": "164bc4312ded37ca7897afd70046e63768f33cd4e99942e0d6e7846cc9052d5e"
+    },
+    {
+      "source": "firmware/mf79u/src/esp-fragment-selftest.c",
+      "destination": "firmware/mf79u/src/esp-fragment-selftest.c",
+      "source_sha256": "88c455af9e49669b29485a3fc23fd939f48a9c7729cba81099883cca9df0426e",
+      "bytes": 1959,
+      "destination_sha256": "88c455af9e49669b29485a3fc23fd939f48a9c7729cba81099883cca9df0426e"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-pcm-transport-selftest.c",
+      "destination": "firmware/mf79u/src/cs-pcm-transport-selftest.c",
+      "source_sha256": "ad2b6996dde57b352347bb12aab94fa2d053ee8a15a4a016e2c07cacd177e52b",
+      "bytes": 2071,
+      "destination_sha256": "ad2b6996dde57b352347bb12aab94fa2d053ee8a15a4a016e2c07cacd177e52b"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-i2s-dsp-loop-probe.c",
+      "destination": "firmware/mf79u/src/cs-i2s-dsp-loop-probe.c",
+      "source_sha256": "60ba02950ece41313885bd2890ffb4dc77d61dcbd6189cadbb7071f43102dc9b",
+      "bytes": 8962,
+      "destination_sha256": "60ba02950ece41313885bd2890ffb4dc77d61dcbd6189cadbb7071f43102dc9b"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-channel-delta.h",
+      "destination": "firmware/mf79u/src/cs-channel-delta.h",
+      "source_sha256": "9cf8d4f8e40634b6973e5faa3b978328f2287021b8f8bda85ce49e0ebf8da383",
+      "bytes": 1316,
+      "destination_sha256": "9cf8d4f8e40634b6973e5faa3b978328f2287021b8f8bda85ce49e0ebf8da383"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-channel-watch.c",
+      "destination": "firmware/mf79u/src/cs-channel-watch.c",
+      "source_sha256": "2d528a372124f2da73ea711b807903d95c8939488682ef4b7d20e1c11c91d8f0",
+      "bytes": 12043,
+      "destination_sha256": "2d528a372124f2da73ea711b807903d95c8939488682ef4b7d20e1c11c91d8f0"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-owner-lease-selftest.c",
+      "destination": "firmware/mf79u/src/cs-owner-lease-selftest.c",
+      "source_sha256": "eccd18294202e45ac5aa8b77d42a285bffde5debc92720e8c8011692c35fc3cd",
+      "bytes": 626,
+      "destination_sha256": "eccd18294202e45ac5aa8b77d42a285bffde5debc92720e8c8011692c35fc3cd"
+    },
+    {
+      "source": "firmware/mf79u/src/vowifi-socket-health.c",
+      "destination": "firmware/mf79u/src/vowifi-socket-health.c",
+      "source_sha256": "181ce422c7dc842a38253418e990bb1f6a9ea1174077aace3ac23ee5a881a11d",
+      "bytes": 1829,
+      "destination_sha256": "181ce422c7dc842a38253418e990bb1f6a9ea1174077aace3ac23ee5a881a11d"
+    },
+    {
+      "source": "firmware/mf79u/src/kernel-summary.c",
+      "destination": "firmware/mf79u/src/kernel-summary.c",
+      "source_sha256": "130d486db0a18f86ba140ac8d147acf7a715d8da57cfd736d8efbedce92ce0a0",
+      "bytes": 2243,
+      "destination_sha256": "130d486db0a18f86ba140ac8d147acf7a715d8da57cfd736d8efbedce92ce0a0"
+    },
+    {
+      "source": "firmware/mf79u/src/cp-pdp.h",
+      "destination": "firmware/mf79u/src/cp-pdp.h",
+      "source_sha256": "ae69c1422db92ae7c058352be92b16cdb9cd8a3f80927d15748c8c4469884f79",
+      "bytes": 254,
+      "destination_sha256": "ae69c1422db92ae7c058352be92b16cdb9cd8a3f80927d15748c8c4469884f79"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-pcm-spsc-selftest.c",
+      "destination": "firmware/mf79u/src/cs-pcm-spsc-selftest.c",
+      "source_sha256": "6966f49e7c8627bf3bb8181206a8306d9bca506eba8d013706fc03b9ac77f1c9",
+      "bytes": 1768,
+      "destination_sha256": "6966f49e7c8627bf3bb8181206a8306d9bca506eba8d013706fc03b9ac77f1c9"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-status.h",
+      "destination": "firmware/mf79u/src/cs-status.h",
+      "source_sha256": "5bb46614d845c32b1844e30874b26f8519a85ac318543c1f68e357f571f15770",
+      "bytes": 1574,
+      "destination_sha256": "5bb46614d845c32b1844e30874b26f8519a85ac318543c1f68e357f571f15770"
+    },
+    {
+      "source": "firmware/mf79u/src/sip-settings-selftest.c",
+      "destination": "firmware/mf79u/src/sip-settings-selftest.c",
+      "source_sha256": "b8ff26ea05d4b76ce0e35c9fa01157089db54b1cfe08725b9f0c1cc35d7b9d3e",
+      "bytes": 741,
+      "destination_sha256": "b8ff26ea05d4b76ce0e35c9fa01157089db54b1cfe08725b9f0c1cc35d7b9d3e"
+    },
+    {
+      "source": "firmware/mf79u/src/atctl-probe.c",
+      "destination": "firmware/mf79u/src/atctl-probe.c",
+      "source_sha256": "17418ca5f312f89bb5539a5e1159ffa13135f79dbcc5a7be986a579747d0295b",
+      "bytes": 2218,
+      "destination_sha256": "17418ca5f312f89bb5539a5e1159ffa13135f79dbcc5a7be986a579747d0295b"
+    },
+    {
+      "source": "firmware/mf79u/src/cp-memory-selftest.c",
+      "destination": "firmware/mf79u/src/cp-memory-selftest.c",
+      "source_sha256": "877207a4ac0c10b4fbb47b7fa0b8de11175d9bcbf94db9833bace77375a430c0",
+      "bytes": 1949,
+      "destination_sha256": "877207a4ac0c10b4fbb47b7fa0b8de11175d9bcbf94db9833bace77375a430c0"
+    },
+    {
+      "source": "firmware/mf79u/src/sip-settings.h",
+      "destination": "firmware/mf79u/src/sip-settings.h",
+      "source_sha256": "2328e0c6aa6d4650c0c77b66697fa838752b682da0856ad21fbb7fd98d5122dd",
+      "bytes": 3401,
+      "destination_sha256": "2328e0c6aa6d4650c0c77b66697fa838752b682da0856ad21fbb7fd98d5122dd"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-wire.h",
+      "destination": "firmware/mf79u/src/cs-wire.h",
+      "source_sha256": "d5768b1406b77f52e63dae0bcc6696aca10e6b4ad0ebb9662d0a380767951ea7",
+      "bytes": 1611,
+      "destination_sha256": "d5768b1406b77f52e63dae0bcc6696aca10e6b4ad0ebb9662d0a380767951ea7"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-i2s-pcm-candidate.h",
+      "destination": "firmware/mf79u/src/cs-i2s-pcm-candidate.h",
+      "source_sha256": "6b3dece00933452e29d76955c239e366fd41a61e314a1fe89760938ad7e88504",
+      "bytes": 26797,
+      "destination_sha256": "6b3dece00933452e29d76955c239e366fd41a61e314a1fe89760938ad7e88504"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-call-watch.c",
+      "destination": "firmware/mf79u/src/cs-call-watch.c",
+      "source_sha256": "bb79e9c63b0e516d2035da65aa86ba8ab325c63ce3259303c558eac1d97c74f9",
+      "bytes": 3848,
+      "destination_sha256": "bb79e9c63b0e516d2035da65aa86ba8ab325c63ce3259303c558eac1d97c74f9"
+    },
+    {
+      "source": "firmware/mf79u/src/net-led-ipc-selftest.c",
+      "destination": "firmware/mf79u/src/net-led-ipc-selftest.c",
+      "source_sha256": "c07b80f90169790fcab7cc8519d71ff3d0c7787bf5d0f1619d64667bc3a36b36",
+      "bytes": 755,
+      "destination_sha256": "c07b80f90169790fcab7cc8519d71ff3d0c7787bf5d0f1619d64667bc3a36b36"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-asc-watch.c",
+      "destination": "firmware/mf79u/src/cs-asc-watch.c",
+      "source_sha256": "777136bd4c0856de2a4f8846d3d9c838ab28e16877f201ed353483c9e36eefb0",
+      "bytes": 8203,
+      "destination_sha256": "777136bd4c0856de2a4f8846d3d9c838ab28e16877f201ed353483c9e36eefb0"
+    },
+    {
+      "source": "firmware/mf79u/src/vowifi-pcscf.h",
+      "destination": "firmware/mf79u/src/vowifi-pcscf.h",
+      "source_sha256": "dc74f2b04758f52d976229de936395f3692ef46ab912436e7f71dce9b2659bc4",
+      "bytes": 1070,
+      "destination_sha256": "dc74f2b04758f52d976229de936395f3692ef46ab912436e7f71dce9b2659bc4"
+    },
+    {
+      "source": "firmware/mf79u/src/pcm-network-selftest.c",
+      "destination": "firmware/mf79u/src/pcm-network-selftest.c",
+      "source_sha256": "ed42b8d58ad58dc3f4cceb271df3c75ca356b675a2a62184ea16b8d8747f0308",
+      "bytes": 3194,
+      "destination_sha256": "ed42b8d58ad58dc3f4cceb271df3c75ca356b675a2a62184ea16b8d8747f0308"
+    },
+    {
+      "source": "firmware/mf79u/src/cp-ipc.c",
+      "destination": "firmware/mf79u/src/cp-ipc.c",
+      "source_sha256": "84d640967cab8ce0b23b5af02611257ba6263c20542e761b6cdd34c420bd901c",
+      "bytes": 5132,
+      "destination_sha256": "84d640967cab8ce0b23b5af02611257ba6263c20542e761b6cdd34c420bd901c"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-call-selftest.c",
+      "destination": "firmware/mf79u/src/cs-call-selftest.c",
+      "source_sha256": "ec95b3aa567c6d757b940bfa2ed067bcd393b215c46c258a6a7c5a8b98a69a91",
+      "bytes": 2571,
+      "destination_sha256": "ec95b3aa567c6d757b940bfa2ed067bcd393b215c46c258a6a7c5a8b98a69a91"
+    },
+    {
+      "source": "firmware/mf79u/src/sha256-min.h",
+      "destination": "firmware/mf79u/src/sha256-min.h",
+      "source_sha256": "562edbb5a26fa5d2a273ff2d27b9cc950f3abdd12d3db9db07b62762d34e9819",
+      "bytes": 2958,
+      "destination_sha256": "562edbb5a26fa5d2a273ff2d27b9cc950f3abdd12d3db9db07b62762d34e9819"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-caller.h",
+      "destination": "firmware/mf79u/src/cs-caller.h",
+      "source_sha256": "d40ab6c73f6c835dc08d2a21e14233bfa131ec3567718469e73f9b36c4124e31",
+      "bytes": 1761,
+      "destination_sha256": "d40ab6c73f6c835dc08d2a21e14233bfa131ec3567718469e73f9b36c4124e31"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-mt-tone-probe.c",
+      "destination": "firmware/mf79u/src/cs-mt-tone-probe.c",
+      "source_sha256": "cd160d55785c89dee544e163dc2e962e20e779f079670075792f4cb6a947e414",
+      "bytes": 12148,
+      "destination_sha256": "cd160d55785c89dee544e163dc2e962e20e779f079670075792f4cb6a947e414"
+    },
+    {
+      "source": "firmware/mf79u/src/adb-boot.c",
+      "destination": "firmware/mf79u/src/adb-boot.c",
+      "source_sha256": "92204c1b847fade9b97cb00479c14e58e1a7c85fd6303ecf5e7dc9c760cc18ee",
+      "bytes": 1850,
+      "destination_sha256": "92204c1b847fade9b97cb00479c14e58e1a7c85fd6303ecf5e7dc9c760cc18ee"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-wcdma-codec.h",
+      "destination": "firmware/mf79u/src/cs-wcdma-codec.h",
+      "source_sha256": "3b2a01b7e3ae0d6487fb9b25cf6fece3ffcb8972653a837641ea397ff945185c",
+      "bytes": 659,
+      "destination_sha256": "3b2a01b7e3ae0d6487fb9b25cf6fece3ffcb8972653a837641ea397ff945185c"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-dsp-boot-watch.c",
+      "destination": "firmware/mf79u/src/cs-dsp-boot-watch.c",
+      "source_sha256": "cc8a020bbae953306ddf896960985c8eec8a19042038783558dea0a0a07a4ef3",
+      "bytes": 3465,
+      "destination_sha256": "cc8a020bbae953306ddf896960985c8eec8a19042038783558dea0a0a07a4ef3"
+    },
+    {
+      "source": "firmware/mf79u/src/dropbear-mf79u.patch",
+      "destination": "firmware/mf79u/src/dropbear-mf79u.patch",
+      "source_sha256": "958f3234d1a5151f33f43038ce0efbe84ddccbc3dd3c045063041d49737ba2da",
+      "bytes": 1348,
+      "destination_sha256": "958f3234d1a5151f33f43038ce0efbe84ddccbc3dd3c045063041d49737ba2da"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-mo-state.h",
+      "destination": "firmware/mf79u/src/cs-mo-state.h",
+      "source_sha256": "5b82812ebd795a963c478c90eaccd20ae1249456ba71df9b4fb83698af3534bf",
+      "bytes": 3636,
+      "destination_sha256": "5b82812ebd795a963c478c90eaccd20ae1249456ba71df9b4fb83698af3534bf"
+    },
+    {
+      "source": "firmware/mf79u/src/ram-http-get.c",
+      "destination": "firmware/mf79u/src/ram-http-get.c",
+      "source_sha256": "7ae9509bd7cfcf3e74c479c7fad8c787801ec388cc03b0dea5c75558005aa96a",
+      "bytes": 1582,
+      "destination_sha256": "7ae9509bd7cfcf3e74c479c7fad8c787801ec388cc03b0dea5c75558005aa96a"
+    },
+    {
+      "source": "firmware/mf79u/src/voice-backend-policy.h",
+      "destination": "firmware/mf79u/src/voice-backend-policy.h",
+      "source_sha256": "2f870e0539574733c869530b333e444c020c48a578a073dbe32991c7231af299",
+      "bytes": 2720,
+      "destination_sha256": "2f870e0539574733c869530b333e444c020c48a578a073dbe32991c7231af299"
+    },
+    {
+      "source": "firmware/mf79u/src/ims-register-response-selftest.c",
+      "destination": "firmware/mf79u/src/ims-register-response-selftest.c",
+      "source_sha256": "558f7f8d6107c5669e531812eae96f604a13a0ea2a82bc6e64fa195f25d23966",
+      "bytes": 918,
+      "destination_sha256": "558f7f8d6107c5669e531812eae96f604a13a0ea2a82bc6e64fa195f25d23966"
+    },
+    {
+      "source": "firmware/mf79u/src/vowifi-pcscf-selftest.c",
+      "destination": "firmware/mf79u/src/vowifi-pcscf-selftest.c",
+      "source_sha256": "2302d3fab6419294324d4e9ae1c438e1b89c13dc51b166e2dd4ca72af6b06dbe",
+      "bytes": 736,
+      "destination_sha256": "2302d3fab6419294324d4e9ae1c438e1b89c13dc51b166e2dd4ca72af6b06dbe"
+    },
+    {
+      "source": "firmware/mf79u/src/vendor-ipsec-uapi.h",
+      "destination": "firmware/mf79u/src/vendor-ipsec-uapi.h",
+      "source_sha256": "6502d103e3162e4ab0a197abe19d112899f17f18bafac7b072189fc5ca639040",
+      "bytes": 737,
+      "destination_sha256": "6502d103e3162e4ab0a197abe19d112899f17f18bafac7b072189fc5ca639040"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-amr-tone-candidate.h",
+      "destination": "firmware/mf79u/src/cs-amr-tone-candidate.h",
+      "source_sha256": "b35bc7e0b2f06541198df6f6900910c95cff0b5ed98eaad111c7589281ba94e3",
+      "bytes": 3097,
+      "destination_sha256": "b35bc7e0b2f06541198df6f6900910c95cff0b5ed98eaad111c7589281ba94e3"
+    },
+    {
+      "source": "firmware/mf79u/src/net-led.c",
+      "destination": "firmware/mf79u/src/net-led.c",
+      "source_sha256": "6acb5fe439a982f2ebed632490d363f4a7bc41cce798ed01b834fac3bf35b787",
+      "bytes": 11122,
+      "destination_sha256": "6acb5fe439a982f2ebed632490d363f4a7bc41cce798ed01b834fac3bf35b787"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-pcm-stream.h",
+      "destination": "firmware/mf79u/src/cs-pcm-stream.h",
+      "source_sha256": "667ed778cc76b09c79a68483ea86665c28842055408023339d5cf4adc4168605",
+      "bytes": 3699,
+      "destination_sha256": "667ed778cc76b09c79a68483ea86665c28842055408023339d5cf4adc4168605"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-connect-probe.h",
+      "destination": "firmware/mf79u/src/cs-connect-probe.h",
+      "source_sha256": "2075850a3418e804fb36a871e064b5a9d2cf428052da004f0219033b09dd6abe",
+      "bytes": 984,
+      "destination_sha256": "2075850a3418e804fb36a871e064b5a9d2cf428052da004f0219033b09dd6abe"
+    },
+    {
+      "source": "firmware/mf79u/src/sip-registrar.h",
+      "destination": "firmware/mf79u/src/sip-registrar.h",
+      "source_sha256": "894a289d6feb8894fdf1bb7b0b9bb75e7101b0b42f197db8ea69c0cb68744298",
+      "bytes": 9409,
+      "destination_sha256": "894a289d6feb8894fdf1bb7b0b9bb75e7101b0b42f197db8ea69c0cb68744298"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-owner-lease.h",
+      "destination": "firmware/mf79u/src/cs-owner-lease.h",
+      "source_sha256": "33332cb0c1e52d5e51a6bb32d2332fdca091e97d32382117fc3fe248e387e549",
+      "bytes": 310,
+      "destination_sha256": "33332cb0c1e52d5e51a6bb32d2332fdca091e97d32382117fc3fe248e387e549"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-ring-state.h",
+      "destination": "firmware/mf79u/src/cs-ring-state.h",
+      "source_sha256": "2411aeabaee78f0da9502a9b346ae3d80a3f3014d48bc24f5e02f9448cf4ff02",
+      "bytes": 2034,
+      "destination_sha256": "2411aeabaee78f0da9502a9b346ae3d80a3f3014d48bc24f5e02f9448cf4ff02"
+    },
+    {
+      "source": "firmware/mf79u/src/voice-registration-policy.h",
+      "destination": "firmware/mf79u/src/voice-registration-policy.h",
+      "source_sha256": "bd37d04e046579d3223de478d68f3dd495484adc3acf3121a02bad5d0f429a2f",
+      "bytes": 1115,
+      "destination_sha256": "bd37d04e046579d3223de478d68f3dd495484adc3acf3121a02bad5d0f429a2f"
+    },
+    {
+      "source": "firmware/mf79u/src/ims-packet-summary.c",
+      "destination": "firmware/mf79u/src/ims-packet-summary.c",
+      "source_sha256": "1ca5de03061b510616f8f6c348c8bd2e834194c954e1b6fcbfb3553197b2d3e1",
+      "bytes": 3611,
+      "destination_sha256": "1ca5de03061b510616f8f6c348c8bd2e834194c954e1b6fcbfb3553197b2d3e1"
+    },
+    {
+      "source": "firmware/mf79u/src/pcm-resample-selftest.c",
+      "destination": "firmware/mf79u/src/pcm-resample-selftest.c",
+      "source_sha256": "f604b2158d8bbf80a25b02beb0f8b90cd485dd32d7635b598d2023674a14adf7",
+      "bytes": 1117,
+      "destination_sha256": "f604b2158d8bbf80a25b02beb0f8b90cd485dd32d7635b598d2023674a14adf7"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-route-probe.c",
+      "destination": "firmware/mf79u/src/cs-route-probe.c",
+      "source_sha256": "edb73d5ed76830cff7f36370cec264276c9930cd0504bb3c3080c76aceab5a67",
+      "bytes": 3348,
+      "destination_sha256": "edb73d5ed76830cff7f36370cec264276c9930cd0504bb3c3080c76aceab5a67"
+    },
+    {
+      "source": "firmware/mf79u/src/caller-id.h",
+      "destination": "firmware/mf79u/src/caller-id.h",
+      "source_sha256": "5503f6b15a27b1e8f3116f67674b143268157df9718830f6d4010e0c66f7d064",
+      "bytes": 227,
+      "destination_sha256": "5503f6b15a27b1e8f3116f67674b143268157df9718830f6d4010e0c66f7d064"
+    },
+    {
+      "source": "firmware/mf79u/src/sd-backup-server.c",
+      "destination": "firmware/mf79u/src/sd-backup-server.c",
+      "source_sha256": "081d885aa9e9a70aacab08b5f71fe94238c2f32ce2b05e11bbcd17910d2c7e8c",
+      "bytes": 5205,
+      "destination_sha256": "081d885aa9e9a70aacab08b5f71fe94238c2f32ce2b05e11bbcd17910d2c7e8c"
+    },
+    {
+      "source": "firmware/mf79u/src/vowifi-ipv4-checksum.h",
+      "destination": "firmware/mf79u/src/vowifi-ipv4-checksum.h",
+      "source_sha256": "06d690f8f6d6f7cd6f75418e150f0fcda1e951a6dcf52cdc771accd42188a185",
+      "bytes": 1360,
+      "destination_sha256": "06d690f8f6d6f7cd6f75418e150f0fcda1e951a6dcf52cdc771accd42188a185"
+    },
+    {
+      "source": "firmware/mf79u/src/native-gateway.c",
+      "destination": "firmware/mf79u/src/native-gateway.c",
+      "source_sha256": "141e1e99580b454a51548018528f449bc67ebf99df321bc13c51cad09052e778",
+      "bytes": 53908,
+      "destination_sha256": "141e1e99580b454a51548018528f449bc67ebf99df321bc13c51cad09052e778"
+    },
+    {
+      "source": "firmware/mf79u/src/diagnostic-fault.h",
+      "destination": "firmware/mf79u/src/diagnostic-fault.h",
+      "source_sha256": "e23eeb793845043855239394fd8cc3596775fd977a06a961b43647a31f43b94d",
+      "bytes": 2157,
+      "destination_sha256": "e23eeb793845043855239394fd8cc3596775fd977a06a961b43647a31f43b94d"
+    },
+    {
+      "source": "firmware/mf79u/src/sip-clock-policy.c",
+      "destination": "firmware/mf79u/src/sip-clock-policy.c",
+      "source_sha256": "cfa4ac82524ff574e5d478e547b29ba9837e26b169fb8b5f62b2f46c7b007fae",
+      "bytes": 748,
+      "destination_sha256": "cfa4ac82524ff574e5d478e547b29ba9837e26b169fb8b5f62b2f46c7b007fae"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-kernel-probe.c",
+      "destination": "firmware/mf79u/src/cs-kernel-probe.c",
+      "source_sha256": "9ade3b021d02b68ca71a0b1cdb3e8ae240e245a8b2b4584511d8ff7100d1be3f",
+      "bytes": 4467,
+      "destination_sha256": "9ade3b021d02b68ca71a0b1cdb3e8ae240e245a8b2b4584511d8ff7100d1be3f"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-i2s-preflight.c",
+      "destination": "firmware/mf79u/src/cs-i2s-preflight.c",
+      "source_sha256": "b26802299272bf1c67bc46990a41b7a9c2bdbd4191557c9697b2d9a55ce9b7b5",
+      "bytes": 2566,
+      "destination_sha256": "b26802299272bf1c67bc46990a41b7a9c2bdbd4191557c9697b2d9a55ce9b7b5"
+    },
+    {
+      "source": "firmware/mf79u/src/ims-software-media.c",
+      "destination": "firmware/mf79u/src/ims-software-media.c",
+      "source_sha256": "8f7d0ba20720d190a12265219c62f5082c4eee1259ff6782087285f580e8c422",
+      "bytes": 16838,
+      "destination_sha256": "8f7d0ba20720d190a12265219c62f5082c4eee1259ff6782087285f580e8c422"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-mo-probe.c",
+      "destination": "firmware/mf79u/src/cs-mo-probe.c",
+      "source_sha256": "5199293bd8e02aade451753a551b6f51417123932b6b1cc8261723a8e01a2229",
+      "bytes": 22915,
+      "destination_sha256": "5199293bd8e02aade451753a551b6f51417123932b6b1cc8261723a8e01a2229"
+    },
+    {
+      "source": "firmware/mf79u/src/voice-backend-selftest.c",
+      "destination": "firmware/mf79u/src/voice-backend-selftest.c",
+      "source_sha256": "48f1f3eecd060620faee4223fb8eb408ae38b7bd07457d839e0fda16c85f4b35",
+      "bytes": 3242,
+      "destination_sha256": "48f1f3eecd060620faee4223fb8eb408ae38b7bd07457d839e0fda16c85f4b35"
+    },
+    {
+      "source": "firmware/mf79u/src/ipv4-fragments.h",
+      "destination": "firmware/mf79u/src/ipv4-fragments.h",
+      "source_sha256": "ba29b25ff991bcb932a281475df4d25ba5dc8819b01a804d1f41e5d825720a22",
+      "bytes": 474,
+      "destination_sha256": "ba29b25ff991bcb932a281475df4d25ba5dc8819b01a804d1f41e5d825720a22"
+    },
+    {
+      "source": "firmware/mf79u/src/sip-sms.h",
+      "destination": "firmware/mf79u/src/sip-sms.h",
+      "source_sha256": "fd8fccc7b976849e77abc14acbb0cb64b9a30db075c124fcf42745139211bce4",
+      "bytes": 10730,
+      "destination_sha256": "fd8fccc7b976849e77abc14acbb0cb64b9a30db075c124fcf42745139211bce4"
+    },
+    {
+      "source": "firmware/mf79u/src/amr-rate-policy.h",
+      "destination": "firmware/mf79u/src/amr-rate-policy.h",
+      "source_sha256": "9abd22645f5f3748484a75fa2618df9211977749b9775fe67c50dac135e5f0d3",
+      "bytes": 1446,
+      "destination_sha256": "9abd22645f5f3748484a75fa2618df9211977749b9775fe67c50dac135e5f0d3"
+    },
+    {
+      "source": "firmware/mf79u/src/ims-register-response.h",
+      "destination": "firmware/mf79u/src/ims-register-response.h",
+      "source_sha256": "278c59810b0a86bc0ce6f6da34dab8e08512704bd8df29ad14f4c6475b7a436b",
+      "bytes": 1138,
+      "destination_sha256": "278c59810b0a86bc0ce6f6da34dab8e08512704bd8df29ad14f4c6475b7a436b"
+    },
+    {
+      "source": "firmware/mf79u/src/net-led-policy.h",
+      "destination": "firmware/mf79u/src/net-led-policy.h",
+      "source_sha256": "8a03e3f323226c6a4ae62ae123a65ffe38e96308c25442b2486b20a5ca57e224",
+      "bytes": 1230,
+      "destination_sha256": "8a03e3f323226c6a4ae62ae123a65ffe38e96308c25442b2486b20a5ca57e224"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-dsp-load-watch.c",
+      "destination": "firmware/mf79u/src/cs-dsp-load-watch.c",
+      "source_sha256": "7e7a4255e5009cae8b9405426d69d9f0bd0a98cc3272955ebcf8483605d1ef11",
+      "bytes": 7955,
+      "destination_sha256": "7e7a4255e5009cae8b9405426d69d9f0bd0a98cc3272955ebcf8483605d1ef11"
+    },
+    {
+      "source": "firmware/mf79u/src/esp-null.c",
+      "destination": "firmware/mf79u/src/esp-null.c",
+      "source_sha256": "17630e38d93a74d6b32498299a9c704223f4a4be5f9acf22b8ab439868c11d5a",
+      "bytes": 3553,
+      "destination_sha256": "17630e38d93a74d6b32498299a9c704223f4a4be5f9acf22b8ab439868c11d5a"
+    },
+    {
+      "source": "firmware/mf79u/src/cp-memory-probe.c",
+      "destination": "firmware/mf79u/src/cp-memory-probe.c",
+      "source_sha256": "ee87cb705e25a6c925de8db6c4622c512ab4bcc412097cccc6f18170b2d816c6",
+      "bytes": 2529,
+      "destination_sha256": "ee87cb705e25a6c925de8db6c4622c512ab4bcc412097cccc6f18170b2d816c6"
+    },
+    {
+      "source": "firmware/mf79u/src/volte-ipc-probe.c",
+      "destination": "firmware/mf79u/src/volte-ipc-probe.c",
+      "source_sha256": "b6c45a9f803f29892166682c6dc63912d13b32a3c3f8ee60847be940d0c56983",
+      "bytes": 8815,
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained",
+        "publication privacy/path normalization"
+      ],
+      "destination_sha256": "51d7d73844909cb1b416e31f7d30f3efa1a668fab6e809287a97d6634ebdd9cc"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-pcm-clarity.h",
+      "destination": "firmware/mf79u/src/cs-pcm-clarity.h",
+      "source_sha256": "f0e846b88438a577429699deab66f6570c26b6e3c4ba4bf146556e547e29059c",
+      "bytes": 726,
+      "destination_sha256": "f0e846b88438a577429699deab66f6570c26b6e3c4ba4bf146556e547e29059c"
+    },
+    {
+      "source": "firmware/mf79u/src/sd-reread.c",
+      "destination": "firmware/mf79u/src/sd-reread.c",
+      "source_sha256": "c3f1258d21d1329cea3a547c371b88334ba0c1ce0105e70cfed2ad57a3499723",
+      "bytes": 1428,
+      "destination_sha256": "c3f1258d21d1329cea3a547c371b88334ba0c1ce0105e70cfed2ad57a3499723"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-tone-codec.c",
+      "destination": "firmware/mf79u/src/cs-tone-codec.c",
+      "source_sha256": "bfd19dd96cdb90bda2b86f6e238ab8f22cf50d6c3d57312aff37f762d15c474b",
+      "bytes": 1776,
+      "destination_sha256": "bfd19dd96cdb90bda2b86f6e238ab8f22cf50d6c3d57312aff37f762d15c474b"
+    },
+    {
+      "source": "firmware/mf79u/src/ims-media-selftest.c",
+      "destination": "firmware/mf79u/src/ims-media-selftest.c",
+      "source_sha256": "6005ad7e6dc32550c4db266f687d83ed62ae1e27a64ab143c3fd0a58313a7555",
+      "bytes": 1314,
+      "destination_sha256": "6005ad7e6dc32550c4db266f687d83ed62ae1e27a64ab143c3fd0a58313a7555"
+    },
+    {
+      "source": "firmware/mf79u/src/vowifi-checksum-selftest.c",
+      "destination": "firmware/mf79u/src/vowifi-checksum-selftest.c",
+      "source_sha256": "759215fe4b7e8214a18df1e6875bf8c271a0717f3f28e1e77df3f395d3ced806",
+      "bytes": 1205,
+      "destination_sha256": "759215fe4b7e8214a18df1e6875bf8c271a0717f3f28e1e77df3f395d3ced806"
+    },
+    {
+      "source": "firmware/mf79u/src/vendor-codecs.c",
+      "destination": "firmware/mf79u/src/vendor-codecs.c",
+      "source_sha256": "f7de1de363368e8070d54cc6192f6d8ee174526e1ed828cf0f128fd668df8376",
+      "bytes": 11525,
+      "destination_sha256": "f7de1de363368e8070d54cc6192f6d8ee174526e1ed828cf0f128fd668df8376"
+    },
+    {
+      "source": "firmware/mf79u/src/pcm-queue-selftest.c",
+      "destination": "firmware/mf79u/src/pcm-queue-selftest.c",
+      "source_sha256": "d263e0998b1f1a9b34081d1330464dace83b3fd7a0b6226d220a8893a7cdf580",
+      "bytes": 1786,
+      "destination_sha256": "d263e0998b1f1a9b34081d1330464dace83b3fd7a0b6226d220a8893a7cdf580"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-pcm-spsc.h",
+      "destination": "firmware/mf79u/src/cs-pcm-spsc.h",
+      "source_sha256": "44bb404e9de7d9864aa728c4b74ac793c032bb278d73c056e7daadecffa48195",
+      "bytes": 1800,
+      "destination_sha256": "44bb404e9de7d9864aa728c4b74ac793c032bb278d73c056e7daadecffa48195"
+    },
+    {
+      "source": "firmware/mf79u/src/ims-sms-native.h",
+      "destination": "firmware/mf79u/src/ims-sms-native.h",
+      "source_sha256": "a66cb68510153c0bd4ee0c938371dc98040b75631d659c6af38b26c03e95ad19",
+      "bytes": 9971,
+      "destination_sha256": "a66cb68510153c0bd4ee0c938371dc98040b75631d659c6af38b26c03e95ad19"
+    },
+    {
+      "source": "firmware/mf79u/src/vowifi-packet-selftest.c",
+      "destination": "firmware/mf79u/src/vowifi-packet-selftest.c",
+      "source_sha256": "3d7a6775eff4966dcfbfc619d393f427854d70042293799e4f10ded459b5786f",
+      "bytes": 2127,
+      "destination_sha256": "3d7a6775eff4966dcfbfc619d393f427854d70042293799e4f10ded459b5786f"
+    },
+    {
+      "source": "firmware/mf79u/src/vowifi-sim-plugin.c",
+      "destination": "firmware/mf79u/src/vowifi-sim-plugin.c",
+      "source_sha256": "1c81c5926612c7450ea781fc6f64fcc751835ccf002d4ea7c91fe6f8e0a30562",
+      "bytes": 4193,
+      "destination_sha256": "1c81c5926612c7450ea781fc6f64fcc751835ccf002d4ea7c91fe6f8e0a30562"
+    },
+    {
+      "source": "firmware/mf79u/src/cp-memory.c",
+      "destination": "firmware/mf79u/src/cp-memory.c",
+      "source_sha256": "a2dc1f5d5bf5750b10e4111dc865a5ac6e0430f07496e9f47333daf22f24964c",
+      "bytes": 1516,
+      "destination_sha256": "a2dc1f5d5bf5750b10e4111dc865a5ac6e0430f07496e9f47333daf22f24964c"
+    },
+    {
+      "source": "firmware/mf79u/src/ims-crypto-selftest.c",
+      "destination": "firmware/mf79u/src/ims-crypto-selftest.c",
+      "source_sha256": "919ad3a530d4fa7a0a61fcdf0d55524e9f82bdb700f0dab60a174cbd38425ff4",
+      "bytes": 964,
+      "destination_sha256": "919ad3a530d4fa7a0a61fcdf0d55524e9f82bdb700f0dab60a174cbd38425ff4"
+    },
+    {
+      "source": "firmware/mf79u/src/amr-tool.c",
+      "destination": "firmware/mf79u/src/amr-tool.c",
+      "source_sha256": "2b6ff7b56fa58f804e1a258e69f8c30d8355a31992b41087a9a0537433543366",
+      "bytes": 3583,
+      "destination_sha256": "2b6ff7b56fa58f804e1a258e69f8c30d8355a31992b41087a9a0537433543366"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-module-layout-probe.c",
+      "destination": "firmware/mf79u/src/cs-module-layout-probe.c",
+      "source_sha256": "7b90d269d5a60b80edc61f92b00f79fadc20b84fceb063b40a8139f341437779",
+      "bytes": 1623,
+      "destination_sha256": "7b90d269d5a60b80edc61f92b00f79fadc20b84fceb063b40a8139f341437779"
+    },
+    {
+      "source": "firmware/mf79u/src/vowifi-packet-health.c",
+      "destination": "firmware/mf79u/src/vowifi-packet-health.c",
+      "source_sha256": "2c706513a64ac1a3d3f7b940be617950e1486e89aabb844a41ce3a7edc76f62c",
+      "bytes": 2672,
+      "destination_sha256": "2c706513a64ac1a3d3f7b940be617950e1486e89aabb844a41ce3a7edc76f62c"
+    },
+    {
+      "source": "firmware/mf79u/src/ipc-cleanup.c",
+      "destination": "firmware/mf79u/src/ipc-cleanup.c",
+      "source_sha256": "97941b4e924edb0aafbbfd65f9921113a94f90284787f09f3086448c07dc6d95",
+      "bytes": 1410,
+      "destination_sha256": "97941b4e924edb0aafbbfd65f9921113a94f90284787f09f3086448c07dc6d95"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-voice-protocol.h",
+      "destination": "firmware/mf79u/src/cs-voice-protocol.h",
+      "source_sha256": "ae64b7b152845da046b4bd361978a3ab53c0db43e3dc821a7e2db93c81aa2062",
+      "bytes": 1855,
+      "destination_sha256": "ae64b7b152845da046b4bd361978a3ab53c0db43e3dc821a7e2db93c81aa2062"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-voice-protocol-selftest.c",
+      "destination": "firmware/mf79u/src/cs-voice-protocol-selftest.c",
+      "source_sha256": "5a856d9473e6f202ca3291535dfeed0557d8f09f128e1f94f57baa6c0dcab7c4",
+      "bytes": 1073,
+      "destination_sha256": "5a856d9473e6f202ca3291535dfeed0557d8f09f128e1f94f57baa6c0dcab7c4"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-pcm-ring-selftest.c",
+      "destination": "firmware/mf79u/src/cs-pcm-ring-selftest.c",
+      "source_sha256": "9c8b321697aca3b100304cd22a22f3fb621990d9725abe9598c1a6f147a67b87",
+      "bytes": 1508,
+      "destination_sha256": "9c8b321697aca3b100304cd22a22f3fb621990d9725abe9598c1a6f147a67b87"
+    },
+    {
+      "source": "firmware/mf79u/src/ims-userspace-ipsec.c",
+      "destination": "firmware/mf79u/src/ims-userspace-ipsec.c",
+      "source_sha256": "8c7985026150dc344b569827f40c979099dce274b0f1f755058717f7625e9e71",
+      "bytes": 33586,
+      "destination_sha256": "8c7985026150dc344b569827f40c979099dce274b0f1f755058717f7625e9e71"
+    },
+    {
+      "source": "firmware/mf79u/src/system-imei.c",
+      "destination": "firmware/mf79u/src/system-imei.c",
+      "source_sha256": "852f598c0645389a897aab28fc85401fe890179faccedf619dacd58b3911f1a6",
+      "bytes": 2205,
+      "destination_sha256": "852f598c0645389a897aab28fc85401fe890179faccedf619dacd58b3911f1a6"
+    },
+    {
+      "source": "firmware/mf79u/src/cp-ipc.h",
+      "destination": "firmware/mf79u/src/cp-ipc.h",
+      "source_sha256": "3a19173bf11caed9398b5547be8b3cc75ec8a2c297529cf3b5b7d2c0e9127126",
+      "bytes": 587,
+      "destination_sha256": "3a19173bf11caed9398b5547be8b3cc75ec8a2c297529cf3b5b7d2c0e9127126"
+    },
+    {
+      "source": "firmware/mf79u/src/vowifi-access-selftest.c",
+      "destination": "firmware/mf79u/src/vowifi-access-selftest.c",
+      "source_sha256": "27059d486e83739f60c051fb3e86fe597fc1f11557dc7c26307d2a46144b3244",
+      "bytes": 1037,
+      "destination_sha256": "27059d486e83739f60c051fb3e86fe597fc1f11557dc7c26307d2a46144b3244"
+    },
+    {
+      "source": "firmware/mf79u/src/network-registration-probe.c",
+      "destination": "firmware/mf79u/src/network-registration-probe.c",
+      "source_sha256": "917c21bea5072e24705bb3d640498adfdde90835afa9ff505749ec28aaa0ac22",
+      "bytes": 1212,
+      "destination_sha256": "917c21bea5072e24705bb3d640498adfdde90835afa9ff505749ec28aaa0ac22"
+    },
+    {
+      "source": "firmware/mf79u/src/cp-ipc-selftest.c",
+      "destination": "firmware/mf79u/src/cp-ipc-selftest.c",
+      "source_sha256": "dd2047f27977add8cc7032b27ee72b747a142abfaac14a592a28d6e343e5d4f7",
+      "bytes": 3465,
+      "destination_sha256": "dd2047f27977add8cc7032b27ee72b747a142abfaac14a592a28d6e343e5d4f7"
+    },
+    {
+      "source": "firmware/mf79u/src/vowifi-wifi-health.c",
+      "destination": "firmware/mf79u/src/vowifi-wifi-health.c",
+      "source_sha256": "ca519a807518773a50acebf89ed667e850d2b228e1e22899aef05b5d3a399b0a",
+      "bytes": 551,
+      "destination_sha256": "ca519a807518773a50acebf89ed667e850d2b228e1e22899aef05b5d3a399b0a"
+    },
+    {
+      "source": "firmware/mf79u/src/cp-ipc-probe.c",
+      "destination": "firmware/mf79u/src/cp-ipc-probe.c",
+      "source_sha256": "ed55d2db9d1b9ff8d6db332a3dc16b6ba3178c3c18f134c3c0e20be24733015e",
+      "bytes": 2315,
+      "destination_sha256": "ed55d2db9d1b9ff8d6db332a3dc16b6ba3178c3c18f134c3c0e20be24733015e"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-status-selftest.c",
+      "destination": "firmware/mf79u/src/cs-status-selftest.c",
+      "source_sha256": "0ff6fa6f5268bd8351dc20247407673d5089c6f72ad3954e09295b7d5355e869",
+      "bytes": 1510,
+      "destination_sha256": "0ff6fa6f5268bd8351dc20247407673d5089c6f72ad3954e09295b7d5355e869"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-call-state.h",
+      "destination": "firmware/mf79u/src/cs-call-state.h",
+      "source_sha256": "02517d309793c1f326de14f93e6634c11d3fb0349658fac8fb7da127072fa6d2",
+      "bytes": 3481,
+      "destination_sha256": "02517d309793c1f326de14f93e6634c11d3fb0349658fac8fb7da127072fa6d2"
+    },
+    {
+      "source": "firmware/mf79u/src/amr-rate-selftest.c",
+      "destination": "firmware/mf79u/src/amr-rate-selftest.c",
+      "source_sha256": "c6f7d60218f31ff670923fff362bc5e53ca19c3707dacff3fb5efc428560b236",
+      "bytes": 10802,
+      "destination_sha256": "c6f7d60218f31ff670923fff362bc5e53ca19c3707dacff3fb5efc428560b236"
+    },
+    {
+      "source": "firmware/mf79u/src/cs-i2s-loop-probe.c",
+      "destination": "firmware/mf79u/src/cs-i2s-loop-probe.c",
+      "source_sha256": "60adc641229e5bcd1bd9c3e455661372685bdc590c1ecda52cc43bff8d5ee277",
+      "bytes": 3275,
+      "destination_sha256": "60adc641229e5bcd1bd9c3e455661372685bdc590c1ecda52cc43bff8d5ee277"
+    },
+    {
+      "source": "firmware/mf79u/src/socket-health.c",
+      "destination": "firmware/mf79u/src/socket-health.c",
+      "source_sha256": "72b3e88115470a9e57dcd3968d13fffdffa424d630c0252c8fa1bac01d2afbfd",
+      "bytes": 992,
+      "destination_sha256": "72b3e88115470a9e57dcd3968d13fffdffa424d630c0252c8fa1bac01d2afbfd"
+    },
+    {
+      "source": "firmware/mf79u/src/voice-uapi.h",
+      "destination": "firmware/mf79u/src/voice-uapi.h",
+      "source_sha256": "538f194e027a4c3b8937dd4d90b79707d739cd1cd8b7fd5a517fa2f5561ab288",
+      "bytes": 679,
+      "destination_sha256": "538f194e027a4c3b8937dd4d90b79707d739cd1cd8b7fd5a517fa2f5561ab288"
+    },
+    {
+      "source": "firmware/mf79u/src/cp-pdp.c",
+      "destination": "firmware/mf79u/src/cp-pdp.c",
+      "source_sha256": "18469aad959c3f86942b38433087c984a68c0dba09390cc853a97894464a62db",
+      "bytes": 4868,
+      "destination_sha256": "18469aad959c3f86942b38433087c984a68c0dba09390cc853a97894464a62db"
+    },
+    {
+      "source": "firmware/mf79u/control/web/index.html",
+      "destination": "firmware/mf79u/control/web/index.html",
+      "source_sha256": "36c3677e697bf3166391d038812b35beae34fa168349fbaf5df69ea00a17d5e0",
+      "bytes": 20471,
+      "destination_sha256": "36c3677e697bf3166391d038812b35beae34fa168349fbaf5df69ea00a17d5e0"
+    },
+    {
+      "source": "firmware/mf79u/control/web/system.js",
+      "destination": "firmware/mf79u/control/web/system.js",
+      "source_sha256": "1f1020a24d7483411b85169783200a8da75c436a284cd33d0a23a459d4ed5cc3",
+      "bytes": 4798,
+      "destination_sha256": "1f1020a24d7483411b85169783200a8da75c436a284cd33d0a23a459d4ed5cc3"
+    },
+    {
+      "source": "firmware/mf79u/control/web/sms-format.js",
+      "destination": "firmware/mf79u/control/web/sms-format.js",
+      "source_sha256": "35fbe00297c2de3c9b4870545da7bf7e4ca69351157927a6e6d0289033cee0f1",
+      "bytes": 2091,
+      "destination_sha256": "35fbe00297c2de3c9b4870545da7bf7e4ca69351157927a6e6d0289033cee0f1"
+    },
+    {
+      "source": "firmware/mf79u/control/web/style.css",
+      "destination": "firmware/mf79u/control/web/style.css",
+      "source_sha256": "7c50683bca8c41610afb06272d4fce630757fa481092b71c68ddf6593f7297ab",
+      "bytes": 8319,
+      "destination_sha256": "7c50683bca8c41610afb06272d4fce630757fa481092b71c68ddf6593f7297ab"
+    },
+    {
+      "source": "firmware/mf79u/control/web/app.js",
+      "destination": "firmware/mf79u/control/web/app.js",
+      "source_sha256": "2ef63222bc42d090219b158fbeb783eec0d624bf851bdd258bafe5d5e4a85cf7",
+      "bytes": 22762,
+      "destination_sha256": "2ef63222bc42d090219b158fbeb783eec0d624bf851bdd258bafe5d5e4a85cf7"
+    },
+    {
+      "source": "outputs/zte-native-usb.c",
+      "destination": "outputs/zte-native-usb.c",
+      "source_sha256": "8e956f568ee5744ee78c3b767c3c1a69ca4e6d5ebb2b7b38a2667bcfc7ebc6f2",
+      "bytes": 4040,
+      "destination_sha256": "8e956f568ee5744ee78c3b767c3c1a69ca4e6d5ebb2b7b38a2667bcfc7ebc6f2"
+    },
+    {
+      "source": "outputs/zte-led-blink-result.txt",
+      "destination": "outputs/zte-led-blink-result.txt",
+      "source_sha256": "ef9e9cc4d7a053ba5ede684bab7c7fea3c760498ff4f89359fd2e582b25fca0b",
+      "bytes": 458,
+      "destination_sha256": "b5e559fecd552a33b3980d109f8977386f557eb66a8539ee32cb1d0ec235b260",
+      "transformations": [
+        "Publication whitespace/LF normalization; behavior unchanged"
+      ]
+    },
+    {
+      "source": "outputs/zte-mac-instructions.txt",
+      "destination": "outputs/zte-mac-instructions.txt",
+      "source_sha256": "909f8b29d0bf5e9432e4cc9507cf8cb7f82a24e0b99c40384dca5c1063442740",
+      "bytes": 4595,
+      "destination_sha256": "909f8b29d0bf5e9432e4cc9507cf8cb7f82a24e0b99c40384dca5c1063442740"
+    },
+    {
+      "source": "outputs/zte-led-blink.sh",
+      "destination": "outputs/zte-led-blink.sh",
+      "source_sha256": "b36bac785c99abc710b083a8fbfc144f2e1a312c287f05c06c628ff5ffc1168c",
+      "bytes": 2441,
+      "destination_sha256": "b36bac785c99abc710b083a8fbfc144f2e1a312c287f05c06c628ff5ffc1168c"
+    },
+    {
+      "source": "outputs/utm-zte-autoconnect.applescript",
+      "destination": "outputs/utm-zte-autoconnect.applescript",
+      "source_sha256": "67197fd43f4e9ed92ec8c4041d8cfea5e4581f8c1596dd9c4c8e0847e6f4c85c",
+      "bytes": 329,
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained",
+        "publication privacy/path normalization"
+      ],
+      "destination_sha256": "b21de8a41dd1af3c35dc9feecd092c18cbe6ca61ef8a6cc01e89c97753ee9133"
+    },
+    {
+      "source": "outputs/zte-windows-handoff.txt",
+      "destination": "outputs/zte-windows-handoff.txt",
+      "source_sha256": "c95abe5b749c474787b68ee654cbccd308cc1821ce873db9f0065893163653f1",
+      "bytes": 8777,
+      "destination_sha256": "c95abe5b749c474787b68ee654cbccd308cc1821ce873db9f0065893163653f1"
+    },
+    {
+      "source": "outputs/zte-mac.py",
+      "destination": "outputs/zte-mac.py",
+      "source_sha256": "9f811ddae3150cd4d954b977b4fff2cccbe216b32a5e74215d301cff6527e589",
+      "bytes": 3813,
+      "destination_sha256": "9f811ddae3150cd4d954b977b4fff2cccbe216b32a5e74215d301cff6527e589"
+    },
+    {
+      "source": "outputs/zte-sms.py",
+      "destination": "outputs/zte-sms.py",
+      "source_sha256": "efa3b0483d63d5d7fef4dedfa302455361b414906cec819c9a1769fbebfe259e",
+      "bytes": 5652,
+      "destination_sha256": "efa3b0483d63d5d7fef4dedfa302455361b414906cec819c9a1769fbebfe259e"
+    },
+    {
+      "source": "outputs/utm-usb-autoconnect.py",
+      "destination": "outputs/utm-usb-autoconnect.py",
+      "source_sha256": "36f6621e25914ca0ecce8b8ed2c1514ab60df0269b73eb473dacd207d938b5bc",
+      "bytes": 3774,
+      "destination_sha256": "36f6621e25914ca0ecce8b8ed2c1514ab60df0269b73eb473dacd207d938b5bc"
+    },
+    {
+      "source": "outputs/mikopbx/configure-sip-messages.py",
+      "destination": "outputs/mikopbx/configure-sip-messages.py",
+      "source_sha256": "202df32132c7ecb86f08fe60675582d34510ace0ef10e55c1ee0bf1a20e84137",
+      "bytes": 4849,
+      "destination_sha256": "202df32132c7ecb86f08fe60675582d34510ace0ef10e55c1ee0bf1a20e84137"
+    },
+    {
+      "source": "outputs/mikopbx/analyze-recording.py",
+      "destination": "outputs/mikopbx/analyze-recording.py",
+      "source_sha256": "04b832dae8bfd8fa9088c740fdf104c358e0368b441ae78b9d799edabb62901f",
+      "bytes": 2215,
+      "destination_sha256": "04b832dae8bfd8fa9088c740fdf104c358e0368b441ae78b9d799edabb62901f"
+    },
+    {
+      "source": "outputs/mikopbx/configure.py",
+      "destination": "outputs/mikopbx/configure.py",
+      "source_sha256": "20ab4f3f96d31da025b72e48499dc38d5fb20f2fcd9b329e25835301e3011b51",
+      "bytes": 5224,
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained",
+        "publication privacy/path normalization"
+      ],
+      "destination_sha256": "8b13bb3d96282a713388cd34a28fec9929cf7b655694895efeccaa0c10cb104e"
+    },
+    {
+      "source": "outputs/mikopbx/record-incoming.py",
+      "destination": "outputs/mikopbx/record-incoming.py",
+      "source_sha256": "a666f958ad278fc3f2537e42719e090d34836dcae81b02df77d4a6cdf06eb772",
+      "bytes": 6357,
+      "destination_sha256": "a666f958ad278fc3f2537e42719e090d34836dcae81b02df77d4a6cdf06eb772"
+    },
+    {
+      "source": "outputs/mikopbx/test-incoming.py",
+      "destination": "outputs/mikopbx/test-incoming.py",
+      "source_sha256": "c94743ad76737108f6cb76e1789550789046bb654b1dc4c4853c89c0d12fc1fb",
+      "bytes": 4477,
+      "destination_sha256": "c94743ad76737108f6cb76e1789550789046bb654b1dc4c4853c89c0d12fc1fb"
+    },
+    {
+      "source": "outputs/mikopbx/README.md",
+      "destination": "outputs/mikopbx/README.md",
+      "source_sha256": "a47823408d165e9d1148cb6302945f1d6a5a7133336165e058cd35fafcc1a425",
+      "bytes": 18835,
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained",
+        "publication privacy/path normalization"
+      ],
+      "destination_sha256": "dd5cc9ddac0036cd68a7dc33150b1f53a50351f2158c7384ac31539d12bb7bda"
+    },
+    {
+      "source": "outputs/mikopbx/test-call.py",
+      "destination": "outputs/mikopbx/test-call.py",
+      "source_sha256": "d4ea65251d74de4864c6c68a1ba2a5e46efa8b1d58baaa0ed9ff595be8def605",
+      "bytes": 3153,
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained",
+        "publication privacy/path normalization"
+      ],
+      "destination_sha256": "40cac01b0fcf0d578179f400433c4b2f3349e00217f6803dff980ff08a1cbfad"
+    },
+    {
+      "source": "outputs/mikopbx/configure-call-routing.py",
+      "destination": "outputs/mikopbx/configure-call-routing.py",
+      "source_sha256": "21086ae25759e3dffbfb0c598aaaabfa27e44688eab934c8a80564f38fb235c4",
+      "bytes": 2513,
+      "destination_sha256": "21086ae25759e3dffbfb0c598aaaabfa27e44688eab934c8a80564f38fb235c4"
+    },
+    {
+      "source": "outputs/mikopbx/audio-quality.md",
+      "destination": "outputs/mikopbx/audio-quality.md",
+      "source_sha256": "62ab0d538471e128b2601818d3fb49faf08546085496740bd970631eeb57daf6",
+      "bytes": 21686,
+      "destination_sha256": "d45165035932417c3dcfbcdaeb8587d1c7853a51f2e5e29b8be93c9bd8de14d9",
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "work/zte/voice/scan-ptcl.py",
+      "destination": "work/zte/voice/scan-ptcl.py",
+      "source_sha256": "22e77d5b5204ffdc056652f256027f65d1fa1445645d13615439652c25d3bdc1",
+      "bytes": 1372,
+      "destination_sha256": "22e77d5b5204ffdc056652f256027f65d1fa1445645d13615439652c25d3bdc1"
+    },
+    {
+      "source": "work/zte/voice/read-sdk.py",
+      "destination": "work/zte/voice/read-sdk.py",
+      "source_sha256": "b5e10d7c42935300f9a97687b55cd29a6bfccaf7f7052d98eb331da5dac6966e",
+      "bytes": 2101,
+      "destination_sha256": "b5e10d7c42935300f9a97687b55cd29a6bfccaf7f7052d98eb331da5dac6966e"
+    },
+    {
+      "source": "work/zte/voice/emulate-mf283u-rx-slots.py",
+      "destination": "work/zte/voice/emulate-mf283u-rx-slots.py",
+      "source_sha256": "87cb96e82ca89bfa63da5dc79b5758b54f946880b0bc73a9d132d992ded66dac",
+      "bytes": 2094,
+      "destination_sha256": "87cb96e82ca89bfa63da5dc79b5758b54f946880b0bc73a9d132d992ded66dac"
+    },
+    {
+      "source": "work/zte/voice/emulate-mf283u-voice-start.py",
+      "destination": "work/zte/voice/emulate-mf283u-voice-start.py",
+      "source_sha256": "704dffb28d87fef964ab99b6651dd1b3de2b41a74952b61d48676cc9e7941fa3",
+      "bytes": 4196,
+      "destination_sha256": "704dffb28d87fef964ab99b6651dd1b3de2b41a74952b61d48676cc9e7941fa3"
+    },
+    {
+      "source": "work/zte/voice/prepare-b03-pcm-windows.py",
+      "destination": "work/zte/voice/prepare-b03-pcm-windows.py",
+      "source_sha256": "c0cceeed4cd8236e3e4d405d7562f991d9b175c4ad1eff5057ca4e4149fbd030",
+      "bytes": 2903,
+      "destination_sha256": "c0cceeed4cd8236e3e4d405d7562f991d9b175c4ad1eff5057ca4e4149fbd030"
+    },
+    {
+      "source": "work/zte/voice/extract-platform.py",
+      "destination": "work/zte/voice/extract-platform.py",
+      "source_sha256": "45693e86405f9f2b82db554ee511fc9707e7cbc07b2d8648f47ca920e73558f7",
+      "bytes": 1067,
+      "destination_sha256": "45693e86405f9f2b82db554ee511fc9707e7cbc07b2d8648f47ca920e73558f7"
+    },
+    {
+      "source": "work/zte/voice/emulate-mf283u-audio.py",
+      "destination": "work/zte/voice/emulate-mf283u-audio.py",
+      "source_sha256": "8f0e7e5fa19a4018e77e36efc2a4c3f74cde93832391f76bcba9a795b3e4d879",
+      "bytes": 13839,
+      "destination_sha256": "8f0e7e5fa19a4018e77e36efc2a4c3f74cde93832391f76bcba9a795b3e4d879"
+    },
+    {
+      "source": "work/zte/voice/emulate-mf283u-voice-paths.py",
+      "destination": "work/zte/voice/emulate-mf283u-voice-paths.py",
+      "source_sha256": "e99be5703fcb802e176e61d0cec4624aeba3b67d725bea9cda08e1454a35cc16",
+      "bytes": 3823,
+      "destination_sha256": "e99be5703fcb802e176e61d0cec4624aeba3b67d725bea9cda08e1454a35cc16"
+    },
+    {
+      "source": "work/zte/voice/inspect-cp-b03.py",
+      "destination": "work/zte/voice/inspect-cp-b03.py",
+      "source_sha256": "f3c33f6d7c2f1e90e7d27723852be4e93a883152184654987f746aa9a60ee68a",
+      "bytes": 2343,
+      "destination_sha256": "f3c33f6d7c2f1e90e7d27723852be4e93a883152184654987f746aa9a60ee68a"
+    },
+    {
+      "source": "work/zte/voice/inspect-mf283u.py",
+      "destination": "work/zte/voice/inspect-mf283u.py",
+      "source_sha256": "a30292acb829ceaad10df0524c4c225945c55b447caec1f49af63e10d90900dc",
+      "bytes": 3294,
+      "destination_sha256": "a30292acb829ceaad10df0524c4c225945c55b447caec1f49af63e10d90900dc"
+    },
+    {
+      "source": "work/zte/voice/decode-gsm-teak-pmb887x.py",
+      "destination": "work/zte/voice/decode-gsm-teak-pmb887x.py",
+      "source_sha256": "1691f27a5016f762dd3e461e04d2b6bc06ec58e6d851042197bc3997c574e020",
+      "bytes": 4364,
+      "destination_sha256": "1691f27a5016f762dd3e461e04d2b6bc06ec58e6d851042197bc3997c574e020"
+    },
+    {
+      "source": "work/zte/voice/emulate-mf283u-voice-open.py",
+      "destination": "work/zte/voice/emulate-mf283u-voice-open.py",
+      "source_sha256": "369365d41e3dc2e3785deaba22e5689c0c60aba242a9faf2fc49f9cf464c4beb",
+      "bytes": 8732,
+      "destination_sha256": "369365d41e3dc2e3785deaba22e5689c0c60aba242a9faf2fc49f9cf464c4beb"
+    },
+    {
+      "source": "work/zte/voice/emulate-mf283u-i2s.py",
+      "destination": "work/zte/voice/emulate-mf283u-i2s.py",
+      "source_sha256": "4afaf40e3cb81f511d11d431e6bd7cd27cd7ddee30e1cd1635d26e9a7a6f00ef",
+      "bytes": 8107,
+      "destination_sha256": "4afaf40e3cb81f511d11d431e6bd7cd27cd7ddee30e1cd1635d26e9a7a6f00ef"
+    },
+    {
+      "source": "work/zte/voice/emulate-mf283u-voice-start-audit.py",
+      "destination": "work/zte/voice/emulate-mf283u-voice-start-audit.py",
+      "source_sha256": "5e2994e04ab07190b7770e018c46b49684bd0deb443aa32e7d103a60d909a32f",
+      "bytes": 1963,
+      "destination_sha256": "5e2994e04ab07190b7770e018c46b49684bd0deb443aa32e7d103a60d909a32f"
+    },
+    {
+      "source": "work/zte/voice/extract-gsm-teak.py",
+      "destination": "work/zte/voice/extract-gsm-teak.py",
+      "source_sha256": "6366f401315837ddf7552484c4f885606cd641ff4f6dfab16d1f3f12d0e5e04a",
+      "bytes": 5893,
+      "destination_sha256": "6366f401315837ddf7552484c4f885606cd641ff4f6dfab16d1f3f12d0e5e04a"
+    },
+    {
+      "source": "work/zte/voice/emulate-mf283u-public-pcm.py",
+      "destination": "work/zte/voice/emulate-mf283u-public-pcm.py",
+      "source_sha256": "67382ea5732b916d1ab1d41cc74fed8b5137479520470a22678651f860c4a9df",
+      "bytes": 5545,
+      "destination_sha256": "67382ea5732b916d1ab1d41cc74fed8b5137479520470a22678651f860c4a9df"
+    },
+    {
+      "source": "agents.md",
+      "destination": "docs/WORKSPACE-HISTORY.md",
+      "source_sha256": "fb40ad5ba9cbd5bff216591c065564c884a5bda1b7fe8ce629dde906a805017a",
+      "bytes": 112093,
+      "transformations": [
+        "Recorded portable build / publication normalization; original source hash retained",
+        "publication privacy/path normalization"
+      ],
+      "destination_sha256": "2665bbc7c74dcc3bbd351a5d2c05e7904cd0285de92f2034fd06ddf258ab53e8"
+    },
+    {
+      "source": "firmware/mf79u/build/detach-control.c",
+      "destination": "firmware/mf79u/profiles/b03/detach-control.c",
+      "source_sha256": "47c3e38fd4ae459b451f11e7c44c5c94fb0d423d496d5d6f4934adb165a1c4f8",
+      "bytes": 738,
+      "destination_sha256": "47c3e38fd4ae459b451f11e7c44c5c94fb0d423d496d5d6f4934adb165a1c4f8"
+    },
+    {
+      "source": "firmware/mf79u/build/detach-native.c",
+      "destination": "firmware/mf79u/profiles/b03/detach-native.c",
+      "source_sha256": "a175ecf1156db83af039fac25bac2336adc58878b019ce105ff38b6327c5a171",
+      "bytes": 720,
+      "destination_sha256": "a175ecf1156db83af039fac25bac2336adc58878b019ce105ff38b6327c5a171"
+    },
+    {
+      "source": "firmware/mf79u/build/detach-led.c",
+      "destination": "firmware/mf79u/profiles/b03/detach-led.c",
+      "source_sha256": "e80e702687ee6961eafe096d1e2d6c03ce9bc55e77852f2a8b9ef6444930d639",
+      "bytes": 720,
+      "destination_sha256": "e80e702687ee6961eafe096d1e2d6c03ce9bc55e77852f2a8b9ef6444930d639"
+    },
+    {
+      "source": "firmware/mf79u/build/cs-full-voice-open-parameters.h",
+      "destination": "firmware/mf79u/profiles/b03/cs-full-voice-open-parameters.h",
+      "source_sha256": "363326d2c493213237466f2c9cc553dfd1588128f6addafa45f81a9b62fd5730",
+      "bytes": 1605,
+      "destination_sha256": "363326d2c493213237466f2c9cc553dfd1588128f6addafa45f81a9b62fd5730"
+    },
+    {
+      "source": "firmware/mf79u/build/cs-voice-driver-meta.S",
+      "destination": "firmware/mf79u/profiles/b03/cs-voice-driver-meta.S",
+      "source_sha256": "7b5ede96803f9b676d86137ce45d4941baa9be303c118fe0b8e1b0fe3bf8825e",
+      "bytes": 519,
+      "destination_sha256": "7b5ede96803f9b676d86137ce45d4941baa9be303c118fe0b8e1b0fe3bf8825e"
+    },
+    {
+      "source": "firmware/mf79u/build/cs-dsp-audio-parameters.h",
+      "destination": "firmware/mf79u/profiles/b03/cs-dsp-audio-parameters.h",
+      "source_sha256": "0386dab6dd3d254c1a8bf0458fd97e9d41de2c3d5bad043cb1e4978ee838ae8a",
+      "destination_sha256": "0386dab6dd3d254c1a8bf0458fd97e9d41de2c3d5bad043cb1e4978ee838ae8a",
+      "bytes": 1353
+    },
+    {
+      "source": "firmware/mf79u/build/exec-trace.c",
+      "destination": "firmware/mf79u/profiles/b03/historical/exec-trace.c",
+      "source_sha256": "7bcc6687135ef8956751c22f9bc87e47816a61c8c683cf0499a219248316c9f3",
+      "destination_sha256": "7bcc6687135ef8956751c22f9bc87e47816a61c8c683cf0499a219248316c9f3",
+      "bytes": 1126,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/cs-full-voice-both-ports-signal-parameters.h",
+      "destination": "firmware/mf79u/profiles/b03/historical/cs-full-voice-both-ports-signal-parameters.h",
+      "source_sha256": "0e03cda8698e7a15e7e9323ca7580ac12ca9e081c0c15ed3a74f7cf303e47dab",
+      "destination_sha256": "0e03cda8698e7a15e7e9323ca7580ac12ca9e081c0c15ed3a74f7cf303e47dab",
+      "bytes": 1597,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/start-control-wrapper-fixture.sh",
+      "destination": "firmware/mf79u/profiles/b03/historical/start-control-wrapper-fixture.sh",
+      "source_sha256": "e10b819a4c18a6f1b055e7f4e07c8431fc31ea0de101f0574008c9a113f58b01",
+      "destination_sha256": "e10b819a4c18a6f1b055e7f4e07c8431fc31ea0de101f0574008c9a113f58b01",
+      "bytes": 692,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/cs-public-pcm-parameters.h",
+      "destination": "firmware/mf79u/profiles/b03/historical/cs-public-pcm-parameters.h",
+      "source_sha256": "2100029c6a0f75449a01869bbe5f68cdebc1525f70ab058f2fa1cb60342a3e77",
+      "destination_sha256": "2100029c6a0f75449a01869bbe5f68cdebc1525f70ab058f2fa1cb60342a3e77",
+      "bytes": 1546,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/install-roaming-ui.py",
+      "destination": "firmware/mf79u/profiles/b03/historical/install-roaming-ui.py",
+      "source_sha256": "e8b46687cd7e13a0cb9003e3182698e62c2a8deef7736e2b1068b2f7f97db82f",
+      "destination_sha256": "e8b46687cd7e13a0cb9003e3182698e62c2a8deef7736e2b1068b2f7f97db82f",
+      "bytes": 3653,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/install-yellow-led.py",
+      "destination": "firmware/mf79u/profiles/b03/historical/install-yellow-led.py",
+      "source_sha256": "699cc36363f3b40c6b16377a47ecf8e0b535536386deaa049ce303807406d722",
+      "destination_sha256": "699cc36363f3b40c6b16377a47ecf8e0b535536386deaa049ce303807406d722",
+      "bytes": 4085,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/cs-i2s-parameters.h",
+      "destination": "firmware/mf79u/profiles/b03/historical/cs-i2s-parameters.h",
+      "source_sha256": "ed48d89454f5e01d5fd2ca4969d5adbcc4f6c50383773eb7d95a0b2fed257b9c",
+      "destination_sha256": "ed48d89454f5e01d5fd2ca4969d5adbcc4f6c50383773eb7d95a0b2fed257b9c",
+      "bytes": 1556,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/sms-status-reboot-recovery.py",
+      "destination": "firmware/mf79u/profiles/b03/historical/sms-status-reboot-recovery.py",
+      "source_sha256": "24fa7a8d7d0b8004978d5e51a8ed1cab589ffcd985504ae55b68d2aa590c472e",
+      "destination_sha256": "c63c0d825d6942d4ec58afee800c91d4f2d2628ec4d35089e4d94e4284310292",
+      "bytes": 2800,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles",
+        "Recorded portable build / publication normalization; original source hash retained"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/ims-sms-format-probe.c",
+      "destination": "firmware/mf79u/profiles/b03/historical/ims-sms-format-probe.c",
+      "source_sha256": "9c2f2db550716c15590fe937180107912e64dce7c55ee469253623f25370c332",
+      "destination_sha256": "9c2f2db550716c15590fe937180107912e64dce7c55ee469253623f25370c332",
+      "bytes": 706,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/cs-public-pcm-arm-slave-parameters.h",
+      "destination": "firmware/mf79u/profiles/b03/historical/cs-public-pcm-arm-slave-parameters.h",
+      "source_sha256": "4f7848e79b6a4b25910b70097ad884311ff67752153cff3f30bd4a3448e23b5e",
+      "destination_sha256": "4f7848e79b6a4b25910b70097ad884311ff67752153cff3f30bd4a3448e23b5e",
+      "bytes": 1588,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/install-gsm-sms-fallback.py",
+      "destination": "firmware/mf79u/profiles/b03/historical/install-gsm-sms-fallback.py",
+      "source_sha256": "edf3cfbbaaafda9f2e18d5b0eccd270473198bd94a59af521c88a180f591527d",
+      "destination_sha256": "edf3cfbbaaafda9f2e18d5b0eccd270473198bd94a59af521c88a180f591527d",
+      "bytes": 4364,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/cs-i2s-parameters.before-extra-cycle-test.h",
+      "destination": "firmware/mf79u/profiles/b03/historical/cs-i2s-parameters.before-extra-cycle-test.h",
+      "source_sha256": "ed48d89454f5e01d5fd2ca4969d5adbcc4f6c50383773eb7d95a0b2fed257b9c",
+      "destination_sha256": "ed48d89454f5e01d5fd2ca4969d5adbcc4f6c50383773eb7d95a0b2fed257b9c",
+      "bytes": 1556,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/cs-audio-mailbox-ack-parameters.h",
+      "destination": "firmware/mf79u/profiles/b03/historical/cs-audio-mailbox-ack-parameters.h",
+      "source_sha256": "ae0bf60343dca88cdadf10b679f9391bb30dba1b2d7a97257a5436d35ee6999f",
+      "destination_sha256": "ae0bf60343dca88cdadf10b679f9391bb30dba1b2d7a97257a5436d35ee6999f",
+      "bytes": 1538,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/cs-full-voice-rx-start-parameters.h",
+      "destination": "firmware/mf79u/profiles/b03/historical/cs-full-voice-rx-start-parameters.h",
+      "source_sha256": "0e03cda8698e7a15e7e9323ca7580ac12ca9e081c0c15ed3a74f7cf303e47dab",
+      "destination_sha256": "0e03cda8698e7a15e7e9323ca7580ac12ca9e081c0c15ed3a74f7cf303e47dab",
+      "bytes": 1597,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/cs-full-voice-both-ports-signal-before-tone-reload-parameters.h",
+      "destination": "firmware/mf79u/profiles/b03/historical/cs-full-voice-both-ports-signal-before-tone-reload-parameters.h",
+      "source_sha256": "0e03cda8698e7a15e7e9323ca7580ac12ca9e081c0c15ed3a74f7cf303e47dab",
+      "destination_sha256": "0e03cda8698e7a15e7e9323ca7580ac12ca9e081c0c15ed3a74f7cf303e47dab",
+      "bytes": 1597,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/cs-tone-frames.h",
+      "destination": "firmware/mf79u/profiles/b03/historical/cs-tone-frames.h",
+      "source_sha256": "533387c56e8b4cb6f1a3b25bfea1eb8007fcf72f6628827e1cd4b88a930a9aaa",
+      "destination_sha256": "533387c56e8b4cb6f1a3b25bfea1eb8007fcf72f6628827e1cd4b88a930a9aaa",
+      "bytes": 54505,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/cs-dsp-pcm-windows.h",
+      "destination": "firmware/mf79u/profiles/b03/historical/cs-dsp-pcm-windows.h",
+      "source_sha256": "ff6a2c767005389e24aa70574d919651f3cd471482be8792ad9f71a565d77b1e",
+      "destination_sha256": "ff6a2c767005389e24aa70574d919651f3cd471482be8792ad9f71a565d77b1e",
+      "bytes": 479,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/finish-gsm-sms-fallback.py",
+      "destination": "firmware/mf79u/profiles/b03/historical/finish-gsm-sms-fallback.py",
+      "source_sha256": "912bac2ea2f9de545ca027996a0a88cd328d97de4c7aa6b9173e42c836f0c8b9",
+      "destination_sha256": "912bac2ea2f9de545ca027996a0a88cd328d97de4c7aa6b9173e42c836f0c8b9",
+      "bytes": 3735,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/cs-full-voice-rx-slots-parameters.h",
+      "destination": "firmware/mf79u/profiles/b03/historical/cs-full-voice-rx-slots-parameters.h",
+      "source_sha256": "0e03cda8698e7a15e7e9323ca7580ac12ca9e081c0c15ed3a74f7cf303e47dab",
+      "destination_sha256": "0e03cda8698e7a15e7e9323ca7580ac12ca9e081c0c15ed3a74f7cf303e47dab",
+      "bytes": 1597,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/cs-full-voice-both-ports-parameters.h",
+      "destination": "firmware/mf79u/profiles/b03/historical/cs-full-voice-both-ports-parameters.h",
+      "source_sha256": "0e03cda8698e7a15e7e9323ca7580ac12ca9e081c0c15ed3a74f7cf303e47dab",
+      "destination_sha256": "0e03cda8698e7a15e7e9323ca7580ac12ca9e081c0c15ed3a74f7cf303e47dab",
+      "bytes": 1597,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/sms-ipc-watch.c",
+      "destination": "firmware/mf79u/profiles/b03/historical/sms-ipc-watch.c",
+      "source_sha256": "732f169385815f4957f519f0716f9f19dce02fc8f5309a3d4f621963f02199f2",
+      "destination_sha256": "732f169385815f4957f519f0716f9f19dce02fc8f5309a3d4f621963f02199f2",
+      "bytes": 1106,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/cs-i2s-extra-cycle1-parameters.h",
+      "destination": "firmware/mf79u/profiles/b03/historical/cs-i2s-extra-cycle1-parameters.h",
+      "source_sha256": "e48ae7a7bcd267f76ec4b0c535a59643791281642a684fbd0b5638eefade32d7",
+      "destination_sha256": "e48ae7a7bcd267f76ec4b0c535a59643791281642a684fbd0b5638eefade32d7",
+      "bytes": 1551,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/dhcp-probe.py",
+      "destination": "firmware/mf79u/profiles/b03/historical/dhcp-probe.py",
+      "source_sha256": "596de88916c366c53de6256097e1e2aeb12710ad41c7434df6e0087db6fded79",
+      "destination_sha256": "596de88916c366c53de6256097e1e2aeb12710ad41c7434df6e0087db6fded79",
+      "bytes": 1850,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/net-led-policy-native-installed.c",
+      "destination": "firmware/mf79u/profiles/b03/historical/net-led-policy-native-installed.c",
+      "source_sha256": "f281189fa7ec769fbb5831c1f2f318b33d92bf5f410a43eb38cc0f2b6d322251",
+      "destination_sha256": "f281189fa7ec769fbb5831c1f2f318b33d92bf5f410a43eb38cc0f2b6d322251",
+      "bytes": 6328,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/cs-full-voice-both-ports-signal-rx-only-parameters.h",
+      "destination": "firmware/mf79u/profiles/b03/historical/cs-full-voice-both-ports-signal-rx-only-parameters.h",
+      "source_sha256": "0e03cda8698e7a15e7e9323ca7580ac12ca9e081c0c15ed3a74f7cf303e47dab",
+      "destination_sha256": "0e03cda8698e7a15e7e9323ca7580ac12ca9e081c0c15ed3a74f7cf303e47dab",
+      "bytes": 1597,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/cs-i2s-extra-cycle0-parameters.h",
+      "destination": "firmware/mf79u/profiles/b03/historical/cs-i2s-extra-cycle0-parameters.h",
+      "source_sha256": "99738f74c0abec1c32ed36331a771a2b1be897230b17f9a9d0517801d522e498",
+      "destination_sha256": "99738f74c0abec1c32ed36331a771a2b1be897230b17f9a9d0517801d522e498",
+      "bytes": 1551,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    },
+    {
+      "source": "firmware/mf79u/build/dsp-load-watch-once.sh",
+      "destination": "firmware/mf79u/profiles/b03/historical/dsp-load-watch-once.sh",
+      "source_sha256": "dcc2d3480c1bfebca0c957cc0ac2960fd1af5f9326af713c93c822d879ea5ddb",
+      "destination_sha256": "dcc2d3480c1bfebca0c957cc0ac2960fd1af5f9326af713c93c822d879ea5ddb",
+      "bytes": 1185,
+      "transformations": [
+        "Archive historical first-party generated sources; production uses canonical profiles"
+      ]
+    }
+  ],
+  "excluded": [
+    "firmware/mf79u/build: generated binaries, historical receipts, captures, device backups (promoted sources listed above)",
+    "__pycache__, .DS_Store, compressed WebUI: regenerated",
+    "outputs/private, device configs, SMS, PBX credentials, recordings: private runtime data",
+    "work: downloaded/extracted third-party source and vendor firmware: make deps and make vendor-import",
+    {
+      "category": "publication article and illustration assets",
+      "reason": "Explicitly excluded by owner on 2026-10-11",
+      "files": [
+        "firmware/mf79u/HABR-SOURCES.md",
+        "firmware/mf79u/HABR.md",
+        "firmware/mf79u/article-assets/01-adb.png",
+        "firmware/mf79u/article-assets/02-at-status.png",
+        "firmware/mf79u/article-assets/03-voice-rejected.png",
+        "firmware/mf79u/article-assets/render-consoles.py"
+      ]
+    },
+    {
+      "category": "removed browser console",
+      "reason": "Retired feature; explicitly excluded by owner on 2026-10-11",
+      "files": [
+        "outputs/zte-shell/bridge.py",
+        "outputs/zte-shell/console.html",
+        "outputs/zte-shell/terminal.html",
+        "outputs/zte-shell/terminal.js"
+      ]
+    },
+    {
+      "category": "generated vendor startup script",
+      "reason": "Reconstructed from the checked on-device original by scripts/device.py and install-native.py; full vendor copy not required",
+      "files": [
+        "firmware/mf79u/profiles/b03/historical/zte_debug.custom.sh"
+      ]
+    }
+  ]
+}

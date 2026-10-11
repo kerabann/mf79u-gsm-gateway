@@ -1,0 +1,71 @@
+Продолжи работу с USB-модемом ZTE MF79U на Windows в виртуальной машине.
+
+Цель и разрешения:
+Пользователь разрешил обновить/изменить прошивку, чтобы заработали приём и чтение SMS через CLI/API для будущей автоматической пересылки. Работа ещё не завершена. Модем НЕ прошивали, режим USB НЕ переключали, разделы НЕ стирали. Перед записью нужно получить совместимый образ и сделать проверенную резервную копию как минимум rootfs и nvrofs. Не менять IMEI, TTL, APN или диапазоны ради сторонних задач. Не отправлять и не удалять SMS. Секреты не выводить в логи; пароль веб-панели пользователь введёт локально.
+
+Подтверждено на физическом модеме через его API на Mac:
+- USB VID:PID 19d2:1405, USB имя ZTE Mobile Boardband.
+- hardware_version: MF79U-HW1.0.
+- wa_inner_version: BD_XCBZHKMF79UV1.0.0B03.
+- web_version: WEB_XCBZHKMF79NV1.0.0B02.
+- cr_version: пусто.
+- modem_main_state: modem_init_complete.
+- После регистрации: оператор epic, сеть GSM/EDGE; PPP отключён.
+- Адрес веб-панели http://192.168.0.1, на Mac был интерфейс en10 с DHCP 192.168.0.169.
+- На Mac Wi-Fi подняли выше ZTE в порядке сетевых служб, чтобы модем не забирал основной маршрут.
+
+SMS-проблема:
+Пользователь отправил тестовое входящее SMS. После успешной авторизации API возвращал messages: [] как для mem_store=1 (память устройства), так и для mem_store=0 (SIM). sms_capacity_info: sms_nv_total=0, sms_sim_total=0, sms_nv_rev_total=-2, sms_nv_send_total=-1, sms_nv_draftbox_total=-2; у SIM аналогично. sms_unread_num и соответствующие dev/sim поля = -1. В js/config/config.js HAS_SMS=false, модельная конфигурация его не переопределяет. Это признаки недоступной SMS-подсистемы; пустой список не доказывает отсутствие сообщений.
+
+API, сверенный с JS этой прошивки:
+1. GET /goform/goform_get_cmd_process?isTest=false&cmd=LD
+2. POST /goform/goform_set_cmd_process, form-urlencoded:
+   isTest=false&goformId=LOGIN&password=<SHA256(SHA256(password)+LD)>
+   Оба SHA256 — HEX В ВЕРХНЕМ РЕГИСТРЕ. Сохранить cookie в текущей сессии. result=0 подтверждён, loginfo=ok.
+3. GET /goform/goform_get_cmd_process?isTest=false&cmd=sms_data_total&page=0&data_per_page=500&mem_store=1&tags=10&order_by=order+by+id+desc
+   Referer: http://192.168.0.1/index.html, X-Requested-With: XMLHttpRequest.
+   tags=10 — список, используемый штатным UI. mem_store=0 — SIM.
+   Содержимое SMS обычно hex UTF-16BE. Обработать кириллицу и surrogate pairs.
+4. GET с cmd=sms_capacity_info — проверка готовности хранилища.
+
+Исследование форума и источники:
+https://4pda.to/forum/index.php?showtopic=1013289&view=findpost&p=143358579
+Автор danya.postfactum выложил B03_MOD_adb_modimei.zip (14.21 МБ), rootfs для установки ТОЛЬКО поверх BD_XCBZHKMF79UV1.0.0B03. По описанию включены SMS в /usr/zte/zte_conf/config/config, изменена веб-панель, добавлен TTL=64; автор восстановил /bin/adbd и изменил обработку AT+MODIMEI. Образ НЕ получен и НЕ проверен. Нужно изучить содержимое и избежать лишних изменений, если доступен вариант только для SMS.
+Ссылка на архив:
+https://4pda.to/forum/dl/post/35470196/B03_MOD_adb_modimei.zip
+Для гостя браузер 4PDA вернул 404. Через curl была HTML-страница защиты, а НЕ ZIP. Нужен доступ пользователя к загрузке; не считать файл .download архивом.
+
+Инструмент автора для резервного копирования/записи durA:
+https://4pda.to/forum/index.php?showtopic=1013289&view=findpost&p=143341226
+Downloader.zip:
+https://4pda.to/forum/dl/post/35463763/Downloader.zip
+Downloader_1.3.9.3_patch.zip:
+https://4pda.to/forum/dl/post/35465351/Downloader_1.3.9.3_patch.zip
+Драйверы:
+https://4pda.to/forum/dl/post/35467487/ZXIC_Develop_Driver.exe
+https://4pda.to/forum/dl/post/35467488/ZTE_USB_Drivers_1.0.0.9.exe
+По описанию работает через DL-порты. Сначала проверить архитектуру Windows и поддержку драйверов (Windows ARM в VM не равна Windows x64 по поддержке kernel-драйверов). Убедиться в пробросе физического USB-устройства в VM.
+
+Автор описывает SET_DEVICE_MODE/debug_enable=2 с AD:
+GET cmd=wa_inner_version,cr_version,RD&multi_data=1
+AD=md5(md5(wa_inner_version+cr_version)+RD), затем POST goformId=SET_DEVICE_MODE, debug_enable=2, isTest=false, AD=<значение>.
+Возврат по AT-порту: AT+ZMODE=0.
+Это только прочитанная инструкция: на модеме НЕ выполняли. Сначала обеспечить инструменты, драйверы и путь восстановления; не оставлять устройство в DL/factory без возможности вернуть user mode.
+
+Совместимость MF79RU:
+https://4pda.to/forum/index.php?showtopic=1013289&view=findpost&p=117234735
+WEB_MF79RU_MOD — модифицированная ВЕБ-ПАНЕЛЬ. Автор проверил её на BD_MF79UV1.0.0B03 и BD_MF79UV1.0.0B05, но наша ветка XCBZHK в этом списке отсутствует. Это не доказательство совместимости полной RU-прошивки.
+https://4pda.to/forum/index.php?showtopic=1013289&view=findpost&p=138447005
+Есть сообщение владельца MF79U о неудачной записи BD_MF79RUV1.0.0B05_U18 и пропавшей веб-панели. Не заливать произвольную MF79RU прошивку по одному совпадению HW1.0.
+
+Текущие файлы:
+На Mac создан CLI zte-sms.py (передать отдельно). Работает на Python standard library, пароль запрашивается --login или берётся из --password-file/--password-stdin. Cookie только в памяти. При пустом списке и отрицательных SMS-счётчиках выдаёт ошибку, чтобы автоматизация не считала это пустым входящим списком.
+
+Первые действия на Windows:
+1. Проверить ОС/архитектуру, проброс USB и идентификаторы устройства.
+2. Проверить доступ к http://192.168.0.1 именно через модем и сохранить основной интернет VM другим интерфейсом.
+3. Получить архивы от пользователя/источника, проверить, что это настоящие архивы, исследовать содержимое.
+4. Установить подходящие драйверы и подготовить бэкап/восстановление.
+5. Снять бэкап разделов с размерами и контрольными суммами; хранить его локально, без публикации уникальных NV-данных.
+6. Записать только совместимое необходимое изменение, вернуть user mode, проверить сеть и SMS API.
+7. Успех: корректная SMS-вместимость/счётчики и реально полученное тестовое сообщение, читаемое через CLI. Не заявлять успех по одному запуску прошивальщика.

@@ -1,0 +1,7 @@
+pyelftools==0.33
+jefferson==0.4.8
+unicorn==2.1.4
+capstone==5.0.9
+paramiko==5.0.0
+Pillow==12.1.1
+audioop-lts==0.2.2; python_version >= '3.13'

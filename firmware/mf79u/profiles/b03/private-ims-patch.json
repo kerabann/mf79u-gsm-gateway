@@ -1,0 +1,41 @@
+{
+  "source_sha256": "3516bf3adfcfe97bbb029b1a89a1ada45b9b1bb578a08170d0141e15a96ab738",
+  "result_sha256": "e0a712e079afa2c97a8c16092e1ff7a96d63525b24f49ac07fa1d1511d89eed0",
+  "patches": [
+    {
+      "offset": 173140,
+      "old": "41f21e00",
+      "new": "47f21e00"
+    },
+    {
+      "offset": 173144,
+      "old": "41f20f01",
+      "new": "47f20f01"
+    },
+    {
+      "offset": 173314,
+      "old": "41f21e00",
+      "new": "47f21e00"
+    },
+    {
+      "offset": 11656,
+      "old": "08b5fff7",
+      "new": "00207047"
+    },
+    {
+      "offset": 237136,
+      "old": "014b1868",
+      "new": "00207047"
+    },
+    {
+      "offset": 237826,
+      "old": "0eb403b5",
+      "new": "00207047"
+    },
+    {
+      "offset": 237854,
+      "old": "0eb403b5",
+      "new": "00207047"
+    }
+  ]
+}

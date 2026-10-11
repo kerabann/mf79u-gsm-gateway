@@ -1,0 +1,40 @@
+--- a/src/common-session.c
++++ b/src/common-session.c
+@@ -646,6 +646,7 @@
+ }
+ 
+ const char* get_user_shell() {
++	if (IS_DROPBEAR_SERVER) return "/mnt/userdata/mf79u/tools/ssh-shell";
+ 	/* an empty shell should be interpreted as "/bin/sh" */
+ 	if (ses.authstate.pw_shell[0] == '\0') {
+ 		return "/bin/sh";
+@@ -664,6 +665,8 @@
+ 	if (ses.authstate.pw_passwd)
+ 		m_free(ses.authstate.pw_passwd);
+ 
++	/* MF79U has one existing UID-0 account; do not modify vendor passwd/shadow. */
++	if (IS_DROPBEAR_SERVER && strcmp(username, "admin") != 0) return;
+ 	pw = getpwnam(username);
+ 	if (!pw) {
+ 		return;
+@@ -692,7 +695,20 @@
+ 			/* android supposedly returns NULL */
+ 			passwd_crypt = "!!";
+ 		}
++		if (IS_DROPBEAR_SERVER) {
++			char hash[256]; struct stat st;
++			int fd = open("/mnt/userdata/mf79u/ssh.password", O_RDONLY | O_NOFOLLOW);
++			ssize_t n = -1;
++			if (fd >= 0 && fstat(fd, &st) == 0 && S_ISREG(st.st_mode) && st.st_uid == 0 && (st.st_mode & 077) == 0)
++				n = read(fd, hash, sizeof(hash)-1);
++			if (fd >= 0) close(fd);
++			if (n > 0) { hash[n] = 0; hash[strcspn(hash, "\r\n")] = 0; }
++			passwd_crypt = n > 0 && !strncmp(hash, "$6$", 3) && strlen(hash) >= 90 ? hash : "!!";
++			ses.authstate.pw_passwd = m_strdup(passwd_crypt);
++			m_burn(hash, sizeof(hash));
++		} else {
+ 		ses.authstate.pw_passwd = m_strdup(passwd_crypt);
++		}
+ 	}
+ }
+ 

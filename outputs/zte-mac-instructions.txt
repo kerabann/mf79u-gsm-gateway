@@ -1,0 +1,75 @@
+ZTE MF79U B03 durA: native macOS access
+
+Verified on this modem on 2026-10-06:
+- Direct libusb AT access: 19d2:1602 interface 0; 19d2:0581 interface 4.
+- Stock AT+SHELL works; stdout is redirected to /dev/ttyGS0.
+- Stock ADB works after enabling adb_enable/debug_enable and reconnecting USB.
+- Google platform-tools adb is included as ./adb (macOS arm64).
+- USB debug configuration 0581 includes ECM, diag, ADB, AT, LOG and storage.
+
+Run commands from the directory containing this file:
+
+  ./adb devices
+  ./adb forward tcp:18080 tcp:80
+  python3 zte-sms.py --url http://127.0.0.1:18080 --login --capacity
+
+The API tool prompts for the existing web UI password; it does not save it.
+Returned message content is decoded from UTF-16BE into the "text" field.
+The web interface may still hide its SMS menu; the API does not need that menu.
+If using ECM/Wi-Fi, use --url http://192.168.0.1 instead of the USB tunnel.
+Keep UTM/Windows stopped to avoid competing for USB.
+
+AT and shell:
+
+  python3 zte-mac.py at AT
+  python3 zte-mac.py sms-status
+  python3 zte-mac.py shell 'cat /proc/mtd'
+  python3 zte-mac.py pull /usr/zte/zte_conf/config/config config-backup.bin
+
+Pull uses 4 KiB chunks and verifies local/remote MD5 before publishing the file.
+Large direct AT+SHELL cat transfers lost data on this modem; do not use those
+for backups. Prefer adb pull for large files or partitions.
+sms-list returns raw PDU records and may mark messages as read.
+sms-prepare selects SIM storage and CMTI notifications; the modem's own SMS
+service normally configures reception, so do not run it alongside an API relay.
+
+Applied change:
+/usr/zte/zte_conf/config/config: only byte at offset 14796 changed 0x30 -> 0x31.
+This is record 5004, ASCII "0" -> "1". The B03 forum mod configuration differs
+from the original in exactly this one byte; no full modified rootfs was flashed.
+After reboot, zte_topsw_wms started and sms_capacity_info returned valid capacity
+100 (device) / 15 (SIM). Original config MD5: b6f0b88773b4e6d916cd0d44871679e6.
+Patched config MD5: cf3c31570ef56d01ca1407fee7b0834d.
+Live receive verification: after network registration, one incoming message
+appeared in sms.db and was returned by sms_data_total. The CLI decoded 31
+characters without a decode error; sms_nvused_total and sms_nv_rev_total were 1.
+
+Backups: zte-config-stock.bin and zte-backup/{rootfs.mtd5,nvrofs.mtd3,yaffs.mtd8}.bin.
+All three partition backups matched remote MD5. SHA256/size/MD5 are recorded in
+zte-backup/checksums.json. Partition dumps are logical MTD data without NAND OOB.
+
+Revert only the SMS configuration change using native ADB:
+
+  ./adb push zte-config-stock.bin /tmp/zte-config-stock.bin
+  ./adb shell 'mount -o remount,rw / && cp /tmp/zte-config-stock.bin /usr/zte/zte_conf/config/config && sync && md5sum /usr/zte/zte_conf/config/config && mount -o remount,ro /'
+  ./adb shell 'reboot'
+
+On this stock adbd, "adb reboot" did not actually reboot; use adb shell reboot.
+
+Sources:
+https://4pda.to/forum/index.php?showtopic=1013289&view=findpost&p=133350388
+https://4pda.to/forum/index.php?showtopic=1013289&st=8060
+https://developer.android.com/tools/releases/platform-tools
+
+Rebuild the native USB helper on this Mac (Homebrew libusb is installed):
+  clang -Wall -Wextra -Werror -I/opt/homebrew/include/libusb-1.0 zte-native-usb.c -L/opt/homebrew/lib -lusb-1.0 -o zte-native-usb
+
+SMS Web UI enabled 2026-10-06:
+Changed /usr/zte_web/web/js/config/config.js HAS_SMS:!1 -> HAS_SMS:!0.
+Added top-level #sms route (sms/smslist) to /usr/zte_web/web/js/config/ufi/MF79N/menu.js.
+Original and modified files: outputs/zte-ui-backup/.
+Both installed files verified against HTTP responses. SMS modules and templates return HTTP 200. Root remounted read-only after sync. No reboot performed. Browser rendering was not verified because in-app browser CDP timed out.
+Open http://192.168.0.1/index.html#sms or, with ADB forward active, http://127.0.0.1:18080/index.html#sms. Hard refresh to clear cached JS.
+Restore: adb push outputs/zte-ui-backup/config.js /tmp/ui-config-original.js; adb push outputs/zte-ui-backup/menu.js /tmp/ui-menu-original.js. Then adb shell command: mount -o remount,rw / && cp /tmp/ui-config-original.js /usr/zte_web/web/js/config/config.js && cp /tmp/ui-menu-original.js /usr/zte_web/web/js/config/ufi/MF79N/menu.js && sync; mount -o remount,ro /
+
+Home SMS button enabled: /usr/zte_web/web/tmpl/home.html, changed only SMS button binding visible:false to visible:true. Original outputs/zte-ui-backup/home.html; modified home-sms-enabled.html. Installed template verified via HTTP; icon HTTP 200.

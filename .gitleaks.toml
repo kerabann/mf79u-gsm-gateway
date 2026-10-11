@@ -1,0 +1,9 @@
+[extend]
+useDefault = true
+
+[allowlist]
+description = "A single non-secret emulation provenance dictionary definition"
+condition = "AND"
+regexTarget = "line"
+paths = ['work/zte/voice/emulate-mf283u-public-pcm\.py$']
+regexes = ['^configuration=\{k:report\[k\] for k in ']
