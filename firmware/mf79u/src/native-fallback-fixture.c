@@ -79,14 +79,21 @@ int main(int argc,char **argv){
  if(strstr(argv[0],"test-ims")) {
   int request=msgget(0x701e,IPC_CREAT|IPC_EXCL|0600),response=msgget(0x700f,0600);if(request<0 || response<0)return 3;
   dprintf(3,"OPERATOR WB/NB factory enabled result=1\n");
+  dprintf(3,"SOFTWARE media errno result=22\nTX_ESP protected SIP method CANCEL bytes=500\n");
+  dprintf(3,"SOFTWARE media errno result=22 PRIVATE_FIXTURE_PAYLOAD\nTX SIP method INVITE bytes=500 PRIVATE_FIXTURE_PAYLOAD\n");
   ims_send(response,0x150a,"\r\n+CVMOD: 3\r\n+ZIMSAMRW: 1\r\n");
-  int accepted=0,access_gate=0,stage=0;struct message m;
+  int accepted=0,access_gate=0,stage=0,resources=0;struct message m;
   int non3gpp=exists("/tmp/ims-non3gpp-gated");
   for(;;){
    if(exists("/tmp/ims-crash"))return 4;
    if(!non3gpp && !accepted && exists("/tmp/ims-accept")){ims_send(response,0x150c,"AT+ZIMSSTATE=1");accepted=1;}
    ssize_t n=msgrcv(request,&m,sizeof(m)-4,0,IPC_NOWAIT);
    if(n<0 && errno!=ENOMSG && errno!=EINTR)return 6;
+   if(n>=0 && m.cmd==0x150b && !strcmp((char *)m.payload,"\r\n+CGEV: ME ACT 5,6\r\n")) {
+    assert(non3gpp && accepted && stage==4 && access_gate==7 && !resources++);
+    assert(exists("/dev/mf79u/vowifi/address") && exists("/tmp/tunnel-permitted"));
+    FILE *f=fopen("/tmp/swu-resource-events","a");assert(f);fprintf(f,"%d\n",(int)getpid());fclose(f);
+   }
    if(non3gpp && n>=0 && m.cmd==0x150b) {
     if(!strncmp((char *)m.payload,"\r\n+CEREG: 1\r\n",13))access_gate|=1;
     if(!strncmp((char *)m.payload,"\r\n^MODE: 17,7\r\n",15))access_gate|=2;

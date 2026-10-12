@@ -8,6 +8,105 @@ The maintained delivery is the device-local userdata overlay. Full NAND/rootfs
 0.9 and SD 0.8 archives are historical and were not flashed or refreshed. Reset
 that preserves/restores a factory profile is designed, not implemented.
 
+## VoWiFi outgoing ringing restored, 2026-10-12
+
+Continuation: a narrow native-controller correction passed validation and was
+installed as MD5`62a9352296662a098986228670a2486b`. After authenticated SWu,
+successful IMS registration and codec/
+frontend readiness, it announces local voice resources to the owned B03 child
+through its existing private `+CGEV: ME ACT 5,6` handler. CID6 is only a private
+compatibility resource; no CP bearer, radio or media setting is changed.
+The indication occurs once per IMS generation and is reset by owned teardown.
+Exact private B03 code executed under Unicorn proves account isolation, matching
+deactivation, the6000ms timer branch and native UPDATE with local sendrecv while
+remote mandatory/unmet conditions remain intact. The ARM controller fixture
+proves tunnel/registration gating, reannouncement after recovery and no event
+on ordinary LTE. Full tests, native build, package/check and audit passed.
+The installer exceeded its120-second ready deadline. A later read-only check
+after the owner reported IMS recovery found a new boot, native1531/SIP1532,
+ready USB SWu/IMS and a registered Linphone client. Exact B03 scalar reads
+confirmed normal-account resources1 (previously0), emergency resources0 and
+preconditions still1. The resource event and ready state occurred at elapsed353
+after repeated ePDG startup failures. Installed native/private IMS/media/SIP
+hashes match the expected versions. Two subsequent calls were individually
+authorized. Both completed PRACK/UPDATE/200 and reached180; the first ended
+with403 while the owner reported the destination handset was not yet on and
+one Linphone ringback. The second rang the destination handset (owner
+confirmed), stayed pending until our UI hangup, then cleared CANCEL/200/487/ACK.
+It lasted22seconds, exceeding the stated20-second limit; this was disclosed.
+Same boot/PIDs, ready IMS/client and idle call legs were verified afterward.
+The original premature B03 QoS cancellation is resolved for outgoing ringing;
+answered audio is untested. Registration delay remains unresolved. All one-shot
+allowances are consumed. See
+[correction](../firmware/mf79u/LINPHONE-VOWIFI-TEST.md#swu-local-voice-resource-correction-2026-10-12).
+
+The owner later reported registration had completed and supplied a test
+destination. A fresh check on another boot found native1535/SIP1537 with ready
+USB IMS, selected `VOWIFI_SMS`, registered Linphone and no active call/guard.
+One authorized Linphone call reached the IMS backend and received operator
+SIP100/183, then487 before connection. Linphone received local401/100/487 and
+did not send CANCEL. The owner confirmed no ringing on either side. Both legs
+cleared and IMS remained ready, with the same boot and production PIDs.
+
+The installed media library passed separate physical synthetic AMR-NB,
+all9 AMR-WB modes and G.722 selftests. Unsupported CSTA/ZCSVOICESPT CP replies
+also occur in historical working/failed IMS paths and are not an established
+cause. The controller had discarded useful media-initialization and SIP
+request-method metadata. The narrowly allowlisted correction now retains
+scalar errors/methods while rejecting arbitrary traces, headers, identities
+and payloads; successful codec frames do not add stdout work. All tests,
+native build, package/check and audits passed, including sanitizer vectors and
+the actual ARM-controller fixture. Native MD5`59f85129c2f3fa27ba6bc03820ba9f67`
+is installed with settings, boot, IMS media/private engine, SIP and CS artifacts
+preserved. IMS became ready at elapsed20; Linphone was reopened and its binding
+restored. The owner authorized exactly one further call. It reached100/183,
+successfully initialized AMR and network PCM, sent PRACK and received200,
+then the B03 IMS process itself sent CANCEL. Network200/487 and local487
+followed; the call failed about8s after admission. No failed media ioctl,
+codec assertion or PCM preopen was observed. Both legs cleared with the same
+boot/native1328/SIP1329/CS1339 and ready IMS/client registration.
+
+Checksum-bound B03 analysis identifies a6000ms QoS timer after183 when
+preconditions are enabled and the account's dedicated EPS bearer is not ready.
+Its outgoing callback queries CS/redial capability and cancels the pending
+IMS call even when CS is unavailable. Read-only fixed scalar inspection found
+preconditions1, both bearer flags0, the matching timer callback and a retained
+deadline, with the timer inactive after clearing. This strongly supports the
+QoS/bearer wait as the cause; callback execution and the operator's negotiated
+SDP conditions were not directly captured. Post-clear call precondition fields
+had been reset and cannot reconstruct the failed negotiation. The owner
+confirmed earlier successful **VoWiFi over Wi-Fi/USB with a local SIM**;
+its earlier radio/profile and negotiated conditions were not instrumented.
+Do not reinterpret that baseline as a VoLTE or CS test, or infer a carrier ban.
+At that diagnostic stage only retention had changed; the later behavioral
+correction and its current verification state are described above.
+Temporary RAM/host probes were removed, and no further call is authorized.
+Details:
+[Linphone call](../firmware/mf79u/LINPHONE-VOWIFI-TEST.md#registered-outgoing-call-failure-2026-10-12).
+
+## Cold-boot VoWiFi registration delay, 2026-10-12
+
+A later read-only check on boot7866a5df… found native1542/SIP1544 in
+`VOWIFI_SMS` with USB selected, GSM SMS registered (CREG5), CS voice disabled
+and the Linphone client registered, but IMS/voice not ready. Registration is
+repeatedly failing: ePDG managers exited at native elapsed52/97/148, followed
+by two P-CSCF waits ending at320; another complete IMS cycle ended at619.
+Each P-CSCF consumes the60-second IMS deadline. Retry backoff has reached60s.
+The first healthy SWu bearer appeared before IMS initialization at188s;
+this cold boot does not reproduce the earlier19-second ready result below.
+
+Successful tunnel snapshots used ePDG31.173.34.209; later failed startup
+snapshots selected85.26.231.145. Preparation picks the first acceptable DNS
+IPv4 and does not retain a working ePDG peer. This is a measured association,
+not proof of why the other endpoint fails. With SWu ready, SIM/PIN and local
+bearer queries succeeded, but no SIP response or IMS AKA event was retained.
+Fixed scalar reads confirmed private mode17 and EPS gate1; the earlier
+`waiting_for_radio_service` symptom was absent. Exact ePDG startup/IMS timeout
+causes remain unresolved; quiet logging also cannot establish that no REGISTER
+packet was transmitted. No settings, firmware, radio mode, reboot, call or SMS
+submission was changed. Details and sanitized receipts:
+[registration delay](../firmware/mf79u/VOWIFI.md#cold-boot-registration-delay-2026-10-12).
+
 ## Incoming multipart SMS forwarding fix, 2026-10-12
 
 The user reported that long incoming GSM SMS were forwarded as fragments. B03

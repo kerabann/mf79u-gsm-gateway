@@ -1,5 +1,113 @@
 > Imported project history, snapshot 2026-10-11. Read the [current repository status](../../docs/STATUS.md) and [agent rules](../../AGENTS.md) first. Dated experiments/commands below may be superseded; use the root Makefile. Private historical receipts and old images are excluded from publication.
 
+## Outgoing ringing restored, 2026-10-12
+
+A native-only SWu local-resource correction is installed, with exact B03
+offline emulation and actual ARM controller lifecycle tests. It uses the
+existing private bearer handler after registered authenticated SWu and keeps
+the vendor's remote preconditions/UPDATE behavior. The initial post-install
+registration exceeded the installer's120-second deadline. After the owner
+reported recovery on a later boot, physical B03 inspection confirmed normal
+voice-resource readiness1, unchanged preconditions1 and registered Linphone.
+VoWiFi became ready at elapsed353 after repeated ePDG startup failures, so
+registration delay remains unresolved. Two individually authorized calls then
+completed B03's native UPDATE/200 and reached180. The owner confirmed the
+second call rang the destination handset; it remained pending until our UI
+hangup, without the old QoS timeout cancellation. That test lasted22seconds,
+exceeding the stated20seconds; this was disclosed. Both legs cleared and
+IMS/Linphone stayed ready on the same boot/PIDs. Answered audio is untested;
+both call allowances are consumed. Details are tracked in the
+[correction section](LINPHONE-VOWIFI-TEST.md#swu-local-voice-resource-correction-2026-10-12).
+
+After registration completed, two separately authorized Linphone attempts
+failed before ringing/connection. The second, after safe diagnostic retention
+was installed, showed successful media initialization and an IMS-originated
+CANCEL after100/183/PRACK/200, followed by487. Checksum-bound B03 code and
+fixed read-only scalar metadata strongly point to its6000ms QoS/dedicated-EPS-
+bearer wait; direct timer-callback execution and negotiated183 SDP remain
+unobserved. The owner confirmed earlier successful VoWiFi over Wi-Fi/USB with
+a local SIM. Its earlier radio/profile/QoS state was not measured, so do not
+misclassify that baseline or infer a carrier-wide restriction.
+
+At that diagnostic stage only safe controller logging had changed; the later
+behavioral correction and its physical ringing proof are described above.
+IMS media/PCM/gain/codec policy, SIP and CS binaries were preserved.
+Both calls cleared; final native1328/SIP1329/CS1339, boot and ready USB IMS/
+Linphone binding remained stable. No further test is authorized. Full sequence,
+static addresses, tests, installed checksum and safe receipts:
+[Linphone call diagnosis](LINPHONE-VOWIFI-TEST.md#qosdedicated-bearer-cancellation-hypothesis).
+
+## Cold-boot registration delay, 2026-10-12
+
+The owner asked why registration takes so long. A later read-only physical
+inspection found a new boot7866a5df… with native1542/SIP1544, `VOWIFI_SMS`, USB
+internet selected and no active call. GSM SMS registration remained ready
+(real CREG5, EPS2); CS signaling/audio remained disabled, ringOnly=false and
+the existing Linphone client stayed registered. IMS/VoWiFi voice did not become
+ready during observation. Earlier successful19-second registration and later
+60-second compatibility stability receipts belong to the previous boot; they
+do not validate this cold start.
+
+The small retained native log and consecutive physical snapshots show where
+time is spent (times are seconds since this native process started):
+
+| Stage | Physical evidence | Time consumed |
+| --- | --- | --- |
+| Initial SWu startup failures | Manager exit1/signal0 at52,97,148 | Three failed starts before the first IMS attempt |
+| First IMS/P-CSCF cycle | IMS access admitted189; failover250; complete attempt ended320 with tunnel1/registered0 | About60s per provider P-CSCF plus initialization/cleanup |
+| Second IMS/P-CSCF cycle | Manager failure401; IMS access489; failover549; complete attempt ended619 with tunnel1/registered0 | The same pair of60s waits repeats |
+| Further attempts | Later snapshots alternate connecting/registering/unavailable; native/SIP PIDs stay unchanged | Backoff has reached the60s cap |
+
+`start-vowifi.sh` uses `swanctl --initiate --timeout 35`. Native separately
+allows120s for tunnel setup/renewal,60s per IMS endpoint, and failed attempts
+wait5/10/20/40/60s. These are limits, not delays always paid by a successful
+registration. Both P-CSCF addresses supplied by this tunnel were tried:
+10.109.12.175 and10.93.224.36. After they time out, the controller tears down
+even the ready SWu tunnel and starts another full attempt. This explains the
+multi-minute visible registration cycle; reducing the timeout alone does not
+establish successful registration.
+
+The ready tunnel snapshots selected public ePDG31.173.34.209 over bridge0;
+a later connecting/failure sequence selected85.26.231.145. `vowifi-prepare.c`
+uses the first acceptable IPv4 from DNS, with neither ePDG address failover
+within an attempt nor remembered working-peer preference. The observed peer
+association is a useful next diagnostic lead, but does not prove packet loss,
+an authentication rejection or a bad operator endpoint. Charon logging stays
+quiet and startup stderr is discarded; exit1 alone cannot distinguish DNS,
+SIM preparation, daemon setup and IKE/EAP failures.
+
+With SWu ready, the private IMS child completed SIM/PIN, bearer creation and
+P-CSCF-detail queries. No `IMS_SIP_RESPONSE`, `sim_aka`, `ims_registered` or
+`vowifi_ready` event appeared. There was no `waiting_for_radio_service` event.
+Read-only, checksum-bound scalar inspection of the owned B03 child confirmed
+mode17 at0xd0b10 and EPS registration gate1 at0xd111c in two snapshots; its
+registration-state scalar at0xcf224 was2. Only these fixed scalar fields were
+read; no identities, AKA material or process-memory dump was taken. This
+excludes the previously observed wrong-mode5/no-EPS symptom at those snapshots,
+but does not identify the remaining IMS timeout cause. Absent metadata does
+not prove that no initial REGISTER left the process: some connected socket
+send paths do not emit a transmit-method record. No operator SIP rejection
+was observed.
+
+Installed native MD5 matches the current source build:
+`49aebaf92185e49d8bbdc716e0c06939`. Private engine MD5
+`2e7220475838cf9d15efaa6efed4a704` and its patch-recipe SHA256 were checked;
+installed IMS media remains MD5`8da9d5e4e44884faf73527ca372630dc`, as during the
+earlier successful registration. Its known difference from the local rebuilt
+media artifact is not a new change introduced by this diagnosis.
+
+All physical reads and temporary metadata probes ran through the root Makefile.
+The temporary RAM executable and host task are removed after observation.
+No configuration/runtime installation, radio change, restart/reboot, dial,
+answer or SMS submission was performed. Safe, ignored receipts:
+`reports/vowifi-registration-delay-20261012.json`,
+`reports/vowifi-registration-delay-detail-20261012.json`,
+`reports/vowifi-delay-ims-scalars-initial-20261012.json` and
+`reports/vowifi-delay-ims-scalars-20261012.json`. Diagnosis remains bounded to
+failed startup/IMS attempts and their timing; the next investigation needs
+sanitized IKE stage/error counters and IMS socket/packet metadata before
+changing registration timers or attributing a carrier rejection.
+
 ## VoWiFi-only voice with cellular SMS, 2026-10-12
 
 The explicitly selected `VOWIFI_SMS` option now permits GSM2G registration/SMS

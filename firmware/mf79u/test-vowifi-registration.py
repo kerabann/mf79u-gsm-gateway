@@ -18,7 +18,7 @@ subprocess.run(['arm-linux-gnueabi-gcc', *flags, '-DMF79U_IMS_TIMEOUT=5', '-DMF7
                 'firmware/mf79u/src/cp-pdp.c', 'firmware/mf79u/src/native-gateway.c',
                 'firmware/mf79u/src/net-led-policy.c', '-o', str(build / 'vowifi-registration-test')], check=True)
 for name in ('radio-lte', 'radio-search', 'cp-status-error', 'ims-accept', 'ims-crash', 'test-call',
-             'guard-test', 'cs-incoming', 'cs-force-incoming', 'cs-crash', 'charged-command', 'non3gpp-admitted', 'tunnel-permitted', 'gsm-sms-supported'):
+             'guard-test', 'cs-incoming', 'cs-force-incoming', 'cs-crash', 'charged-command', 'non3gpp-admitted', 'tunnel-permitted', 'gsm-sms-supported', 'swu-resource-events'):
     Path('/tmp/' + name).unlink(missing_ok=True)
 Path('/tmp/radio-search').touch()
 Path('/tmp/ims-non3gpp-gated').touch()
@@ -81,23 +81,35 @@ try:
     pid, sip = before['pid'], before['sipPid']
     time.sleep(1)
     assert not state()['imsReady'] and not Path('/tmp/non3gpp-admitted').exists()
+    assert not Path('/tmp/swu-resource-events').exists()
     Path('/tmp/tunnel-permitted').touch()
     ready = wait(lambda s: s.get('voiceReady') and s.get('imsReady'))
     assert ready['pid'] == pid and ready['sipPid'] == sip and ready['vowifiTunnelReady']
     assert ready['epsRegistration'] == 4 and ready['csRegistration'] == 4 and not ready['cellularRegistered']
     assert ready['imsAccess'] == 'WIFI' and ready['registrationState'] == 'ready' and ready['ringOnly']
     assert Path('/tmp/non3gpp-admitted').exists()
+    resources = Path('/tmp/swu-resource-events').read_text().splitlines()
+    assert len(resources) == 1
+    metadata = logpath.read_text()
+    assert 'IMS_MEDIA field=ioctl_errno value=22' in metadata
+    assert 'IMS_SIP_METHOD direction=TX method=CANCEL bytes=500' in metadata
+    assert 'PRIVATE_FIXTURE_PAYLOAD' not in metadata
+    assert 'event=vowifi_voice_resources_available' in metadata
     with open('/proc/' + str(sip) + '/fd/0', 'wb', buffering=0) as pipe:
         pipe.write(b'DIAL 1234567\nANSWER\n')
     time.sleep(.5)
     assert state()['callBackend'] == 'none' and not Path('/tmp/charged-command').exists()
+    assert Path('/tmp/swu-resource-events').read_text().splitlines() == resources
     Path('/tmp/tunnel-permitted').unlink()
     lost = wait(lambda s: not s.get('imsReady') and not s.get('vowifiTunnelReady'))
     assert lost['pid'] == pid and lost['sipPid'] == sip and not lost['voiceReady']
+    assert Path('/tmp/swu-resource-events').read_text().splitlines() == resources
     Path('/tmp/cp-status-error').touch()
     Path('/tmp/tunnel-permitted').touch()
     recovered = wait(lambda s: s.get('imsReady') and s.get('voiceReady'))
     assert recovered['pid'] == pid and recovered['sipPid'] == sip and not recovered['cellularRegistered']
+    recovered_resources = Path('/tmp/swu-resource-events').read_text().splitlines()
+    assert len(recovered_resources) == 2 and len(set(recovered_resources)) == 2
     assert 'event=cereg_field_missing' in logpath.read_text()
     Path('/tmp/cp-status-error').unlink()
     config.write_text('role=SERVER\nvoice_mode=VOWIFI_SMS\nvowifi_uplink=USB\n')
@@ -125,6 +137,15 @@ try:
     (base / 'native-cs-only').unlink()
     Path('/tmp/usb-carrier').write_text('1\n')
     wait(lambda s: s.get('voiceReady') and s.get('cellularSmsRadioReady'))
+    # The ordinary LTE engine must never receive the synthetic SWu resource.
+    resources = Path('/tmp/swu-resource-events').read_text().splitlines()
+    Path('/tmp/ims-non3gpp-gated').unlink()
+    Path('/tmp/radio-lte').touch()
+    Path('/tmp/ims-accept').touch()
+    config.write_text('role=SERVER\nvoice_mode=VOLTE\nvowifi_uplink=USB\n')
+    lte = wait(lambda s: s.get('effectiveVoiceMode') == 'VOLTE' and s.get('imsAccess') == 'LTE' and s.get('voiceReady'))
+    assert lte['sipPid'] == sip and not lte['vowifiTunnelReady']
+    assert Path('/tmp/swu-resource-events').read_text().splitlines() == resources
     proc.terminate()
     assert proc.wait(timeout=15) == 0
     Path('reports').mkdir(exist_ok=True)
@@ -134,6 +155,10 @@ try:
         'privateImsPacketServiceQueriesAdapted': True, 'tunnelLossRevokesReadiness': True,
         'cellularQueryFailureDoesNotBlockRecovery': True, 'sipPidPreserved': True,
         'ringOnlyBlocksDialAndAnswer': True, 'gsmSmsRadioRegisteredWithVoiceFlagsOff': True,
+        'mediaSetupErrorsRetained': True, 'sipProtectedMethodMetadataRetained': True,
+        'arbitraryImsTraceDiscarded': True,
+        'swuResourcesAfterRegistrationOnly': True, 'swuResourcesOncePerImsGeneration': True,
+        'swuResourcesReannouncedAfterTunnelRecovery': True, 'lteReceivesNoSwuResourceEvent': True,
         'hybridFreshCellularTelemetry': True, 'hybridTunnelLossNeverFallsBack': True,
         'hybridUnexpectedCsCallRejected': True, 'csOnlyMarkerCannotOverrideVoWiFiOnly': True}, indent=2) + '\n')
     print('PASS actual ARM controller: SWu-gated IMS with no cellular service; private queries, tunnel loss/recovery, CP failure, stable SIP and ring-only')

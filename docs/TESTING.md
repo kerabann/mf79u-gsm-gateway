@@ -16,12 +16,20 @@ rewriting the preserved migration receipt. `make package-check` rejects duplicat
 unsafe members, unexpected payloads, checksum mismatches, missing runtime files
 or a changed external PCM contract.
 
-Native tests run 26 C fixtures (23 with ASan/UBSan, three under ARM32 qemu)
+Native tests run 28 C fixtures (25 with ASan/UBSan, three under ARM32 qemu)
 and five Python regressions. The new actual ARM VoWiFi controller fixture gates
 private IMS on an authenticated simulated tunnel with no cellular service
 and requires B03 private mode17 (SYSINFO service5 is not that enum);
 it covers private CEREG/CGREG queries, tunnel loss/recovery, CP query failure,
-preserved SIP and roaming ring-only rejection. The kernel relocation test generates synthetic ELF
+preserved SIP and roaming ring-only rejection. It also verifies once-per-engine
+SWu voice-resource indication after registration, reannouncement after recovery
+and absence of that indication on ordinary LTE. Safe IMS metadata tests reject
+arbitrary suffixes and suppress successful codec-frame logging. An additional
+private-input test, `make task TASK=firmware/mf79u/test-vowifi-qos-b03.py`, executes
+checksum-verified B03 bearer/QoS code under Unicorn without a modem/network;
+it is separate from public CI and cannot establish a real call result. See
+[VoWiFi call correction](../firmware/mf79u/LINPHONE-VOWIFI-TEST.md#swu-local-voice-resource-correction-2026-10-12).
+The kernel relocation test generates synthetic ELF
 modules and export tables rather than requiring quarantined historical binaries.
 Hardware-only PCM/LED/portless-adapter programs and dynamic vendor selftests
 require real B03 services and are outside isolated CI. SIP codec/network tests

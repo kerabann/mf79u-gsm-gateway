@@ -45,6 +45,7 @@ static int clearing_requested,loss_notified;
 static int registered, active_call, codec_factory, frontend, wb_advertised;
 static int voice_ready, eps_state=-1, cs_state=-1;
 static int vowifi_had_tunnel, vowifi_registration_rejected;
+static int vowifi_resources_announced;
 static unsigned long vowifi_ims_generation;
 static struct mf79u_cs_status cs_status;
 static char last_registration[128];
@@ -464,6 +465,7 @@ static void cs_line(const char *line) {
 }
 struct lines {char data[2048];size_t used;};
 static struct lines sip_lines, ims_lines,cs_lines;
+#include "ims-safe-metadata.h"
 static int read_lines(int fd,struct lines *buffer,int metadata) {
     char data[512];ssize_t n=read(fd,data,sizeof(data));
     if(n<0 && (errno==EAGAIN || errno==EINTR))return 0;
@@ -474,6 +476,12 @@ static int read_lines(int fd,struct lines *buffer,int metadata) {
             if(metadata==2)cs_line(buffer->data);
             else if(metadata==1) {
                 if(!strcmp(buffer->data,"OPERATOR WB/NB factory enabled result=1"))codec_factory=1;
+                struct mf79u_ims_scalar scalar;
+                if(mf79u_ims_scalar(buffer->data,&scalar))
+                    printf("IMS_MEDIA field=%s value=%ld\n",scalar.tag,scalar.value);
+                struct mf79u_ims_method method;
+                if(mf79u_ims_method(buffer->data,&method))
+                    printf("IMS_SIP_METHOD direction=%s method=%s bytes=%u\n",method.direction,method.method,method.bytes);
                 int capability;
                 if(sscanf(buffer->data,"SMS registration capability result=%d",&capability)==1 && (capability==0 || capability==1))
                     printf("SMS_IMS_CAPABILITY advertised=%d\n",capability);
@@ -603,6 +611,22 @@ static int network_status(void) {
     }
     return 0;
 }
+static int vowifi_voice_resources(void) {
+    if(!ims_wifi || ims<1 || request<0 || !registered || !frontend ||
+       !wb_advertised || !codec_factory || !vowifi_tunnel_ready())return -1;
+    if(vowifi_resources_announced)return 0;
+    /* IR.51 local resources are available over the authenticated SWu bearer.
+     * B03 exposes this through its existing private bearer indication. CID5
+     * is our IMS context; CID6 is an internal compatibility resource only.
+     * Never send this to CP or claim a real cellular dedicated EPS bearer.
+     * B03 retains remote preconditions and sends its own SDP UPDATE after
+     * PRACK; no timer disabling, SDP rewriting or media change is needed. */
+    const char *ready="\r\n+CGEV: ME ACT 5,6\r\n";
+    if(send_ims(0x150b,ready,strlen(ready),1) || pump(100) ||
+       !registered || !vowifi_tunnel_ready())return -1;
+    vowifi_resources_announced=1;event("vowifi_voice_resources_available");
+    return 0;
+}
 static pid_t spawn_ims(const char *binary,const char *library) {
     int pipefd[2];if(pipe(pipefd))return -1;
     pid_t pid=fork();
@@ -687,7 +711,7 @@ static void stop_cs_runtime(void) {
 static int stop_ims_runtime(void) {
     int had_request=request>=0;
     sms_reset();
-    voice_ready=registered=vowifi_registration_rejected=0;reconcile_voice();
+    voice_ready=registered=vowifi_registration_rejected=vowifi_resources_announced=0;reconcile_voice();
     if(request>=0 && ims>0) {
         if(voice.owner==MF79U_VOICE_IMS){query_ims("ATH");query_ims("AT+CHUP");}
         query_ims("AT+CVMOD=0");
@@ -887,7 +911,11 @@ int main(int argc,char **argv) {
                 vowifi_had_tunnel=1;
                 if(ims<0 && monotonic()>=vowifi_retry){registration_phase="registering_vowifi";if(start_ims_runtime(argv[1],argv[2])){if(stop_ims_runtime())goto done;vowifi_deadline=0;}deadline=monotonic()+MF79U_IMS_TIMEOUT;}
                 if(ims>0 && registered && !voice_ready){
-                    if(!query_ims("AT+CVMOD?") && !pump(1500) && !query_ims("AT+ZIMSAMRW?") && !pump(1000) && frontend && wb_advertised){voice_ready=1;vowifi_failures=0;vowifi_retry=0;registration_phase="ready";fallback_reason="";vowifi_pcscf_remember();event("vowifi_ready");}
+                    if(!query_ims("AT+CVMOD?") && !pump(1500) && !query_ims("AT+ZIMSAMRW?") && !pump(1000) &&
+                       frontend && wb_advertised && !vowifi_voice_resources()){
+                        voice_ready=1;vowifi_failures=0;vowifi_retry=0;registration_phase="ready";fallback_reason="";
+                        vowifi_pcscf_remember();event("vowifi_ready");
+                    }
                 }
                 if(voice_ready){reconcile_voice();publish("ready");continue;}
                 if(ims>0 && !vowifi_registration_rejected && monotonic()<deadline){publish("registering");continue;}
