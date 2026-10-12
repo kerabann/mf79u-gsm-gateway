@@ -8,6 +8,23 @@ The maintained delivery is the device-local userdata overlay. Full NAND/rootfs
 0.9 and SD 0.8 archives are historical and were not flashed or refreshed. Reset
 that preserves/restores a factory profile is designed, not implemented.
 
+## GitHub Actions ARM fixture launch repair, 2026-10-12
+
+The [workflow for `c8d2768`](https://github.com/kerabann/mf79u-gsm-gateway/actions/runs/38250573566)
+built the firmware and passed Go/JS/native policy tests, then failed in the
+VoWiFi controller fixture with `Exec format error` while starting its ARM CP
+helper. Local Docker ARM emulation had masked a dependency on host binfmt.
+The fixture now starts CP/controller through explicit `qemu-arm` and supplies
+IMS/SIP/CS shell launchers that also invoke qemu, preserving role dispatch with
+`-0`. Production source, device runtime and the workflow's test coverage are
+unchanged. `make test-native` and complete `make ci` passed locally: all 28 native
+tests/five Python regressions, Go/JS and ARM SIP/RTP fixtures, workflow guards,
+the 28-file package/checksums/PCM contract and publication/documentation audits.
+Local output is `reports/ci-repair-validation.log`. The same
+[Firmware workflow](https://github.com/kerabann/mf79u-gsm-gateway/actions/workflows/firmware.yml)
+provides fresh Ubuntu 24.04 x86_64 validation after push; its sanitized receipt
+is kept under ignored `reports/ci-repair-github.json`. See [testing](TESTING.md).
+
 ## Public repository presentation, 2026-10-12
 
 The README now introduces capabilities, SIP arrangements, voice/SMS policies,

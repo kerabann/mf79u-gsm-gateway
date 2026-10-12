@@ -1,18 +1,28 @@
 """Actual ARM controller: authenticated SWu admits IMS without cellular service."""
 import json
+import shlex
+import shutil
 import subprocess
 import time
 from pathlib import Path
 
 if not Path('/tmp/MF79U_ISOLATED_FIXTURE').exists():
     raise SystemExit('Requires disposable Linux fixture; never run on a modem')
+qemu = shutil.which('qemu-arm')
+if not qemu:
+    raise SystemExit('Requires qemu-arm from the repository build container')
 build = Path('firmware/mf79u/build').resolve()
 flags = ['-Os', '-Wall', '-Wextra', '-Werror', '-static', '-march=armv7-a', '-mfloat-abi=soft']
 subprocess.run(['arm-linux-gnueabi-gcc', *flags, 'firmware/mf79u/src/native-fallback-fixture.c',
                 '-o', str(build / 'native-fallback-fixture')], check=True)
 for name in ('test-ims', 'test-sip', 'test-cs'):
-    (build / name).unlink(missing_ok=True)
-    (build / name).symlink_to('native-fallback-fixture')
+    wrapper = build / name
+    wrapper.unlink(missing_ok=True)
+    # The ARM controller execs these children itself. Host shell wrappers avoid
+    # binfmt_misc dependence; -0 preserves the fixture's argv[0] role dispatch.
+    wrapper.write_text('#!/bin/sh\nexec ' + shlex.quote(qemu) + ' -0 "$0" ' +
+                       shlex.quote(str(build / 'native-fallback-fixture')) + ' "$@"\n')
+    wrapper.chmod(0o755)
 subprocess.run(['arm-linux-gnueabi-gcc', *flags, '-DMF79U_IMS_TIMEOUT=5', '-DMF79U_RADIO_INTERVAL=1',
                 '-DMF79U_USB_CARRIER_FILE="/tmp/usb-carrier"', 'firmware/mf79u/src/cp-ipc.c',
                 'firmware/mf79u/src/cp-pdp.c', 'firmware/mf79u/src/native-gateway.c',
@@ -51,11 +61,11 @@ done
 ''')
 config = Path('/tmp/vowifi-registration.ini')
 config.write_text('role=SERVER\nvoice_mode=VOWIFI\nvowifi_uplink=USB\n')
-cp = subprocess.Popen([str(build / 'native-fallback-fixture'), 'cp'], stdout=subprocess.PIPE, text=True)
+cp = subprocess.Popen([qemu, str(build / 'native-fallback-fixture'), 'cp'], stdout=subprocess.PIPE, text=True)
 assert cp.stdout.readline().strip() == 'FIXTURE_CP_READY'
 logpath = Path('/tmp/vowifi-registration.log')
 log = logpath.open('w')
-proc = subprocess.Popen([str(build / 'vowifi-registration-test'), str(build / 'test-ims'),
+proc = subprocess.Popen([qemu, str(build / 'vowifi-registration-test'), str(build / 'test-ims'),
                          '/dev/null', str(build / 'test-sip'), str(config), str(build / 'test-cs')],
                         stdout=log, stderr=subprocess.STDOUT)
 
@@ -150,7 +160,8 @@ try:
     assert proc.wait(timeout=15) == 0
     Path('reports').mkdir(exist_ok=True)
     Path('reports/vowifi-registration-fixture.json').write_text(json.dumps({
-        'passed': True, 'physicalDeviceAccess': False, 'authenticatedTunnelRequired': True,
+        'passed': True, 'physicalDeviceAccess': False, 'explicitQemuArm': True,
+        'emulatedChildRoles': ['IMS', 'SIP', 'CS'], 'authenticatedTunnelRequired': True,
         'noCellularService': True, 'realCellularStatusPreserved': True,
         'privateImsPacketServiceQueriesAdapted': True, 'tunnelLossRevokesReadiness': True,
         'cellularQueryFailureDoesNotBlockRecovery': True, 'sipPidPreserved': True,

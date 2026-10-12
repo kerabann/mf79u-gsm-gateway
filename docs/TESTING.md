@@ -19,8 +19,11 @@ or a changed external PCM contract.
 Native tests run 28 C fixtures (25 with ASan/UBSan, three under ARM32 qemu)
 and five Python regressions. The new actual ARM VoWiFi controller fixture gates
 private IMS on an authenticated simulated tunnel with no cellular service
-and requires B03 private mode17 (SYSINFO service5 is not that enum);
-it covers private CEREG/CGREG queries, tunnel loss/recovery, CP query failure,
+and requires B03 private mode17 (SYSINFO service5 is not that enum).
+Its CP/controller execute through explicit `qemu-arm`; IMS/SIP/CS child wrappers
+also invoke qemu and retain their role's `argv[0]`. No host `binfmt_misc`
+registration is required, including on the GitHub x86_64 runner. The fixture
+covers private CEREG/CGREG queries, tunnel loss/recovery, CP query failure,
 preserved SIP and roaming ring-only rejection. It also verifies once-per-engine
 SWu voice-resource indication after registration, reannouncement after recovery
 and absence of that indication on ordinary LTE. Safe IMS metadata tests reject
