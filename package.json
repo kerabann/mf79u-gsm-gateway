@@ -1,0 +1,8 @@
+{
+  "name": "mf79u-gateway-docs",
+  "private": true,
+  "description": "Optional browser tooling for the public UI gallery",
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

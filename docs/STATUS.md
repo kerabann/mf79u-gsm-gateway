@@ -8,6 +8,20 @@ The maintained delivery is the device-local userdata overlay. Full NAND/rootfs
 0.9 and SD 0.8 archives are historical and were not flashed or refreshed. Reset
 that preserves/restores a factory profile is designed, not implemented.
 
+## Public repository presentation, 2026-10-12
+
+The README now introduces capabilities, SIP arrangements, voice/SMS policies,
+build/install entry points and current verification limits. A public gallery
+contains 22 full-page screenshots of sign-in, all eight tabs and trunk/Client
+variants at desktop/mobile sizes, plus a labeled overview. Two editable SVG
+diagrams explain connections and routing policy; the documentation index and
+contributing guide provide a clear reader/developer entry point.
+Screenshots use actual source assets with synthetic data and no device access.
+All 30 authenticated views passed 1280/390/320px overflow/JS/password checks.
+Firmware code and installed runtime are unchanged. Regeneration uses the root
+Makefile's optional `docs-deps` / `docs-assets` targets. Details and validation:
+[publication presentation](PUBLICATION.md), [UI gallery](UI.md).
+
 ## VoWiFi outgoing ringing restored, 2026-10-12
 
 Continuation: a narrow native-controller correction passed validation and was

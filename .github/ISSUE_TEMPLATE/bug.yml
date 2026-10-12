@@ -1,0 +1,35 @@
+name: Bug report
+description: Report a reproducible firmware, UI or build problem.
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Read the current status and contributing guide first. Include sanitized facts only;
+        omit credentials, device/SIM identities, phone numbers, SMS and private dumps.
+  - type: input
+    id: revision
+    attributes:
+      label: Source revision
+      description: Commit SHA or branch used for the build.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Host OS, build tools, browser/width or confirmed MF79U B03 compatibility. Distinguish fixtures from hardware.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps, expected result and actual result
+      description: Include the relevant Makefile command or UI path.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized evidence
+      description: Error classification, test result or public demo screenshot; no private runtime data.

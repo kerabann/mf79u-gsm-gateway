@@ -1,6 +1,18 @@
 # Documentation index
 
-Updated 2026-10-11. Current entry points appear first; original topic history is retained below.
+Updated 2026-10-12. Current entry points appear first; original topic history is retained below.
+
+## Start here
+
+| Goal | Guide |
+| --- | --- |
+| Understand the project | [Project overview](../README.md), [feature/evidence matrix](FEATURES.md) |
+| Explore the interface | [Desktop/mobile UI gallery](UI.md) |
+| Understand the data path | [Architecture and policy diagrams](ARCHITECTURE.md) |
+| Build or deploy | [Build](BUILD.md), [installation/recovery](INSTALL.md) |
+| Check what is actually verified | [Current status](STATUS.md), [UI audit](UI-E2E-20261011.md) |
+| Develop a change | [Contributing](../CONTRIBUTING.md), [testing](TESTING.md), [agent instructions](../AGENTS.md) |
+| Review publication assets | [Presentation and validation record](PUBLICATION.md) |
 
 ## Current repository workflow
 
@@ -13,6 +25,8 @@ Updated 2026-10-11. Current entry points appear first; original topic history is
 - [WEBHOOKS](WEBHOOKS.md)
 - [MIGRATION](MIGRATION.md)
 - [THIRD-PARTY](THIRD-PARTY.md)
+- [UI gallery](UI.md)
+- [Publication presentation](PUBLICATION.md)
 - [Agent instructions](../AGENTS.md)
 - [Complete prior workspace context](WORKSPACE-HISTORY.md)
 

@@ -23,7 +23,12 @@ export ADB HOST_IP HTTP_PORT TASK ARGS VENDOR_ROOT KERNEL PACKAGE REBOOT BACKUP 
 export ANDROID_SERIAL := $(SERIAL)
 export GOTOOLCHAIN := go1.25.12
 export PATH := $(ROOT)/.venv/bin:$(PATH)
-.PHONY: fetch-check clean-checkout workflow-check migration-coverage test-workflow build-host-tools usb-at
+.PHONY: fetch-check clean-checkout workflow-check migration-coverage test-workflow build-host-tools usb-at docs-assets docs-deps
+docs-deps:
+	@cd "$(ROOT)" && npm ci --ignore-scripts
+	@cd "$(ROOT)" && node node_modules/playwright/cli.js install chromium
+docs-assets:
+	@cd "$(ROOT)" && $(PYTHON) scripts/docs-assets.py
 build-host-tools:
 	@cd "$(ROOT)" && $(PYTHON) scripts/host-tool.py
 usb-at: build-host-tools
@@ -37,6 +42,8 @@ clean-checkout:
 .PHONY: help bootstrap deps toolchain sdk build build-control build-native build-sip build-ims build-cs build-vowifi build-system build-adb build-helpers test test-go test-js test-native test-sip lint audit secrets verify-migration package package-check vendor-import vendor-check device-status verify-device install install-plan restore task tasks clean ci
 
 help:
+	@printf '%s\n' 'make docs-deps       Install optional locked Playwright/Chromium tooling'
+	@printf '%s\n' 'make docs-assets     Regenerate public UI screenshots (Playwright + Chromium)'
 	@printf '%s\n' 'make bootstrap       Python environment' 'make build           All firmware components (Docker + Go + Node)' 'make test            Offline tests; no modem or PBX access' 'make ci              Full build, isolated tests and package audit' 'make package         Complete checked overlay + on-device B03 patch recipes' 'make install-plan    Read-only compatibility/idle/checksum/space check' 'make install         Install/update complete overlay; SERIAL=... HOST_IP=...' 'make verify-device   Read-only installed-artifact/runtime verification' 'make restore         Restore the local backup; BACKUP=...' 'make vendor-import   Optional private historical inputs: VENDOR_ROOT=... KERNEL=...' 'make audit           Migration coverage, documentation and secret checks' 'make task TASK=name ARGS="..."   Historical tools through this Makefile' 'make tasks           List preserved tools'
 
 bootstrap:

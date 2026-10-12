@@ -19,6 +19,11 @@ and source files, including `src/dropbear-mf79u.patch`.
 | ARM libgcc/libc and GMP | Debian Bookworm packages | Package copyright files/licenses |
 | Go Daddy G2 public root certificate | SHA256 `45140b3247eb9cc8c5b4f0d7b53091f73292089e6e5a63e2749dd3aca9198eda` | [Official public CA repository](https://certs.godaddy.com/repository); embedded for Telegram TLS |
 
+Optional documentation tooling is locked in [package-lock.json](../package-lock.json).
+Playwright/Playwright Core 1.62.1 use Apache 2.0; the optional macOS fsevents
+dependency uses MIT. Browser binaries installed by `make docs-deps` retain their
+upstream notices and stay outside Git and the firmware package.
+
 This is an inventory of the source/build dependency licensing, not a new license
 grant for the project's original code. The owner has not selected the project's
 publication license. Preserve all upstream notices and supply the required

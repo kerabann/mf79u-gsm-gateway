@@ -23,7 +23,7 @@ from tests run during this migration and from a fresh live device test.
 | SIP MESSAGE/SMS confirmation/inbox delivery | `sip-sms.h`, Control SMS Unix IPC/job worker | [SMS-SIP](../firmware/mf79u/SMS-SIP.md); waits for confirmed submission, unconfirmed failure no auto resend; delivery ACK retained |
 | Telegram incoming SMS webhook | Control `sms_telegram.go`, bound DNS/HTTPS + private queue | [WEBHOOKS](WEBHOOKS.md); optional delete after Telegram confirmation with durable handoff to connected SIP; source/fixture/device boundaries below |
 | REST/login/CSRF/sessions/config | `control/*.go` embedded in Control | auth/error/recovery/config fixtures imported |
-| Eight-tab English WebUI | `control/web/` + System JS | Status, Mobile, SIP, Messages, Webhooks, Wi-Fi, Network, System; framed blocks, scoped Save, no CDN |
+| Eight-tab English WebUI | `control/web/` + System JS | Status, Mobile, SIP, Messages, Webhooks, Wi-Fi, Network, System; framed blocks, scoped Save, no CDN; [public desktop/mobile gallery](UI.md) uses synthetic data |
 | Hotspot / Client Wi-Fi scan/DHCP | `control/wifi*.go`, web app | [WIFI](../firmware/mf79u/WIFI.md); WPA2-Personal/Open, hidden/enabled/SSID/password |
 | USB/LAN/static network/DHCP | `control/network.go`, network helpers | [NETWORK](../firmware/mf79u/NETWORK.md); shared USB/hotspot LAN, vendor DHCP retained |
 | Ordinary LTE OUTPUT/FORWARD block | Control owned IPv4/IPv6 chains | IMS `wan5` remains allowed; external SIP needs viable USB/Wi-Fi route |

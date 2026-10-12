@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="660" viewBox="0 0 1200 660" role="img" aria-labelledby="title desc">
+  <title id="title">MF79U voice preferences and SMS transport policies</title>
+  <desc id="desc">Auto prefers selected VoWiFi then supports VoLTE and GSM CS recovery. VoLTE-only and CS-only select one cellular voice path. Both VoWiFi-only options prohibit cellular voice fallback. Ordinary modes use B03 cellular SMS, VoWiFi-only uses IMS SMS, and VoWiFi-only plus GSM SMS uses GSM SMS with CS voice disabled.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10" fill="#557394"/></marker>
+    <style>text{font-family:Arial,Helvetica,sans-serif;fill:#16324d}.k{font-size:13px;letter-spacing:1.7px;fill:#53708e}.h{font-size:22px;font-weight:700}.s{font-size:16px;fill:#53708e}.b{font-size:17px;font-weight:700}.box{fill:white;stroke:#d4e0ed;stroke-width:1.5}.l{fill:none;stroke:#557394;stroke-width:2;marker-end:url(#arrow)}</style>
+  </defs>
+  <rect width="1200" height="660" rx="16" fill="#f3f6fb"/>
+  <text x="40" y="44" class="k">VOICE PREFERENCES</text>
+  <text x="40" y="85" class="h">One SIP endpoint. A selected SIM voice path.</text>
+  <rect x="40" y="118" width="1120" height="114" rx="12" class="box"/>
+  <text x="64" y="160" class="b">Auto</text><text x="64" y="191" class="s">Policy chooses an available path</text>
+  <rect x="400" y="145" width="196" height="58" rx="10" fill="#efeafa"/><text x="425" y="181" class="b">VoWiFi preferred</text>
+  <path d="M608 174H650" class="l"/><rect x="666" y="145" width="178" height="58" rx="10" fill="#e8f0fb"/><text x="715" y="181" class="b">VoLTE</text>
+  <path d="M856 174H902" class="l"/><rect x="918" y="145" width="218" height="58" rx="10" fill="#e7f1ed"/><text x="942" y="181" class="b">GSM CS recovery</text>
+  <rect x="40" y="252" width="548" height="98" rx="12" class="box"/><text x="64" y="290" class="b">VoLTE only / GSM CS only</text><text x="64" y="319" class="s">Use the explicitly selected cellular voice backend.</text>
+  <rect x="608" y="252" width="552" height="98" rx="12" class="box"/><text x="632" y="290" class="b">Both VoWiFi-only options</text><text x="632" y="319" class="s">IMS via Wi-Fi / USB. No LTE or CS voice fallback.</text>
+  <text x="40" y="395" class="k">SMS TRANSPORT IS AN EXPLICIT POLICY</text>
+  <rect x="40" y="418" width="356" height="154" rx="12" class="box"/><text x="64" y="455" class="b">Auto / VoLTE / GSM CS</text><text x="64" y="489" class="s">B03 cellular SMS</text><text x="64" y="520" class="s">Shared UI / REST / SIP dispatcher</text>
+  <rect x="422" y="418" width="356" height="154" rx="12" class="box"/><text x="446" y="455" class="b">VoWiFi only</text><text x="446" y="489" class="s">IMS SMS over the SWu tunnel</text><text x="446" y="520" class="s">No cellular fallback / auto retry</text>
+  <rect x="804" y="418" width="356" height="154" rx="12" class="box"/><text x="828" y="455" class="b">VoWiFi only + GSM SMS</text><text x="828" y="489" class="s">Explicit GSM 2G SMS registration</text><text x="828" y="520" class="s">CS voice remains disabled</text>
+  <text x="40" y="616" class="s">Simplified policy view · registration, operator provisioning and media readiness still gate real calls</text>
+</svg>

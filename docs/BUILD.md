@@ -79,3 +79,10 @@ still requires an authorized live check; CI cannot prove RF/audio/ePDG service.
 inputs. Never cache `private/`, live settings, SMS, credentials or recordings in
 Actions. No automatic installation, device calls or public release publication
 is part of the workflow.
+
+## Optional documentation assets
+
+`make docs-deps docs-assets` installs locked Playwright/Chromium tooling and
+regenerates the public desktop/mobile gallery from a disposable loopback fixture.
+It does not require ADB or read any live settings. These npm dependencies are
+optional and are not part of firmware builds or `make ci`; see [UI](UI.md).

@@ -3,6 +3,27 @@
 The host is needed for builds and installation. The installed gateway runs on
 the modem and owns its CP/IMS children; normal operation has no Mac relay.
 
+## Connection overview
+
+![Clients, the on-device runtime and operator access](assets/architecture.svg)
+
+The gateway presents two SIP arrangements: an external PBX trunk or one
+registered client. Both use the same on-device voice backends and fixed PCM
+contract. The illustration groups control and media connections; it is not a
+packet trace or an observed operator network map.
+
+## Voice and SMS policy
+
+![Voice preferences and explicit SMS transports](assets/voice-routing.svg)
+
+AUTO prefers the selected VoWiFi source and can recover through supported
+cellular paths. VOWIFI and VOWIFI_SMS both prohibit cellular voice fallback.
+VOWIFI uses IMS SMS without transport failover; VOWIFI_SMS explicitly enables
+GSM registration for SMS with CS voice disabled. Current readiness and physical
+verification limits are tracked in [STATUS](STATUS.md).
+
+## Runtime components
+
 ```mermaid
 flowchart LR
   UI[Embedded WebUI / REST] --> Control[Go Control / settings / network / SMS]

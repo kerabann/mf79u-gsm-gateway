@@ -1,0 +1,112 @@
+{
+  "fixture": true,
+  "deviceAccess": false,
+  "playwright": "1.62.1",
+  "chromium": "151.0.7922.34",
+  "screenshotWidths": [
+    1280,
+    390
+  ],
+  "checkedWidths": [
+    1280,
+    390,
+    320
+  ],
+  "sourceAssets": {
+    "index.html": "a07a691ff86b1f209471bde39fd10e6e081fb4b02dfb0fcf7336e853dd6d6ecc",
+    "style.css": "7c50683bca8c41610afb06272d4fce630757fa481092b71c68ddf6593f7297ab",
+    "app.js": "8e730ff3141f79b4f5dce6193236dbe3903fba5182654491a36562ad3895cc7a",
+    "system.js": "1f1020a24d7483411b85169783200a8da75c436a284cd33d0a23a459d4ed5cc3",
+    "sms-format.js": "35fbe00297c2de3c9b4870545da7bf7e4ca69351157927a6e6d0289033cee0f1"
+  },
+  "screenshots": [
+    {
+      "file": "screenshots/login-1280.png",
+      "sha256": "5d9e8b695a5133adcef00b13ad23944a45fe43aea1d67313472ff7b36820c590"
+    },
+    {
+      "file": "screenshots/login-390.png",
+      "sha256": "39b2c822684142cebdd822720fed1c1ee5abd3b903028e4fdc82c16d6d5cbd12"
+    },
+    {
+      "file": "screenshots/mobile-1280.png",
+      "sha256": "de5a77aae2c106a0ddc684c00f87e3667d6574e7f9eaf9019f36ece9c7c25f14"
+    },
+    {
+      "file": "screenshots/mobile-390.png",
+      "sha256": "9163a1e13335ae17ddf2b55bdd8bd7dc4ae8c8b79ecc5bfd729feaa1e37b5a96"
+    },
+    {
+      "file": "screenshots/network-1280.png",
+      "sha256": "932553f506f8c957a1257d0ba25dd2edf52a74628df000355b6f1cd987d3f4f4"
+    },
+    {
+      "file": "screenshots/network-390.png",
+      "sha256": "b9298284a82acb2593a54dc265c04f7ef7672be0a54d74e43c6764fe55786d3d"
+    },
+    {
+      "file": "screenshots/sip-1280.png",
+      "sha256": "b5dadcd23a24e6a8154dafe03c850c38a7eaa491dddb4cc2848156b260b78676"
+    },
+    {
+      "file": "screenshots/sip-390.png",
+      "sha256": "686dbcb7c10c295b6d9016c0330b8266819e56a9cc46a8360ba1065f74fd9f69"
+    },
+    {
+      "file": "screenshots/sip-trunk-1280.png",
+      "sha256": "f032dfb1168b1ac4af5464aa679003ea41a027a0e083a1591901ddebd25e2f17"
+    },
+    {
+      "file": "screenshots/sip-trunk-390.png",
+      "sha256": "ac2f3737e7a8da215f4c4501a42db2882928afa287d4d3ed1a84cde528f4e3c3"
+    },
+    {
+      "file": "screenshots/sms-1280.png",
+      "sha256": "ce086fd85569dfe7318b9b7e14b901e29f1c76dc81d4f3ccccf2afab921a8c26"
+    },
+    {
+      "file": "screenshots/sms-390.png",
+      "sha256": "5314be3984252e5f6f0dd5d46af455c26a8bdd6e761444a260f40bc419011fb2"
+    },
+    {
+      "file": "screenshots/status-1280.png",
+      "sha256": "c40104cee6a1f8468eb47a69b33809a96750eef0ebec1ecef5ca3808aad09857"
+    },
+    {
+      "file": "screenshots/status-390.png",
+      "sha256": "16cd30535e9304e734b77cd28abfc9339abd475cd6b58e426416d8749966904e"
+    },
+    {
+      "file": "screenshots/system-1280.png",
+      "sha256": "4d1bbf8f53c593f931489228d8a3c108b7de9ff201b3fef79c8604dc34c14767"
+    },
+    {
+      "file": "screenshots/system-390.png",
+      "sha256": "4fb1dc8a421d8e8dcebb476715ba04eb0cce4d965700f7aa23b9c36c263e3f96"
+    },
+    {
+      "file": "screenshots/webhooks-1280.png",
+      "sha256": "2ef1b7a6553dfdb547a49b31d305c4366bf61f375df0559ddfd65e831d29bd32"
+    },
+    {
+      "file": "screenshots/webhooks-390.png",
+      "sha256": "d0ddc9b664f8ae061f2ff259e3a206c915c571be23a85ad0b732115b7a92f2a2"
+    },
+    {
+      "file": "screenshots/wifi-1280.png",
+      "sha256": "7cab90193911bdc6a2bf489fb803dbbc6ed76691354820fde0b0d8af3fe2b664"
+    },
+    {
+      "file": "screenshots/wifi-390.png",
+      "sha256": "69a39e90a21f662b4b89bf31adbfcfca57b5f91530fd175dbd56c104ca968bf7"
+    },
+    {
+      "file": "screenshots/wifi-client-1280.png",
+      "sha256": "6cccab74ab9d79e557cfa3d3a38a649e7d1624214227ed05897e8f79878fca7f"
+    },
+    {
+      "file": "screenshots/wifi-client-390.png",
+      "sha256": "c518296080f1c25f589e340050f7694d1257019d519616a503be26dcbdbc2daf"
+    }
+  ]
+}
